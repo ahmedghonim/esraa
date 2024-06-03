@@ -4,6 +4,7 @@ import { z } from "zod";
 const ColorSchema = z.object({
   id: z.number(),
   name: z.string().min(1),
+  hexCode: z.string().min(1),
 });
 
 const CategorySchema = z.object({

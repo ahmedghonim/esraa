@@ -34,7 +34,7 @@ export default function AdminLayout({ children }: Props) {
             </Link>
           ))}
           <Link href={"/"} className="bg-white py-3 px-6 block text-center">
-            Back TO Website
+            {t("back_to_website")}
           </Link>
         </div>
       </section>

@@ -66,6 +66,7 @@ model Product {
 model Color {
   id           Int            @id @default(autoincrement())
   name         String
+  hexCode      String
   products     Product[]      @relation("ProductColors")
   ProductColor ProductColor[]
 

@@ -17,6 +17,9 @@
     "submit": "يُقدِّم",
     "address": "عنوان",
     "city": "مدينة",
-    "order-price": "سعر الطلب"
+    "order_price": "سعر الطلب",
+    "back_to_website": "العودة إلى الموقع",
+    "order_date": "تاريخ الطلب",
+    "save": "حفظ"
   }
 }

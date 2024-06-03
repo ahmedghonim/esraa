@@ -3,34 +3,32 @@ import { Color, ColorSchema } from "@/schema";
 
 import { ZodError } from "zod";
 
-const createColor = async (data: Color) => {
+const upsertColor = async (data: Color) => {
+  const id = data.id;
   try {
     const validatedData = ColorSchema.parse(data);
-    const color = await prisma.color.create({
+
+    if (id) {
+      return await prisma.color.update({
+        where: { id },
+        data: validatedData,
+      });
+    }
+
+    return await prisma.color.create({
       data: validatedData,
     });
-    return color;
   } catch (error) {
+    if (id) {
+      console.error(`Error updating color with id ${id}:`, error);
+      throw error instanceof ZodError
+        ? error.errors
+        : new Error(`Failed to update color with id ${id}`);
+    }
     console.error("Error creating color:", error);
     throw error instanceof ZodError
       ? error.errors
       : new Error("Failed to create color");
-  }
-};
-
-const updateColor = async (id: number, data: Color) => {
-  try {
-    const validatedData = ColorSchema.parse(data);
-    const color = await prisma.color.update({
-      where: { id },
-      data: validatedData,
-    });
-    return color;
-  } catch (error) {
-    console.error(`Error updating color with id ${id}:`, error);
-    throw error instanceof ZodError
-      ? error.errors
-      : new Error(`Failed to update color with id ${id}`);
   }
 };
 
@@ -67,4 +65,4 @@ const getAllColors = async () => {
   }
 };
 
-export { createColor, updateColor, deleteColor, getColorById, getAllColors };
+export { upsertColor, deleteColor, getColorById, getAllColors };

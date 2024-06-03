@@ -16,6 +16,8 @@
     "submit": "Submit",
     "address": "Address",
     "city": "City",
-    "order-price": "Order Price"
+    "order_price": "Order Price",
+    "back_to_website": "Back to website",
+    "save": "Save"
   }
 }

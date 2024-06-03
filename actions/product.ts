@@ -43,6 +43,9 @@ const productUpsert = async (value: Product) => {
         collection: {
           connect: { id: value.collectionId },
         },
+        relatedProducts: {
+          connect: value.relatedProducts?.map((id) => ({ id })),
+        },
       },
     });
   } else {
@@ -69,6 +72,9 @@ const productUpsert = async (value: Product) => {
         },
         collection: {
           connect: { id: value.collectionId },
+        },
+        relatedProducts: {
+          connect: value.relatedProducts?.map((id) => ({ id })),
         },
       },
     });

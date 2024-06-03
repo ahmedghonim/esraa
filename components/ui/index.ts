@@ -1,6 +1,5 @@
 import { EsraLink } from "./link";
-import { EsraButton } from "./button";
-
+import { EsraButton } from "@/components/ui/esra_button";
 import { EsraInput } from "./input";
 import { EsraPagination } from "./pagination";
 import { EsraSelect } from "./select";

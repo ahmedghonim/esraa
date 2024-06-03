@@ -3,34 +3,33 @@ import { Category, CategorySchema } from "@/schema";
 
 import { ZodError } from "zod";
 
-const createCategory = async (data: Category) => {
+const upsertCategory = async (data: Category) => {
+  const id = data.id;
   try {
+    if (id) {
+      const validatedData = CategorySchema.parse(data);
+      const category = await prisma.category.update({
+        where: { id },
+        data: validatedData,
+      });
+      return category;
+    }
     const validatedData = CategorySchema.parse(data);
     const category = await prisma.category.create({
       data: validatedData,
     });
     return category;
   } catch (error) {
+    if (id) {
+      console.error(`Error updating category with id ${id}:`, error);
+      throw error instanceof ZodError
+        ? error.errors
+        : new Error(`Failed to update category with id ${id}`);
+    }
     console.error("Error creating category:", error);
     throw error instanceof ZodError
       ? error.errors
       : new Error("Failed to create category");
-  }
-};
-
-const updateCategory = async (id: number, data: Category) => {
-  try {
-    const validatedData = CategorySchema.parse(data);
-    const category = await prisma.category.update({
-      where: { id },
-      data: validatedData,
-    });
-    return category;
-  } catch (error) {
-    console.error(`Error updating category with id ${id}:`, error);
-    throw error instanceof ZodError
-      ? error.errors
-      : new Error(`Failed to update category with id ${id}`);
   }
 };
 
@@ -67,10 +66,4 @@ const getAllCategories = async () => {
   }
 };
 
-export {
-  createCategory,
-  updateCategory,
-  deleteCategory,
-  getCategoryById,
-  getAllCategories,
-};
+export { upsertCategory, deleteCategory, getCategoryById, getAllCategories };
