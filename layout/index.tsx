@@ -8,13 +8,7 @@ import AuthLayout from "./auth-layout";
 import AdminLayout from "./admin-layout";
 import { usePathname } from "@/utils/navigation";
 
-const adminRoutes = [
-  "/dashboard/categories",
-  "/dashboard/products",
-  "/dashboard",
-];
-
-const authRoutes = ["/auth/sign-in"];
+const authRoutes = ["/sign-in"];
 
 interface Props {
   children: React.ReactNode;
@@ -24,11 +18,9 @@ export default function Layout({ children }: Props) {
   const asPath = usePathname();
   const isHomePage = asPath === "/";
 
-  const isAdminRoute = adminRoutes.includes(asPath);
+  const isAdminRoute = asPath.split("/").includes("dashboard");
 
   const isAuthRoute = authRoutes.includes(asPath);
-  console.log("isAdminRoute >>>> ", isAdminRoute);
-  console.log("isAuthRoute >>>> ", isAuthRoute);
   return (
     <>
       {/* admin layout */}

@@ -33,6 +33,7 @@ function FormInput({
           <FormControl>
             <Input
               {...field}
+              value={field.value || ""}
               type={type}
               placeholder={placeholder}
               className={className}

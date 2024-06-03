@@ -20,6 +20,10 @@
     "order_price": "سعر الطلب",
     "back_to_website": "العودة إلى الموقع",
     "order_date": "تاريخ الطلب",
-    "save": "حفظ"
+    "save": "حفظ",
+    "section_": "{key} قسم",
+    "new_": "{key} جديد",
+    "reset": "إعادة تعيين",
+    "color": "لون"
   }
 }

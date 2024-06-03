@@ -151,6 +151,7 @@ const ProductForm = ({
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
+          className="bg-primary-100 text-white p-2 rounded-sm"
           name={t("save")}
         />
       </div>

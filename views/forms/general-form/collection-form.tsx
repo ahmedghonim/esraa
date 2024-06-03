@@ -1,5 +1,5 @@
 "use client";
-import { Trash2, Edit } from "lucide-react";
+import { Trash2, Edit, RefreshCw } from "lucide-react";
 import { Collection, CollectionSchema } from "@/schema";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
@@ -41,7 +41,7 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
 
   const onDelete = () => {
     startTransaction(() => {
-      deleteCollection(form.getValues("id"))
+      deleteCollection(form.getValues("id") || 0)
         .then(() => {
           toast.success("collection deleted successfully");
           router.refresh();
@@ -66,7 +66,13 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
             onClick={() => {
               form.reset();
             }}
-            name={t("reset")}
+            className="bg-primary-100 text-white p-2 rounded-sm"
+            name={
+              <span className="flex items-center gap-2">
+                <RefreshCw className="size-4" />
+                <span>{t("reset")}</span>
+              </span>
+            }
           />
           {collection.map((collection) => (
             <div
@@ -100,6 +106,7 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
+          className="bg-primary-100 text-white p-2 rounded-sm"
           name={t("save")}
         />
       </div>

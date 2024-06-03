@@ -1,20 +1,21 @@
 "use client";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, RefreshCw } from "lucide-react";
 import { Color, ColorSchema } from "@/schema";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-
 import { useRouter } from "@/utils/navigation";
 import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
 import FormInput from "@/components/ui/form-input";
 import { deleteColor, upsertColor } from "@/actions/color";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 const ColorForm = ({ colors }: { colors: Color[] }) => {
+  const { toast } = useToast();
   const t = useTranslations("common");
   const [isPending, startTransaction] = useTransition();
 
@@ -30,24 +31,37 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
     startTransaction(() => {
       upsertColor(values)
         .then(() => {
-          toast.success("save successfully");
+          toast({
+            title: "Save successfully",
+            description: "Color saved successfully",
+          });
           router.refresh();
+          form.reset();
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast({
+            title: "Error",
+            description: error.message,
+          });
         });
     });
   };
 
   const onDelete = () => {
     startTransaction(() => {
-      deleteColor(form.getValues("id"))
+      deleteColor(form.getValues("id") || 0)
         .then(() => {
-          toast.success("Color deleted successfully");
+          toast({
+            title: "Color deleted successfully",
+            description: "Color deleted successfully",
+          });
           router.refresh();
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast({
+            title: "Error",
+            description: error.message,
+          });
         });
     });
   };
@@ -57,29 +71,39 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
       <div className="space-y-4">
         <Text variant="h2" className="flex gap-2 items-baseline">
           {t("section_", {
-            key: t("collection"),
+            key: t("color"),
           })}
         </Text>
 
         <div className="flex flex-wrap gap-3">
           <EsraButton
             onClick={() => {
+              form.setValue("id", undefined);
+              form.setValue("name", "");
+              router.refresh();
               form.reset();
             }}
-            name={t("reset")}
+            className="bg-primary-100 text-white p-2 rounded-sm"
+            name={
+              <span className="flex items-center gap-2">
+                <RefreshCw className="size-4" />
+                <span>{t("reset")}</span>
+              </span>
+            }
           />
           {colors.map((color) => (
             <div
               key={color.id}
-              className="flex gap-2 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm"
+              className="flex gap-3 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm"
             >
               <span
                 style={{
                   backgroundColor: color.hexCode,
                 }}
-                className="size-4"
+                className="size-6"
               />
 
+              <Text>{color.name}</Text>
               <Edit
                 className="cursor-pointer text-blue-500"
                 onClick={() => {
@@ -89,12 +113,20 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
                 }}
               />
 
-              <Text>{color.name}</Text>
               <Trash2
                 className="cursor-pointer text-red-500"
                 onClick={() => {
                   form.setValue("id", color.id);
-                  onDelete();
+                  toast({
+                    title: "Are you sure?",
+                    description: "This action is irreversible",
+
+                    action: (
+                      <ToastAction altText="Delete" onClick={onDelete}>
+                        Delete
+                      </ToastAction>
+                    ),
+                  });
                 }}
               />
             </div>
@@ -102,13 +134,21 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
         </div>
 
         <FormInput form={form} label={t("name")} name="name" />
-
-        <input type="color" {...form.register("hexCode")} />
+        <label className="flex flex-col gap-2">
+          {t("color")}
+          <input
+            type="color"
+            {...form.register("hexCode")}
+            value={form.getValues("hexCode") || "#000000"}
+            className="size-16"
+          />
+        </label>
 
         <EsraButton
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
+          className="bg-primary-100 text-white p-2 rounded-sm"
           name={t("save")}
         />
       </div>

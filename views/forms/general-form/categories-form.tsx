@@ -1,5 +1,5 @@
 "use client";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, RefreshCw, Trash2 } from "lucide-react";
 import { Category, CategorySchema } from "@/schema";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
@@ -40,7 +40,7 @@ const CategoriesForm = ({ category }: { category: Category[] }) => {
 
   const onDelete = () => {
     startTransaction(() => {
-      deleteCategory(form.getValues("id"))
+      deleteCategory(form.getValues("id") || 0)
         .then(() => {
           toast.success("Category deleted successfully");
           router.refresh();
@@ -65,7 +65,13 @@ const CategoriesForm = ({ category }: { category: Category[] }) => {
             onClick={() => {
               form.reset();
             }}
-            name={t("reset")}
+            className="bg-primary-100 text-white p-2 rounded-sm"
+            name={
+              <span className="flex items-center gap-2">
+                <RefreshCw className="size-4" />
+                <span>{t("reset")}</span>
+              </span>
+            }
           />
           {category.map((category) => (
             <div
@@ -98,6 +104,7 @@ const CategoriesForm = ({ category }: { category: Category[] }) => {
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
+          className="bg-primary-100 text-white p-2 rounded-sm"
           name={t("save")}
         />
       </div>

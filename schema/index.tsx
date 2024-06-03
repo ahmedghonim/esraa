@@ -2,29 +2,29 @@ import { z } from "zod";
 
 // Define the nested schemas for colors, categories, sizes, and collection
 const ColorSchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   name: z.string().min(1),
   hexCode: z.string().min(1),
 });
 
 const CategorySchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   name: z.string().min(1),
 });
 
 const SizeSchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   name: z.string().min(1),
 });
 
 const CollectionSchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   name: z.string().min(1),
 });
 
 // Define the main Product schema
 const ProductSchema = z.object({
-  id: z.number(),
+  id: z.number().optional(),
   inStock: z.boolean().optional(),
   name: z.string().min(1),
   description: z.string().min(1),

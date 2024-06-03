@@ -2,7 +2,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { El_Messiri } from "next/font/google";
 import Layout from "@/layout";
 import LocalCart from "@/views/shopper/local-cart";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/toaster";
 
 const cairo_font = El_Messiri({
   subsets: ["arabic", "latin"],

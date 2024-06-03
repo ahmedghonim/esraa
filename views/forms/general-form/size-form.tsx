@@ -42,7 +42,7 @@ const SizeForm = ({ size }: { size: Size[] }) => {
 
   const onDelete = () => {
     startTransaction(() => {
-      deleteCollection(form.getValues("id"))
+      deleteCollection(form.getValues("id") || 0)
         .then(() => {
           toast.success("Size deleted successfully");
           router.refresh();
@@ -106,6 +106,7 @@ const SizeForm = ({ size }: { size: Size[] }) => {
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
+          className="bg-primary-100 text-white p-2 rounded-sm"
           name={t("save")}
         />
       </div>

@@ -1,3 +1,4 @@
+"use server";
 import prisma from "@/lib/prisma";
 import { Collection, CollectionSchema } from "@/schema";
 import { ZodError } from "zod";

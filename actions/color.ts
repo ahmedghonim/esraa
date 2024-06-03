@@ -1,3 +1,4 @@
+"use server";
 import prisma from "@/lib/prisma";
 import { Color, ColorSchema } from "@/schema";
 
@@ -7,7 +8,6 @@ const upsertColor = async (data: Color) => {
   const id = data.id;
   try {
     const validatedData = ColorSchema.parse(data);
-
     if (id) {
       return await prisma.color.update({
         where: { id },

@@ -18,6 +18,10 @@
     "city": "City",
     "order_price": "Order Price",
     "back_to_website": "Back to website",
-    "save": "Save"
+    "save": "Save",
+    "section_": "Section {key}",
+    "new_": "New {key}",
+    "reset": "Reset",
+    "color": "Color"
   }
 }
