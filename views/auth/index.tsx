@@ -1,3 +1,4 @@
+"use client";
 import { EsraButton, EsraInput, EsraLink } from "@/components/ui";
 import { Link } from "@/utils/navigation";
 

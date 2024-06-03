@@ -1,5 +1,5 @@
+import { TProduct } from "@/types";
 import { Link } from "@/utils/navigation";
-
 import React from "react";
 
 interface Props {

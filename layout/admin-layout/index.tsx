@@ -9,15 +9,15 @@ interface Props {
 const links = [
   {
     name: "Products",
-    href: "/admin/products",
+    href: "/dashboard/products",
   },
   {
     name: "Categories",
-    href: "/admin/categories",
+    href: "/dashboard/categories",
   },
   {
     name: "Orders",
-    href: "/admin/orders",
+    href: "/dashboard",
   },
 ];
 

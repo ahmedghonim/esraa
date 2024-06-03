@@ -3,6 +3,7 @@ import { Link } from "@/utils/navigation";
 import React from "react";
 import { EsraButton } from "../button";
 import Favorite from "@/svg/favorite.svg";
+import Image from "next/image";
 interface Props {
   id: number;
   name: string;
@@ -25,9 +26,12 @@ export function ProductCard({
       href={`/products/view-product?id=${id}`}
       className="flex flex-col md:max-w-[243px]"
     >
-      <img
+      <Image
+        alt="product image"
+        width={2000}
+        height={2000}
         loading="lazy"
-        srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&"
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&"
         className="w-full aspect-[0.91]"
       />
       <div className="flex gap-5 justify-between mt-2 text-lg font-bold leading-6 capitalize">

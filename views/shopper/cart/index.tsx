@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import EmptyCart from "./empty-cart";
 import CartItems from "./cart-items";

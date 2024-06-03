@@ -1,3 +1,4 @@
+"use client";
 import React, { createContext } from "react";
 import Categories from "./categories";
 import Price from "./price";

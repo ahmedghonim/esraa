@@ -1,4 +1,5 @@
-import { Input } from "@/components/ui";
+import { EsraInput } from "@/components/ui";
+import { TProduct } from "@/types";
 import { colorsData } from "@/views/shopper/products/filter/colors";
 import { sizesData } from "@/views/shopper/products/filter/sizes";
 import clsx from "clsx";

@@ -1,4 +1,5 @@
-import { Input } from "@/components/ui";
+import { EsraInput } from "@/components/ui";
+import { TCategory } from "@/types";
 import React from "react";
 
 interface Props {

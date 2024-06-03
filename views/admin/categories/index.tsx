@@ -1,3 +1,4 @@
+"use client";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/ui/table";
 import React from "react";
 import CategoryRow from "./category-row";

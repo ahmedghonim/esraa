@@ -40,16 +40,13 @@ export default function FooterNav({}: Props) {
               <Link href={"/"}>Home</Link>
             </li>
             <li>
-              <Link href={""}>About us</Link>
+              <Link href={"about-us"}>About us</Link>
             </li>
             <li>
               <Link href={"/products"}>Products</Link>
             </li>
             <li>
-              <Link href={""}>Collection</Link>
-            </li>
-            <li>
-              <Link href={""}>Contact us</Link>
+              <Link href={"/contact-us"}>Contact us</Link>
             </li>
           </ul>
         </div>

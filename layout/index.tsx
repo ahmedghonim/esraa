@@ -10,8 +10,8 @@ import { usePathname } from "@/utils/navigation";
 
 const adminRoutes = [
   "/dashboard/categories",
-  "/dashboard/orders",
   "/dashboard/products",
+  "/dashboard",
 ];
 
 const authRoutes = ["/auth/sign-in"];
