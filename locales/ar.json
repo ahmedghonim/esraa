@@ -5,6 +5,18 @@
     "About Us": "معلومات عنا",
     "Services": "خدمات",
     "Collections": "مجموعات",
-    "Products": "منتجات"
+    "products": "منتجات",
+    "cart": "السلة",
+    "orders": "طلبات",
+    "categories": "الفئات",
+    "search": "بحث",
+    "name": "اسم",
+    "email": "بريد إلكتروني",
+    "phone": "هاتف",
+    "message": "رسالة",
+    "submit": "يُقدِّم",
+    "address": "عنوان",
+    "city": "مدينة",
+    "order-price": "سعر الطلب"
   }
 }

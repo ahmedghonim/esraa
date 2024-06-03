@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [],
+    domains: ["cdn.builder.io"],
   },
   webpack(config) {
     config.module.rules.push({

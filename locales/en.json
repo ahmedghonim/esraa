@@ -5,6 +5,17 @@
     "About Us": "About Us",
     "Services": "Services",
     "Collections": "Collections",
-    "Products": "Products"
+    "products": "Products",
+    "cart": "Cart",
+    "orders": "Orders",
+    "categories": "Categories",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "submit": "Submit",
+    "address": "Address",
+    "city": "City",
+    "order-price": "Order Price"
   }
 }

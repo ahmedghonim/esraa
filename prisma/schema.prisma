@@ -45,6 +45,8 @@ model Product {
   name            String
   description     String
   image           String
+  inStock         Boolean           @default(true)
+  slug            String
   colors          Color[]           @relation("ProductColors")
   categories      Category[]        @relation("ProductCategories")
   sizes           Size[]            @relation("ProductSizes")
@@ -54,6 +56,9 @@ model Product {
   ProductCategory ProductCategory[]
   ProductSize     ProductSize[]
   OrderProduct    OrderProduct[]
+
+  relatedProducts Product[] @relation("RelatedProducts")
+  parentProducts  Product[] @relation("RelatedProducts")
 
   @@index([name])
 }

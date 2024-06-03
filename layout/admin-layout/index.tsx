@@ -2,26 +2,27 @@ import { Link } from "@/utils/navigation";
 
 import React from "react";
 import Logo from "@/svg/logo.svg";
+import { useTranslations } from "next-intl";
 interface Props {
   children: React.ReactNode;
 }
 
-const links = [
-  {
-    name: "Products",
-    href: "/dashboard/products",
-  },
-  {
-    name: "Categories",
-    href: "/dashboard/categories",
-  },
-  {
-    name: "Orders",
-    href: "/dashboard",
-  },
-];
-
 export default function AdminLayout({ children }: Props) {
+  const t = useTranslations("common");
+  const links = [
+    {
+      name: t("orders"),
+      href: "/dashboard",
+    },
+    {
+      name: t("products"),
+      href: "/dashboard/products",
+    },
+    {
+      name: t("categories"),
+      href: "/dashboard/categories",
+    },
+  ];
   return (
     <main className="min-h-screen flex justify-between gap-6">
       <section className="w-[300px] bg-primary-100 py-6 px-10">
