@@ -7,7 +7,7 @@ import { ZodError } from "zod";
 
 const upsertCategory = async (data: Category) => {
   const id = data.id;
-  console.log("data >>>> ", data);
+
   const image = await uploadFile(data?.image);
 
   if (image) {
@@ -23,7 +23,6 @@ const upsertCategory = async (data: Category) => {
       return category;
     }
     const validatedData = CategorySchema.parse(data);
-    console.log("validatedData >>>> ", validatedData);
     const category = await prisma.category.create({
       data: validatedData,
     });

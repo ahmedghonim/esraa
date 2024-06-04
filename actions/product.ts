@@ -17,7 +17,7 @@ const productUpsert = async (value: Product) => {
           )
       )
     : [];
-  console.log("imageUrl >>>> ", imageUrl);
+
   if (imageUrl.length > 0) {
     value.images = imageUrl as string[];
   }
@@ -36,10 +36,10 @@ const productUpsert = async (value: Product) => {
       data: {
         name: value.name,
         images: value.images,
+        price: +value.price as number,
         thumbnail: value.thumbnail,
         description: value.description,
-        inStock: value.inStock,
-        price: +value.price as number,
+        stoke: +value.stoke,
         slug: slugify(value.name, {
           replacement: "-",
           remove: /[*+~.()'"!:@]/g,
@@ -78,7 +78,7 @@ const productUpsert = async (value: Product) => {
         price: +value.price as number,
         thumbnail: value.thumbnail,
         description: value.description,
-        inStock: value.inStock,
+        stoke: +value.stoke,
         slug: slugify(value.name, {
           replacement: "-",
           remove: /[*+~.()'"!:@]/g,

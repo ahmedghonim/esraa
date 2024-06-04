@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-import { Input } from "@/ui/input";
 import {
   FormControl,
   FormField,
@@ -7,23 +7,18 @@ import {
   FormLabel,
   FormMessage,
 } from "./form";
+import Editor from "./quill-editor";
 
-function FormInput({
+function FormEditor({
   form,
   name,
   label,
   placeholder,
-  type = "text",
-  className,
-  checked,
 }: {
   form: any;
   name: string;
   label?: string;
-  type?: string;
   placeholder?: string;
-  className?: string;
-  checked?: boolean;
 }) {
   return (
     <FormField
@@ -33,14 +28,7 @@ function FormInput({
         <FormItem>
           <FormLabel htmlFor={field.name}>{label}</FormLabel>
           <FormControl>
-            <Input
-              {...field}
-              checked={Boolean(field.value)}
-              value={field.value || ""}
-              type={type}
-              placeholder={placeholder}
-              className={className}
-            />
+            <Editor {...field} placeholder={placeholder} />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -49,4 +37,4 @@ function FormInput({
   );
 }
 
-export default FormInput;
+export default FormEditor;

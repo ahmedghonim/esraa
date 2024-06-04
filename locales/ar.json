@@ -34,9 +34,9 @@
     "sizes": "الأحجام",
     "inStoke": "في المخزن",
     "outStoke": "خارج المخزن",
-
+    "select": "اختر",
     "colors": "الألوان",
-    "stoke": "بضاعة",
+    "stoke": "المخزون",
     "actions": "أجراءات",
     "product": "المنتج",
     "upload": "تحميل",
@@ -44,6 +44,12 @@
     "images": "صور",
     "remove": "إزالة",
     "thumbnail": "صورة الاساسيه",
-    "add_": "إضافة {key}"
+    "add_": "إضافة {key}",
+    "sale_slider": " عرض ترويجي",
+    "is_active": "نشط",
+    "what_they_say": "ماذا يقولون",
+    "sale_list:": "قائمة العروض:",
+    "visible": "مرئي",
+    "hidden": "مخفي"
   }
 }

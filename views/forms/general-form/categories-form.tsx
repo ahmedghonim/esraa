@@ -30,7 +30,6 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
   });
 
   const onSubmit = (values: Category) => {
-    console.log("values >>>> ", values);
     startTransaction(() => {
       upsertCategory(values)
         .then(() => {
@@ -42,7 +41,6 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
           form.reset();
         })
         .catch((error) => {
-          console.log("error.message >>>> ", error);
           toast({
             title: "Error",
             description: error.message,

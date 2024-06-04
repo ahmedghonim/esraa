@@ -1,15 +1,19 @@
-import React from "react";
+"use client";
+import React, { useTransition } from "react";
 import Delete from "@/svg/delete.svg";
 import Edit from "@/svg/edit.svg";
-import { EsraAlertDialog } from "@/components/ui";
+import { EsraAlertDialog, EsraButton } from "@/components/ui";
 import Image from "next/image";
 import { Color, Product, Size } from "@prisma/client";
+import { Link, useRouter } from "@/utils/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
+import { useTranslations } from "use-intl";
+import { productDelete } from "@/actions/product";
 
 interface Props extends Product {
   sizes: Size[];
   colors: Color[];
-  onDelete: (id: number) => void;
-  onEdit: () => void;
 }
 
 export default function ProductRow({
@@ -18,13 +22,32 @@ export default function ProductRow({
   colors,
   thumbnail,
   price,
-  inStock,
+  stoke,
   description,
-  onDelete,
-  onEdit,
+  id,
 }: Props) {
-  console.log("colors >>>> ", colors);
-  console.log("sizes >>>> ", sizes);
+  const { toast } = useToast();
+  const t = useTranslations("common");
+  const router = useRouter();
+  const [isPending, startTransaction] = useTransition();
+  const onDelete = (id: number) => {
+    startTransaction(() => {
+      productDelete(id)
+        .then(() => {
+          toast({
+            title: "Deleted",
+            description: "Product deleted successfully",
+          });
+          router.refresh();
+        })
+        .catch((error) => {
+          toast({
+            title: "Error",
+            description: error.message,
+          });
+        });
+    });
+  };
   return (
     <>
       <td className="py-4">
@@ -63,7 +86,7 @@ export default function ProductRow({
         </div>
       </td>
 
-      <td className="py-4 text-center">{inStock} Item</td>
+      <td className="py-4 text-center">{stoke} Item</td>
 
       <td className="py-4 text-center">{description}</td>
 
@@ -72,16 +95,25 @@ export default function ProductRow({
       <td className="py-4">
         <div className="flex justify-center items-center gap-4">
           {/* edit alert */}
-          <button onClick={onEdit}>
+          <Link href={"/dashboard/products/" + id}>
             <Edit className="size-5" />
-          </button>
+          </Link>
           {/* delete alert */}
-          <EsraAlertDialog
-            alertTitle="Are you absolutely sure?"
-            alertDescription="This action cannot be undone. This will permanently delete the product."
-            openTrigger={<Delete />}
-            confirmClassName="bg-red-600"
-            onAccept={() => onDelete(0)}
+          <EsraButton
+            className="bg-transparent"
+            name={<Delete />}
+            onClick={() => {
+              toast({
+                title: "Are you sure?",
+                description: "This action is irreversible",
+
+                action: (
+                  <ToastAction altText="Delete" onClick={() => onDelete(id)}>
+                    {t("delete")}
+                  </ToastAction>
+                ),
+              });
+            }}
           />
         </div>
       </td>

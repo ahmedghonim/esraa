@@ -26,6 +26,14 @@ export default function AdminLayout({ children }: Props) {
       name: t("general-info"),
       href: "/dashboard/general-info",
     },
+    {
+      name: t("sale_slider"),
+      href: "/dashboard/sale",
+    },
+    {
+      name: t("what_they_say"),
+      href: "/dashboard/say",
+    },
   ];
   return (
     <main className="min-h-screen flex justify-between gap-6">

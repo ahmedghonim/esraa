@@ -27,7 +27,7 @@ const CollectionSchema = z.object({
 const ProductSchema = z.object({
   id: z.number().optional(),
   price: z.number().or(z.string()),
-  inStock: z.boolean().optional(),
+  stoke: z.number().or(z.string()),
   name: z.string().min(1),
   description: z.string().min(1),
   images: z.array(z.string()),
@@ -65,7 +65,25 @@ const CustomerSchema = z.object({
   email: z.string().email().optional(),
   orders: z.array(OrderSchema).optional(),
 });
-
+const SaleSliderSchema = z.object({
+  id: z.number().int().optional(),
+  hidden: z.boolean().optional(),
+  description: z.string().min(1),
+  image: z.string().url(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+});
+const WhatTheSaySchema = z.object({
+  id: z.number().int().optional(),
+  hidden: z.boolean().optional(),
+  name: z.string().min(1),
+  message: z.string().min(1),
+  image: z.string().url(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+});
+type WhatTheSay = z.infer<typeof WhatTheSaySchema>;
+type SaleSlider = z.infer<typeof SaleSliderSchema>;
 type Product = z.infer<typeof ProductSchema>;
 type Color = z.infer<typeof ColorSchema>;
 type Category = z.infer<typeof CategorySchema>;
@@ -84,6 +102,9 @@ export {
   OrderProductSchema,
   OrderSchema,
   CustomerSchema,
+  SaleSliderSchema,
+  WhatTheSaySchema,
+  type WhatTheSay,
   type Product,
   type Color,
   type Category,
@@ -92,4 +113,5 @@ export {
   type OrderProduct,
   type Order,
   type Customer,
+  type SaleSlider,
 };

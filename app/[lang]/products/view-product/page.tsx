@@ -20,7 +20,7 @@ export default function ViewProductPage({}: Props) {
           price={productData.price}
           category={productData.category}
           name={productData.name}
-          stock={productData.stock}
+          stoke={productData.stoke}
           sizes={productData.sizes}
           colors={productData.colors}
         />

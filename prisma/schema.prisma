@@ -46,7 +46,7 @@ model Product {
   description     String
   images          String[]
   thumbnail       String
-  inStock         Boolean           @default(true)
+  stoke           Int               @default(1)
   price           Float
   slug            String
   colors          Color[]           @relation("ProductColors")
@@ -158,4 +158,23 @@ model OrderProduct {
   product Product @relation(fields: [productId], references: [id])
 
   @@id([orderId, productId])
+}
+
+model WhatTheSay {
+  id        Int      @id @default(autoincrement())
+  name      String
+  message   String
+  image     String
+  hidden    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SaleSlider {
+  id          Int      @id @default(autoincrement())
+  description String
+  image       String
+  hidden      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

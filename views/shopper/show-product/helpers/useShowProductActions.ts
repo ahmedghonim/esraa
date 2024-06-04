@@ -25,7 +25,7 @@ const useShowProductActions = () => {
       "/intro-2.png",
       "/intro-3.png",
     ],
-    stock: 10,
+    stoke: 10,
     category: "Hejab",
     name: "Hijab Glamour Modest Fashion for Modern Muslim Women",
     price: 3000,

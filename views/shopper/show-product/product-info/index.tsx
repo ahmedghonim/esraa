@@ -9,7 +9,7 @@ interface Props {
   price: number;
   category: string;
   name: string;
-  stock: number;
+  stoke: number;
   sizes: string[];
   colors: string[];
 }
@@ -17,7 +17,7 @@ export default function ProductInfo({
   price,
   category,
   name,
-  stock,
+  stoke,
   sizes,
   colors,
 }: Props) {
@@ -26,7 +26,7 @@ export default function ProductInfo({
       <div className="flex flex-col mt-1.5 max-md:mt-8 max-md:max-w-full">
         {/* Main Information */}
         <h1 className="text-lg font-medium text-green-600 max-md:max-w-full">
-          Instock {stock}
+          stoke {stoke}
         </h1>
         <div className="flex gap-5 justify-between mt-2 w-full font-medium text-primary-100 max-md:flex-wrap max-md:max-w-full">
           <div className="my-auto text-lg">
