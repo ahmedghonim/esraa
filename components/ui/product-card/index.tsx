@@ -1,9 +1,9 @@
 import { Link } from "@/utils/navigation";
 
 import React from "react";
-import { EsraButton } from "../button";
 import Favorite from "@/svg/favorite.svg";
 import Image from "next/image";
+import { EsraButton } from "../esra_button";
 interface Props {
   id: number;
   name: string;

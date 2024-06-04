@@ -9,6 +9,7 @@ const ColorSchema = z.object({
 
 const CategorySchema = z.object({
   id: z.number().optional(),
+  image: z.string(),
   name: z.string().min(1),
 });
 
@@ -25,10 +26,12 @@ const CollectionSchema = z.object({
 // Define the main Product schema
 const ProductSchema = z.object({
   id: z.number().optional(),
+  price: z.number().or(z.string()),
   inStock: z.boolean().optional(),
   name: z.string().min(1),
   description: z.string().min(1),
-  image: z.string().url(),
+  images: z.array(z.string()),
+  thumbnail: z.string(),
   colors: z.array(z.number()),
   categories: z.array(z.number()),
   sizes: z.array(z.number()),

@@ -1,21 +1,22 @@
 "use client";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, RefreshCw } from "lucide-react";
 import { Size, SizeSchema } from "@/schema";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-
 import { useRouter } from "@/utils/navigation";
 import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
 import FormInput from "@/components/ui/form-input";
-import { deleteCollection, upsertCollection } from "@/actions/collection";
-import { cn } from "@/lib/utils";
 
-const SizeForm = ({ size }: { size: Size[] }) => {
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+import { deleteSize, upsertSize } from "@/actions/size";
+
+const SizeForm = ({ sizes }: { sizes: Size[] }) => {
+  const { toast } = useToast();
   const t = useTranslations("common");
   const [isPending, startTransaction] = useTransition();
 
@@ -29,26 +30,39 @@ const SizeForm = ({ size }: { size: Size[] }) => {
 
   const onSubmit = (values: Size) => {
     startTransaction(() => {
-      upsertCollection(values)
+      upsertSize(values)
         .then(() => {
-          toast.success("save successfully");
+          toast({
+            title: "Save successfully",
+            description: "Size saved successfully",
+          });
           router.refresh();
+          form.reset();
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast({
+            title: "Error",
+            description: error.message,
+          });
         });
     });
   };
 
   const onDelete = () => {
     startTransaction(() => {
-      deleteCollection(form.getValues("id") || 0)
+      deleteSize(form.getValues("id") || 0)
         .then(() => {
-          toast.success("Size deleted successfully");
+          toast({
+            title: "Size deleted successfully",
+            description: "Size deleted successfully",
+          });
           router.refresh();
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast({
+            title: "Error",
+            description: error.message,
+          });
         });
     });
   };
@@ -58,42 +72,54 @@ const SizeForm = ({ size }: { size: Size[] }) => {
       <div className="space-y-4">
         <Text variant="h2" className="flex gap-2 items-baseline">
           {t("section_", {
-            key: t("collection"),
+            key: t("size"),
           })}
         </Text>
 
         <div className="flex flex-wrap gap-3">
           <EsraButton
             onClick={() => {
+              form.setValue("id", undefined);
+              form.setValue("name", "");
+              router.refresh();
               form.reset();
             }}
-            name={t("reset")}
+            className="bg-primary-100 text-white p-2 rounded-sm"
+            name={
+              <span className="flex items-center gap-2">
+                <RefreshCw className="size-4" />
+                <span>{t("reset")}</span>
+              </span>
+            }
           />
-          {size.map((size) => (
+          {sizes.map((color) => (
             <div
-              key={size.id}
-              className={cn(
-                "flex gap-3 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm",
-                {
-                  "bg-red-500": form.watch("id") === size.id,
-                }
-              )}
+              key={color.id}
+              className="flex gap-3 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm"
             >
+              <Text>{color.name}</Text>
               <Edit
                 className="cursor-pointer text-blue-500"
                 onClick={() => {
-                  form.setValue("id", size.id);
-                  form.setValue("name", size.name);
+                  form.setValue("id", color.id);
+                  form.setValue("name", color.name);
                 }}
               />
-
-              <Text>{size.name}</Text>
 
               <Trash2
                 className="cursor-pointer text-red-500"
                 onClick={() => {
-                  form.setValue("id", size.id);
-                  onDelete();
+                  form.setValue("id", color.id);
+                  toast({
+                    title: "Are you sure?",
+                    description: "This action is irreversible",
+
+                    action: (
+                      <ToastAction altText="Delete" onClick={onDelete}>
+                        {t("delete")}
+                      </ToastAction>
+                    ),
+                  });
                 }}
               />
             </div>
@@ -106,7 +132,7 @@ const SizeForm = ({ size }: { size: Size[] }) => {
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
-          className="bg-primary-100 text-white p-2 rounded-sm"
+          className="bg-primary-100 text-white p-2 rounded-sm px-4"
           name={t("save")}
         />
       </div>

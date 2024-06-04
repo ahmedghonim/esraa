@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import { FormControl, FormField, FormItem, FormLabel } from "../atoms/ui/form";
+import { FormControl, FormField, FormItem, FormLabel } from "./form";
 import FileUpload from "./upload";
 
 function FormUpload({
@@ -7,11 +8,13 @@ function FormUpload({
   name,
   label,
   className,
+  hideDelete,
 }: {
   form: any;
   name: string;
   label?: string;
-  className: string;
+  className?: string;
+  hideDelete?: boolean;
 }) {
   return (
     <FormField
@@ -26,6 +29,7 @@ function FormUpload({
               className={className}
               onChange={field.onChange}
               value={field.value}
+              hideDelete={hideDelete}
             />
           </FormControl>
         </FormItem>

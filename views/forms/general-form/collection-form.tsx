@@ -1,20 +1,21 @@
 "use client";
-import { Trash2, Edit, RefreshCw } from "lucide-react";
+import { Edit, Trash2, RefreshCw } from "lucide-react";
 import { Collection, CollectionSchema } from "@/schema";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-
 import { useRouter } from "@/utils/navigation";
 import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
 import FormInput from "@/components/ui/form-input";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 import { deleteCollection, upsertCollection } from "@/actions/collection";
 
 const CollectionForm = ({ collection }: { collection: Collection[] }) => {
+  const { toast } = useToast();
   const t = useTranslations("common");
   const [isPending, startTransaction] = useTransition();
 
@@ -30,11 +31,18 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
     startTransaction(() => {
       upsertCollection(values)
         .then(() => {
-          toast.success("save successfully");
+          toast({
+            title: "Save successfully",
+            description: "Collection saved successfully",
+          });
           router.refresh();
+          form.reset();
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast({
+            title: "Error",
+            description: error.message,
+          });
         });
     });
   };
@@ -43,11 +51,17 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
     startTransaction(() => {
       deleteCollection(form.getValues("id") || 0)
         .then(() => {
-          toast.success("collection deleted successfully");
+          toast({
+            title: "Collection deleted successfully",
+            description: "Collection deleted successfully",
+          });
           router.refresh();
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast({
+            title: "Error",
+            description: error.message,
+          });
         });
     });
   };
@@ -64,6 +78,9 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
         <div className="flex flex-wrap gap-3">
           <EsraButton
             onClick={() => {
+              form.setValue("id", undefined);
+              form.setValue("name", "");
+              router.refresh();
               form.reset();
             }}
             className="bg-primary-100 text-white p-2 rounded-sm"
@@ -79,6 +96,7 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
               key={collection.id}
               className="flex gap-3 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm"
             >
+              <Text>{collection.name}</Text>
               <Edit
                 className="cursor-pointer text-blue-500"
                 onClick={() => {
@@ -87,13 +105,20 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
                 }}
               />
 
-              <Text>{collection.name}</Text>
-
               <Trash2
                 className="cursor-pointer text-red-500"
                 onClick={() => {
                   form.setValue("id", collection.id);
-                  onDelete();
+                  toast({
+                    title: "Are you sure?",
+                    description: "This action is irreversible",
+
+                    action: (
+                      <ToastAction altText="Delete" onClick={onDelete}>
+                        {t("delete")}
+                      </ToastAction>
+                    ),
+                  });
                 }}
               />
             </div>
@@ -106,7 +131,7 @@ const CollectionForm = ({ collection }: { collection: Collection[] }) => {
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
-          className="bg-primary-100 text-white p-2 rounded-sm"
+          className="bg-primary-100 text-white p-2 rounded-sm px-4"
           name={t("save")}
         />
       </div>

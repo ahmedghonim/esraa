@@ -1,3 +1,4 @@
+"use client";
 import { usePathname } from "@/utils/navigation";
 
 const useShowProductActions = () => {

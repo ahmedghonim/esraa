@@ -1,23 +1,10 @@
 "use client";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/ui/table";
 import React from "react";
-import { EsraButton, EsraModal } from "@/components/ui";
-import { useProductsActions } from "./helpers/useProductsActions";
-import ProductForm from "./form";
+import { EsraLink } from "@/components/ui";
 import ProductRow from "./product-row";
-
-// { name: "Purple", hexCode: "#8434E1" },
-// { name: "Black", hexCode: "#000" },
-// { name: "Red", hexCode: "#F32840" },
-// { name: "Orange", hexCode: "#F16F2B" },
-// { name: "Navy", hexCode: "#345EFF" },
-// { name: "White", hexCode: "#fff" },
-// { name: "Broom", hexCode: "#D67E3B" },
-// { name: "Green", hexCode: "#48BC4E" },
-// { name: "Yellow", hexCode: "#FDC761" },
-// { name: "Grey", hexCode: "#E4E5E8" },
-// { name: "Pink", hexCode: "#E08D9D" },
-// { name: "Blue", hexCode: "#3FDEFF" },
+import { useTranslations } from "next-intl";
+import { Product } from "@prisma/client";
 
 const products = [
   {
@@ -62,27 +49,21 @@ const products = [
   },
 ];
 
-type Props = {};
+type Props = { data: Product[] };
 
-export default function ProductsList({}: Props) {
-  const {
-    open,
-    editControler,
-    setEditControler,
-    setOpen,
-    onEditProduct,
-    onDeleteProduct,
-  } = useProductsActions();
-
+export default function ProductsList({ data }: Props) {
+  const t = useTranslations("common");
   return (
     <section>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-primary-100 font-bold text-3xl">Products List:</h1>
+        <h1 className="text-primary-100 font-bold text-3xl">
+          {t("products_list:")}
+        </h1>
 
-        <EsraButton
+        <EsraLink
           name="Add Product"
-          className="text-white py-2 px-6"
-          onClick={() => setOpen(true)}
+          className="text-white py-2 px-6 bg-primary-100 rounded-sm w-fit"
+          href="/dashboard/products/add"
         />
       </div>
       {/* categories list */}
@@ -90,61 +71,47 @@ export default function ProductsList({}: Props) {
         <TableHeader className="bg-primary-100">
           <TableRow>
             <TableHead className="!text-white text-center min-w-[100px] w-fit">
-              Product
+              {t("product")}
             </TableHead>
 
             <TableHead className="!text-white text-center min-w-[100px] w-fit">
-              Sizes
+              {t("sizes")}
             </TableHead>
 
             <TableHead className="!text-white text-center min-w-[100px] w-fit">
-              Colors
+              {t("colors")}
             </TableHead>
 
             <TableHead className="!text-white text-center min-w-[100px] w-fit">
-              Stock
+              {t("stock")}
             </TableHead>
 
             <TableHead className="!text-white text-center w-[220px]">
-              Description
+              {t("description")}
             </TableHead>
 
             <TableHead className="!text-white text-center min-w-[100px] w-fit">
-              Price
+              {t("price")}
             </TableHead>
 
             <TableHead className="!text-white text-center min-w-[100px] w-fit">
-              Actions
+              {t("actions")}
             </TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {products.map((product, index) => (
+          {data.map((product, index) => (
             <TableRow key={index} className="border-y-[1px] border-[#8C8C8C]">
               <ProductRow
                 {...product}
-                onDelete={onDeleteProduct}
-                onEdit={() => onEditProduct(product as any)}
+                // onDelete={()=>{}}
+                // onEdit={() => onEditProduct(product as any)}
               />
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
-      {/* product form */}
-      <EsraModal
-        open={open}
-        modalTitle={Boolean(editControler) ? "Edit Product" : "Add Product"}
-        modalClassName="sm:max-w-[800px]"
-        onConfirm={() => {}}
-        onOpenChange={() => {
-          setOpen(!open);
-          setEditControler(null);
-        }}
-      >
-        <ProductForm editControler={editControler} />
-      </EsraModal>
     </section>
   );
 }

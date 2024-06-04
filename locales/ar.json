@@ -23,7 +23,27 @@
     "save": "حفظ",
     "section_": "{key} قسم",
     "new_": "{key} جديد",
-    "reset": "إعادة تعيين",
-    "color": "لون"
+    "category": "فئة",
+    "price": "سعر",
+    "description": "وصف",
+    "image": "صورة",
+    "size": "مقاس",
+    "collection": "مجموعة",
+    "delete": "حذف",
+    "products_list:": "قائمة المنتجات:",
+    "sizes": "الأحجام",
+    "inStoke": "في المخزن",
+    "outStoke": "خارج المخزن",
+
+    "colors": "الألوان",
+    "stoke": "بضاعة",
+    "actions": "أجراءات",
+    "product": "المنتج",
+    "upload": "تحميل",
+    "related_products": "منتجات ذات صلة",
+    "images": "صور",
+    "remove": "إزالة",
+    "thumbnail": "صورة الاساسيه",
+    "add_": "إضافة {key}"
   }
 }

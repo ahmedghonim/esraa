@@ -123,7 +123,7 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
 
                     action: (
                       <ToastAction altText="Delete" onClick={onDelete}>
-                        Delete
+                        {t("delete")}
                       </ToastAction>
                     ),
                   });
@@ -148,7 +148,7 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
           type="submit"
-          className="bg-primary-100 text-white p-2 rounded-sm"
+          className="bg-primary-100 text-white p-2 rounded-sm px-4"
           name={t("save")}
         />
       </div>

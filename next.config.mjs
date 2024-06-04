@@ -5,7 +5,10 @@ const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["cdn.builder.io"],
+    domains: [
+      "cdn.builder.io",
+      "qgmidrhrzeyarvna.public.blob.vercel-storage.com",
+    ],
   },
   webpack(config) {
     config.module.rules.push({

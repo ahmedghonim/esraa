@@ -19,7 +19,7 @@ async function GeneralInfo({
 }) {
   const t = await getTranslations("common");
   const tab = searchParams.tab as string | undefined;
-  const tabs = ["color", "size", "category", "collection"];
+  const tabs = ["color", "size", "collection", "category"];
   const color = await getAllColors();
   const category = await getAllCategories();
   const collection = await getAllCollections();
@@ -30,7 +30,7 @@ async function GeneralInfo({
         {tabs.map((item) => (
           <Link
             className={cn(
-              "hover:bg-primary-100 p-2 px-3 rounded text-primary-100 text-sm font-semibold",
+              "hover:bg-primary-100 hover:text-white duration-200 p-2 px-3 rounded text-primary-100 text-sm font-semibold",
               {
                 "!bg-primary-100 text-white": item === tab && tab !== undefined,
               },
@@ -48,7 +48,7 @@ async function GeneralInfo({
       </div>
       <div>
         {(tab === "color" || tab === undefined) && <ColorForm colors={color} />}
-        {tab === "size" && <SizeForm size={sizes} />}
+        {tab === "size" && <SizeForm sizes={sizes} />}
         {tab === "category" && <CategoriesForm category={category} />}
         {tab === "collection" && <CollectionForm collection={collection} />}
       </div>

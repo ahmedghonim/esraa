@@ -59,8 +59,7 @@ const getCollectionById = async (id: number) => {
 
 const getAllCollections = async () => {
   try {
-    const collections = await prisma.collection.findMany();
-    return collections;
+    return await prisma.collection.findMany();
   } catch (error) {
     console.error("Error fetching collections:", error);
     throw new Error("Failed to fetch collections");

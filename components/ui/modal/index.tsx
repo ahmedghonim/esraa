@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Dialog,
@@ -9,8 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/ui/dialog";
-import { EsraButton } from "../button";
+
 import clsx from "clsx";
+import { EsraButton } from "../esra_button";
 
 interface Props {
   open: boolean;

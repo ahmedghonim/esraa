@@ -1,11 +1,18 @@
 "use server";
 import prisma from "@/lib/prisma";
+import uploadFile from "@/lib/upload-file";
 import { Category, CategorySchema } from "@/schema";
 
 import { ZodError } from "zod";
 
 const upsertCategory = async (data: Category) => {
   const id = data.id;
+  console.log("data >>>> ", data);
+  const image = await uploadFile(data?.image);
+
+  if (image) {
+    data.image = image;
+  }
   try {
     if (id) {
       const validatedData = CategorySchema.parse(data);
@@ -16,6 +23,7 @@ const upsertCategory = async (data: Category) => {
       return category;
     }
     const validatedData = CategorySchema.parse(data);
+    console.log("validatedData >>>> ", validatedData);
     const category = await prisma.category.create({
       data: validatedData,
     });

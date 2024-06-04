@@ -3,15 +3,11 @@ import Delete from "@/svg/delete.svg";
 import Edit from "@/svg/edit.svg";
 import { EsraAlertDialog } from "@/components/ui";
 import Image from "next/image";
+import { Color, Product, Size } from "@prisma/client";
 
-interface Props {
-  name: string;
-  image: string;
-  sizes: string[];
-  colors: string[];
-  price: number;
-  stock: number;
-  description: string;
+interface Props extends Product {
+  sizes: Size[];
+  colors: Color[];
   onDelete: (id: number) => void;
   onEdit: () => void;
 }
@@ -20,18 +16,20 @@ export default function ProductRow({
   name,
   sizes,
   colors,
-  image,
+  thumbnail,
   price,
-  stock,
+  inStock,
   description,
   onDelete,
   onEdit,
 }: Props) {
+  console.log("colors >>>> ", colors);
+  console.log("sizes >>>> ", sizes);
   return (
     <>
       <td className="py-4">
         <div className="flex gap-2.5">
-          <Image src={image} width={100} height={100} alt="product image" />
+          <Image src={thumbnail} width={100} height={100} alt="product image" />
           <div className="flex flex-col my-auto">
             <span className="text-lg font-bold leading-6 capitalize text-zinc-800">
               {name}
@@ -42,12 +40,12 @@ export default function ProductRow({
 
       <td className="py-4">
         <div className="flex justify-center flex-wrap gap-2">
-          {sizes.map((size) => (
+          {sizes.map(({ name }) => (
             <span
-              key={size}
+              key={name}
               className="grid place-items-center border border-solid border-stone-300 px-5"
             >
-              {size}
+              {name}
             </span>
           ))}
         </div>
@@ -55,17 +53,17 @@ export default function ProductRow({
 
       <td className="py-4">
         <div className="flex justify-center gap-2 flex-wrap">
-          {colors.map((color) => (
+          {colors.map(({ hexCode }) => (
             <div
-              key={color}
+              key={hexCode}
               className="shrink-0 h-5 w-5"
-              style={{ background: color }}
+              style={{ background: hexCode }}
             />
           ))}
         </div>
       </td>
 
-      <td className="py-4 text-center">{stock} Item</td>
+      <td className="py-4 text-center">{inStock} Item</td>
 
       <td className="py-4 text-center">{description}</td>
 

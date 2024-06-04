@@ -44,8 +44,10 @@ model Product {
   id              Int               @id @default(autoincrement())
   name            String
   description     String
-  image           String
+  images          String[]
+  thumbnail       String
   inStock         Boolean           @default(true)
+  price           Float
   slug            String
   colors          Color[]           @relation("ProductColors")
   categories      Category[]        @relation("ProductCategories")
@@ -76,6 +78,7 @@ model Color {
 model Category {
   id              Int               @id @default(autoincrement())
   name            String
+  image           String
   products        Product[]         @relation("ProductCategories")
   ProductCategory ProductCategory[]
 

@@ -1,3 +1,4 @@
+"use client";
 import { useShowProductActions } from "@/views/shopper/show-product/helpers/useShowProductActions";
 import ProductExtraInfo from "@/views/shopper/show-product/product-extra-info";
 import ProductGallery from "@/views/shopper/show-product/product-gallery";

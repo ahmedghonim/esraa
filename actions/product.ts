@@ -8,10 +8,24 @@ import slugify from "slugify";
 const productUpsert = async (value: Product) => {
   const db = prisma.product;
 
-  const image = await uploadFile(value?.image);
+  const imageUrl = value?.images
+    ? await Promise.all(
+        value.images
+          .filter((image) => image)
+          .map((image) =>
+            image?.startsWith("https") ? image : uploadFile(image)
+          )
+      )
+    : [];
+  console.log("imageUrl >>>> ", imageUrl);
+  if (imageUrl.length > 0) {
+    value.images = imageUrl as string[];
+  }
 
-  if (image) {
-    value.image = image;
+  const thumbnail = await uploadFile(value?.thumbnail);
+
+  if (thumbnail) {
+    value.thumbnail = thumbnail;
   }
 
   if (value.id) {
@@ -20,9 +34,12 @@ const productUpsert = async (value: Product) => {
         id: value.id,
       },
       data: {
-        image: value.image,
         name: value.name,
+        images: value.images,
+        thumbnail: value.thumbnail,
         description: value.description,
+        inStock: value.inStock,
+        price: +value.price as number,
         slug: slugify(value.name, {
           replacement: "-",
           remove: /[*+~.()'"!:@]/g,
@@ -40,23 +57,32 @@ const productUpsert = async (value: Product) => {
         sizes: {
           connect: value.sizes?.map((id) => ({ id })),
         },
-        collection: {
-          connect: { id: value.collectionId },
-        },
-        relatedProducts: {
-          connect: value.relatedProducts?.map((id) => ({ id })),
-        },
+        collection: value.collectionId
+          ? {
+              connect: { id: value.collectionId },
+            }
+          : undefined,
+        relatedProducts:
+          value?.relatedProducts && value?.relatedProducts.length > 0
+            ? {
+                connect: value?.relatedProducts?.map((id) => ({ id })),
+              }
+            : undefined,
       },
     });
   } else {
     return db.create({
       data: {
-        image: value.image,
         name: value.name,
+        images: value.images,
+        price: +value.price as number,
+        thumbnail: value.thumbnail,
         description: value.description,
+        inStock: value.inStock,
         slug: slugify(value.name, {
           replacement: "-",
           remove: /[*+~.()'"!:@]/g,
+          locale: "ar",
           lower: true,
           strict: true,
           trim: true,

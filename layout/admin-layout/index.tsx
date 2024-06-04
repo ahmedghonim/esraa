@@ -18,9 +18,13 @@ export default function AdminLayout({ children }: Props) {
       name: t("products"),
       href: "/dashboard/products",
     },
+    // {
+    //   name: t("categories"),
+    //   href: "/dashboard/categories",
+    // },
     {
-      name: t("categories"),
-      href: "/dashboard/categories",
+      name: t("general-info"),
+      href: "/dashboard/general-info",
     },
   ];
   return (
