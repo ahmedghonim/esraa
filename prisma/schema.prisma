@@ -169,6 +169,7 @@ model Order {
 }
 
 model OrderProduct {
+  id        Int @id @default(autoincrement())
   orderId   Int
   productId Int
   quantity  Int @default(1)
@@ -176,7 +177,7 @@ model OrderProduct {
   order   Order   @relation(fields: [orderId], references: [id])
   product Product @relation(fields: [productId], references: [id])
 
-  @@id([orderId, productId])
+  @@unique([orderId, productId])
 }
 
 model WhatTheSay {
