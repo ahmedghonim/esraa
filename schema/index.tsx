@@ -51,9 +51,8 @@ const OrderProductSchema = z.object({
 // Define the Order schema
 const OrderSchema = z.object({
   id: z.number().optional(),
-  orderDate: z.date().optional(),
   customerId: z.number(),
-  products: z.array(OrderProductSchema).optional(),
+  products: z.array(z.number()),
 });
 
 // Define the Customer schema
@@ -64,8 +63,9 @@ const CustomerSchema = z.object({
     .string()
     .min(1)
     .regex(/^\+?[1-9]\d{1,14}$/), // Assuming E.164 phone format
+  address: z.string().min(1),
   email: z.string().email().optional(),
-  orders: z.array(OrderSchema).optional(),
+  orders: z.array(z.number()),
 });
 const SaleSliderSchema = z.object({
   id: z.number().int().optional(),

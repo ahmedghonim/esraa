@@ -5,7 +5,7 @@ import SayList from "@/views/admin/say";
 import React from "react";
 
 export default async function ProductsPage() {
-  const data = (await getAllWhatTheSays()) as any;
+  const data = (await getAllWhatTheSays({})) as any;
 
   return <SayList data={data} />;
 }

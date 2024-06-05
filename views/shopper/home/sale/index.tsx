@@ -5,10 +5,13 @@ import RightArrow from "@/svg/right-arrow.svg";
 import Image from "next/image";
 import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/css";
+import { SaleSlider } from "@/schema";
+import parser from "html-react-parser";
+type Props = {
+  data: SaleSlider[];
+};
 
-type Props = {};
-
-export default function Sale({}: Props) {
+export default function Sale({ data }: Props) {
   const swiperRef = useRef<any>(null);
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
@@ -16,32 +19,18 @@ export default function Sale({}: Props) {
   return (
     <section className="relative mt-[45px]">
       <Swiper className="relative w-full" ref={swiperRef}>
-        {[...Array(3)].map((_slide, index) => (
+        {data.map((slide, index) => (
           <SwiperSlide className="!flex max-md:flex-col-reverse" key={index}>
             <div className="flex flex-col w-[34%] max-md:ml-0 max-md:w-full">
-              <div className="flex grow gap-5 justify-center px-10 md:ps-[66px] max-md:py-[60px] w-full bg-primary-100">
-                <div className="flex flex-col grow shrink-0 my-auto text-white basis-0 w-fit">
-                  <div className="self-center md:text-[28px] text-center capitalize font-Heebo">
-                    end of season
-                  </div>
-                  <div className="self-center mt-5 mb-2 text-5xl font-bold max-md:text-3xl">
-                    SALE
-                  </div>
-                  <div className="md:text-[42px] text-2xl text-center font-Heebo">
-                    Up to 70% off
-                  </div>
-                  <div className="mt-3 text-sm leading-5 text-center font-Heebo">
-                    Vivamus sit amet interdum elit. Proin erat ac velit tempus
-                    auctor.
-                  </div>
-                </div>
+              <div className="h-full flex flex-col justify-center px-10 md:ps-[66px] max-md:py-[60px] w-full bg-primary-100">
+                {parser(slide.description)}
               </div>
             </div>
 
             <div className="flex flex-col w-[66%] max-md:w-full">
               <div className="flex overflow-hidden relative flex-col grow justify-center items-end md:min-h-[487px] max-md:max-w-full">
                 <Image
-                  src={"/sale-poster.png"}
+                  src={slide.image || "/sale-poster.png"}
                   width={1200}
                   height={1200}
                   alt="sale poster"

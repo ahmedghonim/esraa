@@ -78,9 +78,12 @@ const getSaleSliderById = async (id: number) => {
   }
 };
 
-const getAllSaleSliders = async () => {
+const getAllSaleSliders = async ({ notHidden }: { notHidden?: boolean }) => {
+  const where = notHidden ? { hidden: false } : {};
   try {
-    const saleSliders = await prisma.saleSlider.findMany();
+    const saleSliders = await prisma.saleSlider.findMany({
+      where,
+    });
     return saleSliders;
   } catch (error) {
     console.error("Error fetching sale sliders:", error);

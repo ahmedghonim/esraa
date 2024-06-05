@@ -21,7 +21,7 @@ async function GeneralInfo({
   const tab = searchParams.tab as string | undefined;
   const tabs = ["color", "size", "collection", "category"];
   const color = await getAllColors();
-  const category = await getAllCategories();
+  const category = await getAllCategories({});
   const collection = await getAllCollections();
   const sizes = await getAllSizes();
   return (

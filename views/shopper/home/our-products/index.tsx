@@ -3,12 +3,18 @@ import { ProductCard } from "@/components/ui";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { Button } from "@/ui/button";
 import React, { useContext } from "react";
-import { TProduct } from "@/types";
+
 import EsraSectionTitle from "@/components/ui/section-title";
+import { Color, Product, Size } from "@prisma/client";
+import { TProduct } from "@/types";
+import { useTranslations } from "next-intl";
 
-type Props = {};
+type Props = {
+  data: Array<Product & { sizes: Size[] } & { colors: Color[] }>;
+};
 
-export default function OurProducts({}: Props) {
+export default function OurProducts({ data }: Props) {
+  const t = useTranslations("common");
   const { cart, setCart } = useContext<{
     cart: TCart;
     setCart: React.Dispatch<React.SetStateAction<TCart>>;
@@ -36,13 +42,10 @@ export default function OurProducts({}: Props) {
     <section className="flex flex-col font-bold leading-[150%] mt-[45px]">
       <EsraSectionTitle title="Our Products" href="" />
       <div className="grid md:grid-cols-3 lg:grid-cols-4  gap-5 mt-[14px]">
-        {[...Array(8)].map((item, index) => (
+        {data.map((item, index) => (
           <ProductCard
             key={index}
-            id={0}
-            name={"tailored stretch"}
-            price={3000}
-            colors={["#9747FF", "#988B1D", "#292929"]}
+            {...item}
             isSelected={isItemSelected(0)}
             onAddToCart={() => onAddToCart(item, isItemSelected(0))}
           />
@@ -53,7 +56,7 @@ export default function OurProducts({}: Props) {
         className="mt-8 bg-transparent border-primary-100 border-[2px] text-primary-100"
         onClick={onSeeMore}
       >
-        See More
+        {t("see_more")}
       </Button>
     </section>
   );

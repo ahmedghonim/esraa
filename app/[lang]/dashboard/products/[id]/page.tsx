@@ -11,7 +11,7 @@ async function Page({ params: { id } }: { params: { id: string } }) {
   const values = id === "add" ? {} : ((await getProductById(+id)) as any);
   const products = (await getAllProducts()) as any;
   const color = await getAllColors();
-  const category = await getAllCategories();
+  const category = await getAllCategories({});
   const collection = await getAllCollections();
   const sizes = await getAllSizes();
 

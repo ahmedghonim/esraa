@@ -63,9 +63,12 @@ const getWhatTheSayById = async (id: number) => {
   }
 };
 
-const getAllWhatTheSays = async () => {
+const getAllWhatTheSays = async ({ notHidden }: { notHidden?: boolean }) => {
+  const where = notHidden ? { hidden: false } : {};
   try {
-    const whatTheSays = await prisma.whatTheSay.findMany();
+    const whatTheSays = await prisma.whatTheSay.findMany({
+      where,
+    });
     return whatTheSays;
   } catch (error) {
     console.error("Error fetching what the say entries:", error);

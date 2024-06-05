@@ -4,13 +4,16 @@ import React from "react";
 import Favorite from "@/svg/favorite.svg";
 import Image from "next/image";
 import { EsraButton } from "../esra_button";
-interface Props {
+import { Product } from "@prisma/client";
+import { Color, Size } from "@/schema";
+interface Props extends Product {
   id: number;
   name: string;
   price: number;
-  colors: string[];
-  isSelected: boolean;
-  onAddToCart: () => void;
+  sizes: Size[];
+  colors: Color[];
+  isSelected?: boolean;
+  onAddToCart?: () => void;
 }
 
 export function ProductCard({
@@ -19,19 +22,17 @@ export function ProductCard({
   name,
   price,
   colors,
+  thumbnail,
   onAddToCart,
 }: Props) {
   return (
-    <Link
-      href={`/products/view-product?id=${id}`}
-      className="flex flex-col md:max-w-[243px]"
-    >
+    <Link href={`/products/${id}`} className="flex flex-col md:max-w-[243px]">
       <Image
         alt="product image"
         width={2000}
         height={2000}
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/3b065688ebab8fef614c196532aa35a8cda54348783ddd0c878e4bc05f45d713?apiKey=f5af8c8bd07842f79a8521db5d6c1ca5&"
+        src={thumbnail || "/product.png"}
         className="w-full aspect-[0.91]"
       />
       <div className="flex gap-5 justify-between mt-2 text-lg font-bold leading-6 capitalize">
@@ -41,9 +42,9 @@ export function ProductCard({
       <div className="flex gap-1 pr-20 mt-1">
         {colors.map((color) => (
           <div
-            key={color}
+            key={color.hexCode}
             className={"shrink-0 w-4 h-4"}
-            style={{ background: color }}
+            style={{ background: color.hexCode }}
           />
         ))}
       </div>

@@ -10,10 +10,12 @@ import React, { useContext } from "react";
 import Search from "@/svg/search.svg";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { TProduct } from "@/types";
+import { Color, Product, Size } from "@prisma/client";
+type Props = {
+  data: Array<Product & { sizes: Size[] } & { colors: Color[] }>;
+};
 
-type Props = {};
-
-export default function ProductsList({}: Props) {
+export default function ProductsList({ data }: Props) {
   const { cart, setCart } = useContext<{
     cart: TCart;
     setCart: React.Dispatch<React.SetStateAction<TCart>>;
@@ -68,13 +70,10 @@ export default function ProductsList({}: Props) {
 
       {/* products list */}
       <div className="grid md:grid-cols-3 gap-5 mt-[14px] mb-8">
-        {[...Array(12)].map((item, index) => (
+        {data.map((item, index) => (
           <ProductCard
-            key={index}
-            id={0}
-            name={"tailored stretch"}
-            price={3000}
-            colors={["#9747FF", "#988B1D", "#292929"]}
+            key={item.id}
+            {...item}
             isSelected={isItemSelected(0)}
             onAddToCart={() => onAddToCart(item, isItemSelected(0))}
           />
