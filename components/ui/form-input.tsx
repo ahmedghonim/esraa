@@ -15,7 +15,6 @@ function FormInput({
   placeholder,
   type = "text",
   className,
-  checked,
 }: {
   form: any;
   name: string;
@@ -23,7 +22,6 @@ function FormInput({
   type?: string;
   placeholder?: string;
   className?: string;
-  checked?: boolean;
 }) {
   return (
     <FormField
@@ -35,7 +33,7 @@ function FormInput({
           <FormControl>
             <Input
               {...field}
-              checked={Boolean(field.value)}
+              checked={field.value}
               value={field.value || ""}
               type={type}
               placeholder={placeholder}

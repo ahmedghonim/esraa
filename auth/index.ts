@@ -15,22 +15,14 @@ const authOptions: NextAuthConfig = {
       if (user) {
         token.id = user.id;
         token.fullname = user.fullname;
-        token.type = user.type;
         token.email = user.email;
-        // token.expiresAt = new Date(Date.now() + 30);
       }
-
-      // const expiresAt = token.expiresAt as Date;
-      // if (expiresAt && new Date() > expiresAt) {
-      //   return token;
-      // }
 
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.id as string;
       session.user.fullname = token.fullname as string;
-      session.user.type = token.type;
       session.user.email = token.email as string;
 
       return session;

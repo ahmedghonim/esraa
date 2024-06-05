@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: Props) {
     <main className="lg:px-[168px] px-6 py-10">
       <Header />
 
-      <section className="grid grid-cols-12 mt-8">
+      <section className="grid grid-cols-12 mt-8 gap-6 w-full">
         <div className="col-span-12 md:col-span-6">
           <Image
             src="/auth-image.png"

@@ -1,7 +1,7 @@
 {
   "common": {
     "Contact Us": "اتصل بنا",
-    "Home": "بيت",
+    "Home": "الرئيسية",
     "About Us": "معلومات عنا",
     "Services": "خدمات",
     "Collections": "مجموعات",
@@ -50,6 +50,17 @@
     "what_they_say": "ماذا يقولون",
     "sale_list:": "قائمة العروض:",
     "visible": "مرئي",
-    "hidden": "مخفي"
+    "hidden": "مخفي",
+    "send-otp": "إرسال OTP",
+    "otp": "otp",
+    "fullname": "الاسم الكامل",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "sign-up": "اشتراك",
+    "sign-in": "تسجيل الدخول",
+    "what_they_say_list:": "قائمة ما يقولون:",
+    "is_new_arrival": "هل هو وصول جديد",
+    "top_category": "أعلى الفئة",
+    "hero-section": "قسم الاساسي"
   }
 }

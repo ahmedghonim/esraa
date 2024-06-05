@@ -40,6 +40,7 @@ const productUpsert = async (value: Product) => {
         thumbnail: value.thumbnail,
         description: value.description,
         stoke: +value.stoke,
+        newArrival: value.newArrival,
         slug: slugify(value.name, {
           replacement: "-",
           remove: /[*+~.()'"!:@]/g,
@@ -79,6 +80,7 @@ const productUpsert = async (value: Product) => {
         thumbnail: value.thumbnail,
         description: value.description,
         stoke: +value.stoke,
+        newArrival: value.newArrival,
         slug: slugify(value.name, {
           replacement: "-",
           remove: /[*+~.()'"!:@]/g,

@@ -72,10 +72,24 @@ const getAllWhatTheSays = async () => {
     throw new Error("Failed to fetch what the say entries");
   }
 };
-
+const hiddenWhatTheSay = async (id: number, hidden: boolean) => {
+  try {
+    const saleSlider = await prisma.whatTheSay.update({
+      where: { id },
+      data: {
+        hidden,
+      },
+    });
+    return saleSlider;
+  } catch (error) {
+    console.error(`Error hiding sale slider with id ${id}:`, error);
+    throw new Error(`Failed to hide sale slider with id ${id}`);
+  }
+};
 export {
   upsertWhatTheSay,
   deleteWhatTheSay,
   getWhatTheSayById,
   getAllWhatTheSays,
+  hiddenWhatTheSay,
 };

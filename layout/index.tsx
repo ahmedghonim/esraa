@@ -8,7 +8,7 @@ import AuthLayout from "./auth-layout";
 import AdminLayout from "./admin-layout";
 import { usePathname } from "@/utils/navigation";
 
-const authRoutes = ["/sign-in"];
+const authRoutes = ["/sign-in", "/sign-up", "/forget-password"];
 
 interface Props {
   children: React.ReactNode;

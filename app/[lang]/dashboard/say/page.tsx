@@ -1,9 +1,11 @@
 import { getAllProducts } from "@/actions/product";
+import { getAllWhatTheSays } from "@/actions/whatStay";
 import ProductsList from "@/views/admin/products";
+import SayList from "@/views/admin/say";
 import React from "react";
 
 export default async function ProductsPage() {
-  const data = (await getAllProducts()) as any;
+  const data = (await getAllWhatTheSays()) as any;
 
-  return <ProductsList data={data} />;
+  return <SayList data={data} />;
 }

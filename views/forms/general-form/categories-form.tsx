@@ -83,6 +83,7 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
               form.setValue("id", undefined);
               form.setValue("name", "");
               form.setValue("image", "");
+              form.setValue("topCategory", false);
               router.refresh();
               form.reset();
             }}
@@ -106,6 +107,7 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
                   form.setValue("id", category.id);
                   form.setValue("name", category.name);
                   form.setValue("image", category.image);
+                  form.setValue("topCategory", category.topCategory);
                 }}
               />
 
@@ -125,6 +127,9 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
                   });
                 }}
               />
+              {category.topCategory && (
+                <Text className="text-primary-100">{t("top_category")}</Text>
+              )}
             </div>
           ))}
         </div>
@@ -137,6 +142,14 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
         />
 
         <FormInput form={form} label={t("name")} name="name" />
+
+        <FormInput
+          form={form}
+          label={t("top_category")}
+          name="topCategory"
+          type="checkbox"
+          className="w-24 items-end text-end justify-end me-auto"
+        />
 
         <EsraButton
           isLoading={isPending}

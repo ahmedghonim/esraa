@@ -47,13 +47,11 @@ function Select({
         options={options}
         value={
           props.isMulti
-            ? value
+            ? // @ts-ignore
+              value?.map((val: any) =>
+                options?.find((option) => option.value == val)
+              )
             : options?.find((option) => option.value == value)
-        }
-        defaultValue={
-          props.isMulti
-            ? defaultValue
-            : options?.find((option) => option.value == defaultValue)
         }
         formatOptionLabel={formatOptionLabel}
         {...props}

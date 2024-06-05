@@ -40,6 +40,11 @@ model Account {
   @@unique([providerId, providerAccountId])
 }
 
+model OtpCode {
+  id  Int    @id @default(autoincrement())
+  otp String
+}
+
 model Product {
   id              Int               @id @default(autoincrement())
   name            String
@@ -48,6 +53,7 @@ model Product {
   thumbnail       String
   stoke           Int               @default(1)
   price           Float
+  newArrival      Boolean           @default(false)
   slug            String
   colors          Color[]           @relation("ProductColors")
   categories      Category[]        @relation("ProductCategories")
@@ -58,11 +64,22 @@ model Product {
   ProductCategory ProductCategory[]
   ProductSize     ProductSize[]
   OrderProduct    OrderProduct[]
-
-  relatedProducts Product[] @relation("RelatedProducts")
-  parentProducts  Product[] @relation("RelatedProducts")
+  relatedProducts Product[]         @relation("RelatedProducts")
+  parentProducts  Product[]         @relation("RelatedProducts")
+  HeroSection     HeroSection?      @relation(fields: [heroSectionId], references: [id])
+  heroSectionId   Int?
 
   @@index([name])
+}
+
+model HeroSection {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  products    Product[]
+  mainProduct Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Color {
@@ -79,6 +96,7 @@ model Category {
   id              Int               @id @default(autoincrement())
   name            String
   image           String
+  topCategory     Boolean           @default(false)
   products        Product[]         @relation("ProductCategories")
   ProductCategory ProductCategory[]
 

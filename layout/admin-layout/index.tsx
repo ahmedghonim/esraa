@@ -15,6 +15,10 @@ export default function AdminLayout({ children }: Props) {
       href: "/dashboard",
     },
     {
+      name: t("hero-section"),
+      href: "/dashboard/hero-section",
+    },
+    {
       name: t("products"),
       href: "/dashboard/products",
     },
@@ -37,7 +41,7 @@ export default function AdminLayout({ children }: Props) {
   ];
   return (
     <main className="min-h-screen flex justify-between gap-6">
-      <section className="w-[300px] bg-primary-100 py-6 px-10">
+      <section className="w-[200px] bg-primary-100 py-6 px-10">
         <Logo />
         <div className="flex flex-col gap-6 my-8">
           {links.map((link) => (

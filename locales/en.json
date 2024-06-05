@@ -53,6 +53,17 @@
     "what_they_say": "What They Say",
     "sale_list:": "Sale List:",
     "visible": "Visible",
-    "hidden": "Hidden"
+    "hidden": "Hidden",
+    "send-otp": "Send OTP",
+    "otp": "OTP",
+    "fullname": "Full Name",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In",
+    "what_they_say_list:": "What They Say List:",
+    "is_new_arrival": "Is New Arrival",
+    "top_category": "Top Category",
+    "hero-section": "Hero Section"
   }
 }

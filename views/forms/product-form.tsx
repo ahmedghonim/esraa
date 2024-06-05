@@ -42,31 +42,20 @@ const ProductForm = ({
   const { toast } = useToast();
   const [isPending, startTransaction] = useTransition();
   const router = useRouter();
-  console.log("values >>>> ", values);
+
   const form = useForm<Product>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       id: undefined,
       stoke: 1,
+      newArrival: false,
     },
     values: {
       ...values,
-      categories: values?.categories?.map((item: any) => ({
-        value: item?.id,
-        label: item?.name,
-      })) as any,
-      colors: values?.colors?.map((item: any) => ({
-        value: item.id,
-        label: item?.name,
-      })) as any,
-      sizes: values?.sizes?.map((item: any) => ({
-        value: item?.id,
-        label: item?.name,
-      })) as any,
-      relatedProducts: values?.products?.map((item: any) => ({
-        value: item?.id,
-        label: item?.name,
-      })) as any,
+      categories: values?.categories?.map((item: any) => item.id),
+      colors: values?.colors?.map((item: any) => item.id),
+      sizes: values?.sizes?.map((item: any) => item.id),
+      relatedProducts: values?.products?.map((item: any) => item.id),
     },
   });
 
@@ -90,7 +79,7 @@ const ProductForm = ({
         });
     });
   };
-
+  console.log("form.watch() >>>> ", form.watch());
   return (
     <Form {...form}>
       <div className="space-y-4">
@@ -108,7 +97,7 @@ const ProductForm = ({
           name="thumbnail"
         />
 
-        <div className="grid grid-cols-3 gap-4 w-full items-center">
+        <div className="grid  grid-cols-1 lg:grid-cols-3 gap-4 w-full items-center">
           {form.getValues("images")?.map((_phone, index) => (
             <div className="flex-1 w-full flex flex-col gap-2" key={index}>
               <FormUpload
@@ -119,7 +108,7 @@ const ProductForm = ({
                 hideDelete
               />
               <EsraButton
-                className="bg-red-500 text-white p-2 rounded-sm text-center"
+                className="bg-red-500 text-white p-2 rounded-sm text-center mt-5"
                 onClick={() => {
                   startTransaction(() => {
                     form.setValue(`images[${index}]` as any, "");
@@ -158,25 +147,32 @@ const ProductForm = ({
             key: t("images"),
           })}
         />
-        <div className="grid grid-cols-3 gap-4 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full">
           <FormInput form={form} label={t("name")} name="name" />
-
           <FormInput
             form={form}
             label={t("price")}
             name="price"
             type="number"
           />
-
-          <FormInput
-            form={form}
-            label={t("stoke")}
-            name="stoke"
-            type="number"
-          />
+          <div className="flex gap-4 items-center">
+            <FormInput
+              form={form}
+              label={t("stoke")}
+              name="stoke"
+              type="number"
+            />
+            <FormInput
+              form={form}
+              label={t("is_new_arrival")}
+              name="newArrival"
+              type="checkbox"
+              className="w-24 items-end text-end justify-end me-auto"
+            />
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
           <FormSelect
             options={collection.map((item: any) => ({
               value: item.id,
@@ -197,6 +193,7 @@ const ProductForm = ({
             label={t("categories")}
             name="categories"
           />
+
           <FormSelect
             isMulti
             options={color.map((item) => ({
@@ -207,6 +204,7 @@ const ProductForm = ({
             label={t("color")}
             name="colors"
           />
+
           <FormSelect
             isMulti
             options={sizes.map((item) => ({

@@ -10,15 +10,17 @@ import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { useTranslations } from "use-intl";
 import parser from "html-react-parser";
-import { deleteSaleSlider, hiddenSaleSlider } from "@/actions/slae";
-import { SaleSlider } from "@prisma/client";
+import { WhatTheSay } from "@prisma/client";
 
-export default function SaleRow({
+import { deleteWhatTheSay, hiddenWhatTheSay } from "@/actions/whatStay";
+
+export default function SayRow({
   image,
-  description,
+  message,
+  name,
   id,
   hidden,
-}: SaleSlider) {
+}: WhatTheSay) {
   const { toast } = useToast();
   const t = useTranslations("common");
   const router = useRouter();
@@ -26,11 +28,11 @@ export default function SaleRow({
 
   const onDelete = () => {
     startTransaction(() => {
-      deleteSaleSlider(id)
+      deleteWhatTheSay(id)
         .then(() => {
           toast({
             title: "Deleted",
-            description: "Sale Slider deleted successfully",
+            description: "Say deleted successfully",
           });
           router.refresh();
         })
@@ -45,7 +47,7 @@ export default function SaleRow({
 
   const onHidden = () => {
     startTransaction(() => {
-      hiddenSaleSlider(+id, !hidden)
+      hiddenWhatTheSay(+id, !hidden)
         .then(() => {
           toast({
             title: hidden ? t("hidden") : t("visible"),
@@ -70,7 +72,9 @@ export default function SaleRow({
         <Image src={image} width={200} height={200} alt="Sale Slider image" />
       </td>
 
-      <td className="py-4 text-center">{parser(description)}</td>
+      <td className="py-4 text-center">{name}</td>
+
+      <td className="py-4 text-center">{parser(message)}</td>
 
       <td className="py-4 text-center">
         {hidden ? t("hidden") : t("visible")}

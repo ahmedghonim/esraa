@@ -11,6 +11,7 @@ const CategorySchema = z.object({
   id: z.number().optional(),
   image: z.string(),
   name: z.string().min(1),
+  topCategory: z.boolean().optional(),
 });
 
 const SizeSchema = z.object({
@@ -26,6 +27,7 @@ const CollectionSchema = z.object({
 // Define the main Product schema
 const ProductSchema = z.object({
   id: z.number().optional(),
+  newArrival: z.boolean().optional(),
   price: z.number().or(z.string()),
   stoke: z.number().or(z.string()),
   name: z.string().min(1),
@@ -82,6 +84,48 @@ const WhatTheSaySchema = z.object({
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 });
+
+export const UserLoginSchema = z.object({
+  email: z.string().email({ message: "You did not enter a valid email" }),
+  password: z
+    .string()
+    .min(8, { message: "Your password must be atleast 8 characters long" })
+    .max(64, {
+      message: "Your password can not be longer then 64 characters long",
+    }),
+});
+
+const SignupSchema = z.object({
+  fullname: z.string().min(1),
+  email: z.string().email(),
+  password: z
+    .string()
+    .min(8, { message: "Your password must be atleast 8 characters long" })
+    .max(64, {
+      message: "Your password can not be longer then 64 characters long",
+    })
+    .refine(
+      (value) => /^[a-zA-Z0-9_.-]*$/.test(value ?? ""),
+      "password should contain only alphabets and numbers"
+    ),
+  confirmPassword: z.string(),
+  otp: z.string(),
+});
+
+const HeroSectionSchema = z.object({
+  id: z.number().optional(),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  products: z.array(z.number()),
+  mainProduct: z.number(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+});
+
+type HeroSection = z.infer<typeof HeroSectionSchema>;
+
+type Signup = z.infer<typeof SignupSchema>;
+type UserLogin = z.infer<typeof UserLoginSchema>;
 type WhatTheSay = z.infer<typeof WhatTheSaySchema>;
 type SaleSlider = z.infer<typeof SaleSliderSchema>;
 type Product = z.infer<typeof ProductSchema>;
@@ -94,6 +138,7 @@ type Order = z.infer<typeof OrderSchema>;
 type Customer = z.infer<typeof CustomerSchema>;
 
 export {
+  SignupSchema,
   ProductSchema,
   ColorSchema,
   CategorySchema,
@@ -104,6 +149,9 @@ export {
   CustomerSchema,
   SaleSliderSchema,
   WhatTheSaySchema,
+  HeroSectionSchema,
+  type Signup,
+  type UserLogin,
   type WhatTheSay,
   type Product,
   type Color,
@@ -114,4 +162,5 @@ export {
   type Order,
   type Customer,
   type SaleSlider,
+  type HeroSection,
 };
