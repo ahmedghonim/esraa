@@ -41,7 +41,7 @@ const createOrder = async (data: Order) => {
 
     // Ensure that products array is defined and correctly typed
     if (validatedData.products) {
-      const products = validatedData.products.map((product) => ({
+      const products = validatedData?.products.map((product) => ({
         productId: product.productId,
         quantity: product.quantity || 1,
         size: product.size,

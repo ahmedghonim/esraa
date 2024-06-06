@@ -17,7 +17,7 @@ type Props = {
 export default function IntroSection({ data }: Props) {
   const t = useTranslations("common");
 
-  const mainProduct = data.products.find(
+  const mainProduct = data?.products.find(
     (item: any) => data.mainProduct === item.id
   ) as any;
 
@@ -63,7 +63,9 @@ export default function IntroSection({ data }: Props) {
                 <span className="text-2xl text-zinc-800">
                   0{activeSlide + 1}
                 </span>
-                <span className="text-zinc-800">/0{data.products.length}</span>
+                <span className="text-zinc-800">
+                  /0{data?.products?.length}
+                </span>
               </div>
 
               {/* Swiper Buttons */}
@@ -97,7 +99,7 @@ export default function IntroSection({ data }: Props) {
                 onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
               >
                 {/* @ts-ignore */}
-                {data.products.map((product: Product, index: number): any => (
+                {data?.products?.map((product: Product, index: number): any => (
                   <SwiperSlide key={index}>
                     <div className="relative w-[184px] h-[130px]">
                       <Image
@@ -121,11 +123,11 @@ export default function IntroSection({ data }: Props) {
             </div>
 
             <h1 className="mt-4 text-3xl md:text-[52px] font-bold tracking-tight leading-[78px] text-primary-500 max-md:leading-[40px] w-[230px] text-wrap">
-              {data.title}
+              {data?.title}
             </h1>
 
             <div className="mt-1 md:text-xl text-base leading-8 capitalize text-primary-300 max-md:max-w-full">
-              {data.description && parser(data.description)}
+              {data?.description && parser(data.description)}
             </div>
 
             <EsraLink
