@@ -11,6 +11,7 @@ const cairo_font = El_Messiri({
   weight: ["400", "500", "600", "700"],
   variable: "--font-cairo",
 });
+
 export async function generateMetadata(
   {
     params: { lang },

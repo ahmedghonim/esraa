@@ -5,11 +5,81 @@ import { getAllProducts } from "@/actions/product";
 import { getAllSizes } from "@/actions/size";
 import Filter from "@/views/shopper/products/filter";
 import ProductsList from "@/views/shopper/products/products-list";
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import React from "react";
 
-type Props = {};
+export async function generateMetadata(
+  {
+    params: { lang },
+  }: {
+    params: { lang: string };
+  },
+  cookieLang: string | undefined
+): Promise<Metadata> {
+  const t = await getTranslations("common");
+  return {
+    title: t("products"),
+    // description: t("description"),
+    // keywords: t("keywords"),
+    authors: [{ name: "esramodestwear" }],
+    applicationName: "esramodestwear",
+    metadataBase: new URL("https://www.esramodestwear.com"),
+    alternates: {
+      canonical: `${
+        cookieLang ? "/" + (lang === "en" ? "en/products" : ``) : "products"
+      }`,
+      languages: {
+        en: "/en/products",
+        "en-US": "/en/products",
+        "en-au": "/en/products",
+        "en-bz": "/en/products",
+        "en-ca": "/en/products",
+        "en-ie": "/en/products",
+        "en-jm": "/en/products",
+        "en-nz": "/en/products",
+        "en-za": "/en/products",
+        "en-tt": "/en/products",
+        "en-gb": "/en/products",
+        "en-us": "/en/products",
+        "ar-AR": "/products",
+        "ar-dz": "/products",
+        "ar-bh": "/products",
+        "ar-eg": "/products",
+        "ar-iq": "/products",
+        "ar-jo": "/products",
+        "ar-kw": "/products",
+        "ar-lb": "/products",
+        "ar-ly": "/products",
+        "ar-ma": "/products",
+        "ar-om": "/products",
+        "ar-qa": "/products",
+        "ar-sa": "/products",
+        "ar-sy": "/products",
+        "ar-tn": "/products",
+        "ar-ae": "/products",
+        "ar-ye": "/products",
+      },
+    },
 
-export default async function ProductsPage({}: Props) {
+    openGraph: {
+      type: "website",
+      title: "Esra Modestwear",
+      url: `https://www.esramodestwear.com/${lang}`,
+      siteName: "esramodestwear",
+      images: [
+        {
+          url: "./logo.jpg",
+          width: 800,
+          height: 600,
+          alt: "esramodestwear",
+        },
+      ],
+    },
+  };
+}
+
+export default async function ProductsPage() {
   const data = (await getAllProducts()) as any;
   const color = await getAllColors();
   const category = await getAllCategories({});
