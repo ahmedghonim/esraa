@@ -55,8 +55,6 @@ export default function LocalCart({ children }: Props) {
         (total, item) => total + item.qty * item.price,
         0
       );
-
-      // setCart({ ...cart, subTotal, total: subTotal - cart.shipping });
     }
   }, [cart]);
 
