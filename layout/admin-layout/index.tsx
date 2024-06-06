@@ -3,6 +3,7 @@ import { Link } from "@/utils/navigation";
 import React from "react";
 import Logo from "@/svg/logo.svg";
 import { useTranslations } from "next-intl";
+import { signOut } from "@/auth/helper";
 interface Props {
   children: React.ReactNode;
 }
@@ -61,6 +62,9 @@ export default function AdminLayout({ children }: Props) {
             {t("back_to_website")}
           </Link>
         </div>
+        <button onClick={() => signOut()} className="text-red-400">
+          {t("log_out")}
+        </button>
       </section>
       <section className="flex-1 p-8">{children}</section>
     </main>

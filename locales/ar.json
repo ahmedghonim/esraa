@@ -81,6 +81,8 @@
     "Message sent successfully": "تم إرسال الرسالة بنجاح",
     "success": "نجاح",
     "read": "قراءة",
-    "contact_us_list:": "قائمة اتصل بنا"
+    "contact_us_list:": "قائمة اتصل بنا",
+    "log_out": "تسجيل الخروج",
+    "login": "تسجيل الدخول"
   }
 }

@@ -85,6 +85,8 @@
     "Message sent successfully": "Message sent successfully",
     "success": "Success",
     "read": "Read",
-    "contact_us_list:": "Contact Us List"
+    "contact_us_list:": "Contact Us List",
+    "log_out": "Log Out",
+    "login": "Login"
   }
 }

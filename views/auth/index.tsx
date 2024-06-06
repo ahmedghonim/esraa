@@ -41,14 +41,12 @@ export default function Login({}: Props) {
         <Form {...form}>
           <div className="flex flex-col gap-4">
             <FormInput form={form} name="email" label={t("email")} />
-            <FormInput form={form} name="password" label={t("password")} />
-
-            {/* <Link
-              href="/forget_password"
-              className="self-end mt-4 underline text-primary-100"
-            >
-              Forget Password ?
-            </Link> */}
+            <FormInput
+              form={form}
+              name="password"
+              label={t("password")}
+              type="password"
+            />
 
             <EsraButton
               isLoading={isPending}
