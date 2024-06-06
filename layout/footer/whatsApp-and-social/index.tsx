@@ -11,7 +11,7 @@ type Props = {};
 
 export default function WhatsAppAndSocialMedia({}: Props) {
   const t = useTranslations("common");
-  const whatsAppChatLink = "";
+
   const [info, setInfo] = React.useState<any>();
   useEffect(() => {
     getOurInfo().then((data) => {

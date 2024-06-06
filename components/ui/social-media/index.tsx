@@ -14,21 +14,26 @@ interface Props {
 export function SocialMedia({ fill = "white", info }: Props) {
   return (
     <>
-      <Link href={"https://wa.me/" + info?.whatsApp || "/"}>
-        <WhatsApp className={fill === "primary" ? "fill-primary-100" : ""} />
-      </Link>
-
-      <Link href={info?.tiktok || "/"}>
-        <Tiktok className={fill === "primary" ? "fill-primary-100" : ""} />
-      </Link>
-
-      <Link href={info?.facebook || "/"}>
-        <Facebook className={fill === "primary" ? "fill-primary-100" : ""} />
-      </Link>
-
-      <Link href={info?.instagram || "/"}>
-        <Instagram className={fill === "primary" ? "fill-primary-100" : ""} />
-      </Link>
+      {info?.whatsApp && (
+        <Link href={"https://wa.me/" + info?.whatsApp || "/"}>
+          <WhatsApp className={fill === "primary" ? "fill-primary-100" : ""} />
+        </Link>
+      )}
+      {info?.tiktok && (
+        <Link href={info?.tiktok || "/"}>
+          <Tiktok className={fill === "primary" ? "fill-primary-100" : ""} />
+        </Link>
+      )}
+      {info?.facebook && (
+        <Link href={info?.facebook || "/"}>
+          <Facebook className={fill === "primary" ? "fill-primary-100" : ""} />
+        </Link>
+      )}
+      {info?.instagram && (
+        <Link href={info?.instagram || "/"}>
+          <Instagram className={fill === "primary" ? "fill-primary-100" : ""} />
+        </Link>
+      )}
     </>
   );
 }
