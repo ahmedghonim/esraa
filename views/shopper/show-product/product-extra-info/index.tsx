@@ -1,15 +1,17 @@
+import { useTranslations } from "next-intl";
 import React from "react";
 
 interface Props {
   description: string;
-  benifits: { image: string; name: string }[];
+  // benifits: { image: string; name: string }[];
 }
 
-export default function ProductExtraInfo({ description, benifits }: Props) {
+export default function ProductExtraInfo({ description }: Props) {
+  const t = useTranslations("common");
   return (
     <div>
       <h1 className="mt-16 text-3xl font-medium text-zinc-800 max-md:mt-10 max-md:max-w-full">
-        Product Description
+        {t("product_description")}
       </h1>
       <div className="shrink-0 mix-blend-multiply bg-primary-100 h-[10px] w-[150px] mb-4" />
 
@@ -17,7 +19,7 @@ export default function ProductExtraInfo({ description, benifits }: Props) {
         {description}
       </p>
 
-      <h1 className="mt-10 text-3xl font-medium text-zinc-800 max-md:max-w-full">
+      {/* <h1 className="mt-10 text-3xl font-medium text-zinc-800 max-md:max-w-full">
         Benefits
       </h1>
       <div className="shrink-0 mix-blend-multiply bg-primary-100 h-[19px] w-[78px]" />
@@ -32,7 +34,7 @@ export default function ProductExtraInfo({ description, benifits }: Props) {
             <span>{benefit.name}</span>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

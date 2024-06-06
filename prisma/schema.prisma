@@ -164,18 +164,20 @@ model Order {
   id         Int            @id @default(autoincrement())
   orderDate  DateTime       @default(now())
   customerId Int
+  delivered  Boolean        @default(false)
   customer   Customer       @relation(fields: [customerId], references: [id])
   products   OrderProduct[]
 }
 
 model OrderProduct {
-  id        Int @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   orderId   Int
   productId Int
-  quantity  Int @default(1)
-
-  order   Order   @relation(fields: [orderId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(1)
+  size      String
+  color     String
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 
   @@unique([orderId, productId])
 }

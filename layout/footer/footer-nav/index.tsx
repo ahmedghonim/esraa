@@ -1,6 +1,9 @@
+import { getAllCategories } from "@/actions/category";
 import { Link } from "@/utils/navigation";
+import { Category } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 type Props = {};
 
@@ -28,6 +31,14 @@ const dummyCategories = [
 ];
 
 export default function FooterNav({}: Props) {
+  const t = useTranslations("common");
+  const [category, setCategory] = React.useState<Category[]>();
+  useEffect(() => {
+    getAllCategories({}).then((data) => {
+      setCategory(data);
+    });
+  }, []);
+
   return (
     <div className="px-5 mt-6 max-md:max-w-full">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -37,16 +48,13 @@ export default function FooterNav({}: Props) {
           </span>
           <ul className="flex flex-col gap-6 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
             <li>
-              <Link href={"/"}>Home</Link>
+              <Link href={"/"}>{t("home")}</Link>
             </li>
             <li>
-              <Link href={"about-us"}>About us</Link>
+              <Link href={"/products"}>{t("products")}</Link>
             </li>
             <li>
-              <Link href={"/products"}>Products</Link>
-            </li>
-            <li>
-              <Link href={"/contact-us"}>Contact us</Link>
+              <Link href={"/contact-us"}>{t("contact_us")}</Link>
             </li>
           </ul>
         </div>
@@ -55,9 +63,12 @@ export default function FooterNav({}: Props) {
             Categories
           </span>
           <div className="flex flex-col gap-6 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
-            {dummyCategories.map((category) => (
-              <Link key={category.id} href={""}>
-                {category.category}
+            {category?.map((category) => (
+              <Link
+                key={category.id}
+                href={`/products?categories=${category.id}`}
+              >
+                {category.name}
               </Link>
             ))}
           </div>

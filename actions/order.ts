@@ -6,12 +6,19 @@ import { ZodError } from "zod";
 // Create order-product relationships
 const createOrderProduct = async (
   orderId: number,
-  products: { productId: number; quantity: number }[]
+  products: {
+    productId: number;
+    quantity: number;
+    size: string;
+    color: string;
+  }[]
 ) => {
   const orderProducts = products.map((product) => ({
     orderId,
     productId: product.productId,
     quantity: product.quantity,
+    size: product.size,
+    color: product.color,
   }));
 
   await prisma.orderProduct.createMany({
@@ -36,7 +43,9 @@ const createOrder = async (data: Order) => {
     if (validatedData.products) {
       const products = validatedData.products.map((product) => ({
         productId: product.productId,
-        quantity: product.quantity || 1, // Default quantity to 1 if not provided
+        quantity: product.quantity || 1,
+        size: product.size,
+        color: product.color,
       }));
 
       // Create order products
@@ -47,12 +56,7 @@ const createOrder = async (data: Order) => {
     const orderWithProducts = await prisma.order.findUnique({
       where: { id: createdOrder.id },
       include: {
-        order: {
-          include: {
-            order: true,
-            product: true,
-          },
-        },
+        products: true,
       },
     });
 
@@ -84,12 +88,7 @@ const getOrderById = async (id: number) => {
     return await prisma.order.findUnique({
       where: { id },
       include: {
-        order: {
-          include: {
-            order: true,
-            product: true,
-          },
-        },
+        products: true,
       },
     });
   } catch (error) {
@@ -103,12 +102,7 @@ const getAllOrders = async () => {
   try {
     return await prisma.order.findMany({
       include: {
-        order: {
-          include: {
-            order: true,
-            product: true,
-          },
-        },
+        products: true,
       },
     });
   } catch (error) {

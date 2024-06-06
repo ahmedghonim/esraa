@@ -1,4 +1,5 @@
 import { Link } from "@/utils/navigation";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 }
 
 function EsraSectionTitle({ title, href }: Props) {
+  const t = useTranslations("common");
   return (
     <div className="flex justify-between  tracking-tight max-md:flex-wrap max-md:max-w-full">
       <div className="flex flex-col pt-2.5 text-3xl text-zinc-800">
@@ -17,7 +19,7 @@ function EsraSectionTitle({ title, href }: Props) {
         href={href}
         className="my-auto text-base underline text-primary-100"
       >
-        View All
+        {t("view_all")}
       </Link>
     </div>
   );

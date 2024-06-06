@@ -127,6 +127,7 @@ const getProductById = (id: number) => {
       categories: true,
       sizes: true,
       collection: true,
+      relatedProducts: true,
     },
   });
 };

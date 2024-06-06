@@ -40,7 +40,7 @@ export function ProductCard({
         <div className="text-primary-100">{price} LE</div>
       </div>
       <div className="flex gap-1 pr-20 mt-1">
-        {colors.map((color) => (
+        {colors?.map((color) => (
           <div
             key={color.hexCode}
             className={"shrink-0 w-4 h-4"}

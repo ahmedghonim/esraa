@@ -1,37 +1,31 @@
-"use client";
-import { useShowProductActions } from "@/views/shopper/show-product/helpers/useShowProductActions";
+import { getProductById } from "@/actions/product";
 import ProductExtraInfo from "@/views/shopper/show-product/product-extra-info";
 import ProductGallery from "@/views/shopper/show-product/product-gallery";
 import ProductInfo from "@/views/shopper/show-product/product-info";
 import SimilarProducts from "@/views/shopper/show-product/similar-products";
 import React from "react";
 
-type Props = {};
+type Props = {
+  params: {
+    id: string;
+  };
+};
 
-export default function ViewProductPage({}: Props) {
-  const { productData } = useShowProductActions();
-
+export default async function ViewProductPage({ params: { id } }: Props) {
+  const data = (await getProductById(+id)) as any;
   return (
     <main className="mt-[95px]">
       <section className="grid grid-cols-12">
-        <ProductGallery images={productData.images} />
+        <ProductGallery images={[data?.thumbnail, ...data.images]} />
 
-        <ProductInfo
-          price={productData.price}
-          category={productData.category}
-          name={productData.name}
-          stoke={productData.stoke}
-          sizes={productData.sizes}
-          colors={productData.colors}
-        />
+        <ProductInfo {...data} />
       </section>
 
-      <ProductExtraInfo
-        description={productData.description}
-        benifits={productData.benefits}
-      />
+      <ProductExtraInfo description={data?.description || ""} />
 
-      <SimilarProducts />
+      {data?.relatedProducts && (
+        <SimilarProducts data={data?.relatedProducts} />
+      )}
     </main>
   );
 }
