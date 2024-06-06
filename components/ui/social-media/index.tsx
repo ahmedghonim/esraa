@@ -1,5 +1,5 @@
 import React from "react";
-import WhatsApp from "@/svg/whatsApp.svg";
+import WhatsApp from "@/svg/whatsapp.svg";
 import Facebook from "@/svg/facebook.svg";
 import Tiktok from "@/svg/tiktok.svg";
 import Instagram from "@/svg/instagram.svg";
