@@ -6,6 +6,7 @@ import FormInput from "@/components/ui/form-input";
 import FormTextArea from "@/components/ui/form-textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Contact, ContactSchema } from "@/schema";
+import { useRouter } from "@/utils/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -15,7 +16,7 @@ import { useForm } from "react-hook-form";
 function ConactUsForm() {
   const { toast } = useToast();
   const t = useTranslations("common");
-
+  const router = useRouter();
   const [isPending, startTransaction] = useTransition();
   const form = useForm<Contact>({
     resolver: zodResolver(ContactSchema),
@@ -28,6 +29,8 @@ function ConactUsForm() {
             title: t("success"),
             description: t("Message sent successfully"),
           });
+          router.refresh();
+          form.reset();
         })
         .catch((error) => {
           toast({

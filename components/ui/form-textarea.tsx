@@ -31,6 +31,7 @@ function FormTextArea({
           <FormControl>
             <TextArea
               {...field}
+              value={field.value || ""}
               placeholder={placeholder}
               className={className}
             />

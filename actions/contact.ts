@@ -2,14 +2,24 @@
 import { ZodError } from "zod";
 import { Contact, ContactSchema } from "@/schema";
 import prisma from "@/lib/prisma";
+import { onMailer } from "./mailer";
 
 // Create or update a contact
 const createContact = async (data: Contact) => {
   try {
     const validatedData = ContactSchema.parse(data);
 
-    return await prisma.contact.create({
+    await prisma.contact.create({
       data: validatedData,
+    });
+    onMailer({
+      email: process.env.NODE_MAILER_EMAIL!,
+      subject: "New Contact Message Form Your Website",
+      html: `
+        <h2>New Contact Message</h2>
+        <p>Name: ${validatedData.name}</p>
+        <p>Phone: ${validatedData.phone}</p>
+        <p>Message: ${validatedData.message}</p>`,
     });
   } catch (error) {
     console.error("Error creating/updating contact:", error);
