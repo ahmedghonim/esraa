@@ -4,8 +4,11 @@ import React, { useContext } from "react";
 import { TFilterState } from "../helpers/useFilterActions";
 import { FilterContext } from "..";
 import clsx from "clsx";
+import { Size } from "@prisma/client";
 
-interface Props {}
+interface Props {
+  sizes: Size[];
+}
 
 export const sizesData = [
   "xxs",
@@ -19,7 +22,7 @@ export const sizesData = [
   "4xl",
 ];
 
-export default function Sizes({}: Props) {
+export default function Sizes({ sizes }: Props) {
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
@@ -53,19 +56,19 @@ export default function Sizes({}: Props) {
   return (
     <CollapseCard title={"Sizes"}>
       <div className="grid grid-cols-3 gap-4">
-        {sizesData.map((size, index) => (
+        {sizes.map((size, index) => (
           <button
             key={index}
             className={clsx(
               "uppercase border-[1px] border-secondary-600  py-1 text-primary-300 duration-300",
               {
                 "bg-primary-100 text-white font-bold":
-                  filterControler.size.includes(size),
+                  filterControler.size.includes(size.name),
               }
             )}
-            onClick={() => onSelectSize(size)}
+            onClick={() => onSelectSize(size.name)}
           >
-            {size}
+            {size.name}
           </button>
         ))}
       </div>

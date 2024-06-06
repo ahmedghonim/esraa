@@ -5,25 +5,13 @@ import React, { useContext } from "react";
 import { TFilterState } from "../helpers/useFilterActions";
 import { FilterContext } from "..";
 import clsx from "clsx";
+import { Color } from "@prisma/client";
 
-interface Props {}
+interface Props {
+  color: Color[];
+}
 
-export const colorsData = [
-  { name: "Purple", hexCode: "#8434E1" },
-  { name: "Black", hexCode: "#000" },
-  { name: "Red", hexCode: "#F32840" },
-  { name: "Orange", hexCode: "#F16F2B" },
-  { name: "Navy", hexCode: "#345EFF" },
-  { name: "White", hexCode: "#fff" },
-  { name: "Broom", hexCode: "#D67E3B" },
-  { name: "Green", hexCode: "#48BC4E" },
-  { name: "Yellow", hexCode: "#FDC761" },
-  { name: "Grey", hexCode: "#E4E5E8" },
-  { name: "Pink", hexCode: "#E08D9D" },
-  { name: "Blue", hexCode: "#3FDEFF" },
-];
-
-export default function Colors({}: Props) {
+export default function Colors({ color }: Props) {
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
@@ -57,7 +45,7 @@ export default function Colors({}: Props) {
   return (
     <CollapseCard title={"Colors"}>
       <div className="grid grid-cols-4 gap-4">
-        {colorsData.map((color, index) => (
+        {color?.map((color, index) => (
           <button key={index}>
             <span
               className="block h-9 w-9 mb-3 mx-auto"

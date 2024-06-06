@@ -95,7 +95,7 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
               </span>
             }
           />
-          {category.map((category) => (
+          {category?.map((category) => (
             <div
               key={category.id}
               className="flex gap-3 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm"

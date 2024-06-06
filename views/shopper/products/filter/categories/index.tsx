@@ -5,33 +5,13 @@ import React, { useContext } from "react";
 import { FilterContext } from "..";
 import clsx from "clsx";
 import { TFilterState } from "../helpers/useFilterActions";
+import { Category } from "@prisma/client";
 
-type Props = {};
+type Props = {
+  category: Category[];
+};
 
-const dummyCateories = [
-  {
-    id: 1,
-    name: "Test Caregory",
-  },
-  {
-    id: 2,
-    name: "Test Caregory",
-  },
-  {
-    id: 3,
-    name: "Test Caregory",
-  },
-  {
-    id: 4,
-    name: "Test Caregory",
-  },
-  {
-    id: 5,
-    name: "Test Caregory",
-  },
-];
-
-export default function Categories({}: Props) {
+export default function Categories({ category }: Props) {
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
@@ -39,7 +19,7 @@ export default function Categories({}: Props) {
 
   return (
     <CollapseCard title={"Categories"}>
-      {dummyCateories.map((category) => (
+      {category?.map((category) => (
         <button
           key={category.id}
           className={clsx("block text-[#807D7E] text-lg duration-300", {

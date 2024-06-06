@@ -9,12 +9,17 @@ import {
   initialFiterState,
   useFilterActions,
 } from "./helpers/useFilterActions";
+import { Category, Collection, Color, Size } from "@prisma/client";
 
-type Props = {};
-
+type Props = {
+  color: Color[];
+  category: Category[];
+  sizes: Size[];
+  collection: Collection[];
+};
 export const FilterContext = createContext<any>(null);
 
-export default function Filter({}: Props) {
+export default function Filter({ color, category, sizes, collection }: Props) {
   const { filterControler, setFilterControler, onApplyFilter } =
     useFilterActions();
 
@@ -23,13 +28,13 @@ export default function Filter({}: Props) {
       <FilterContext.Provider
         value={{ filterControler, setFilterControler } as any}
       >
-        <Categories />
+        <Categories category={category} />
 
         <Price />
 
-        <Colors />
+        <Colors color={color} />
 
-        <Sizes />
+        <Sizes sizes={sizes} />
 
         <EsraButton
           name="Apply Filter"
