@@ -65,6 +65,15 @@
     "view_all": "عرض الكل",
     "pieces": "قِطَع",
     "similar_products": "منتجات مماثلة",
-    "product_description": "وصف المنتج"
+    "product_description": "وصف المنتج",
+    "hero_section_updated": "تم تحديث قسم الاساسي",
+    "info_updated": "تم تحديث المعلومات",
+    "our_info": "معلوماتنا",
+    "contact_us": "اتصل بنا",
+    "facebook": "فيسبوك",
+    "instagram": "انستغرام",
+    "x": "X",
+    "tiktok": "تيك توك",
+    "phone_number": "رقم الهاتف"
   }
 }

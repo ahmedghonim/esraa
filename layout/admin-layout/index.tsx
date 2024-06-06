@@ -38,6 +38,14 @@ export default function AdminLayout({ children }: Props) {
       name: t("what_they_say"),
       href: "/dashboard/say",
     },
+    {
+      name: t("contact_us"),
+      href: "/dashboard/contact_us",
+    },
+    {
+      name: t("our_info"),
+      href: "/dashboard/info",
+    },
   ];
   return (
     <main className="min-h-screen flex justify-between gap-6">

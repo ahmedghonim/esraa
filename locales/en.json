@@ -69,6 +69,15 @@
     "home": "Home",
     "pieces": "Pieces",
     "similar_products": "Similar Products",
-    "product_description": "Product Description"
+    "product_description": "Product Description",
+    "hero_section_updated": "Hero Section Updated",
+    "info_updated": "Info Updated",
+    "our_info": "Our Info",
+    "contact_us": "Contact Us",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "x": "X",
+    "tiktok": "Tiktok",
+    "phone_number": "Phone Number"
   }
 }

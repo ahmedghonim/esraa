@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowUp from "@/svg/arrow-top.svg";
 import { Link } from "@/utils/navigation";
+import { useTranslations } from "next-intl";
+import { OurInfo } from "@prisma/client";
+import { getOurInfo } from "@/actions/our-info";
 
 type Props = {};
 
 export default function ContactData({}: Props) {
-  const firstNumber = "(693) 209-8416 x541";
-
-  const secondNumber = "(693) 209-8416 x541";
-
-  const firstEmail = "Taylor_Kreiger52@gmail.com";
-
-  const secondEmail = "Taylor_Kreiger52@gmail.com";
+  const t = useTranslations("common");
+  const [info, setInfo] = React.useState<OurInfo>();
+  useEffect(() => {
+    getOurInfo().then((data) => {
+      setInfo(data as OurInfo);
+    });
+  }, []);
 
   return (
     <div className="flex gap-5 justify-between items-start mt-12 w-full max-w-[1044px] max-md:mt-10 max-md:max-w-full max-md:flex-col-reverse  max-lg:px-6">
@@ -22,30 +25,24 @@ export default function ContactData({}: Props) {
       </div>
       <div className="flex gap-5 justify-between items-start px-5 max-md:flex-wrap max-md:max-w-full">
         <div className="flex flex-col self-stretch text-sm leading-5 text-neutral-600">
-          <h1 className="text-2xl text-zinc-800">Phone Number</h1>
+          <h1 className="text-2xl text-zinc-800">{t("phone_number")}</h1>
 
-          <Link href={`tel:${firstNumber}`} className="mt-2">
-            {firstNumber}
-          </Link>
-          <Link href={`tel:${secondNumber}`} className="mt-3">
-            {secondNumber}
+          <Link href={`tel:${info?.phone}`} className="mt-2">
+            {info?.phone}
           </Link>
         </div>
         <div className="flex flex-col text-sm leading-5 whitespace-nowrap text-neutral-600">
-          <h1 className="text-2xl text-zinc-800">E-mails</h1>
-          <Link href={`mailto:${firstEmail}`} className="mt-2">
-            {firstEmail}
-          </Link>
-          <Link href={`mailto:${secondEmail}`} className="mt-2">
-            {secondEmail}
+          <h1 className="text-2xl text-zinc-800">{t("email")}</h1>
+          <Link href={`mailto:${info?.email}`} className="mt-2">
+            {info?.email}
           </Link>
         </div>
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <h1 className="text-2xl leading-8 text-zinc-800">Address</h1>
           <address className="mt-2 text-sm leading-5 text-neutral-600">
             33426 Fiona Ports, Feeneyport 63186-7530
           </address>
-        </div>
+        </div> */}
       </div>
     </div>
   );

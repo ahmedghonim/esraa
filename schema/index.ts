@@ -1,3 +1,4 @@
+import { WhatsApp } from "@/svg/whatsapp.svg";
 import { z } from "zod";
 
 // Define the nested schemas for colors, categories, sizes, and collection
@@ -45,7 +46,9 @@ const ProductSchema = z.object({
 const OrderProductSchema = z.object({
   orderId: z.number().optional(),
   productId: z.number(),
-  quantity: z.number().optional(), // Optional field, can be included if needed
+  quantity: z.number().optional(),
+  color: z.string(),
+  size: z.string(),
 });
 
 // Define schema for Order
@@ -123,6 +126,32 @@ const HeroSectionSchema = z.object({
   updatedAt: z.date().optional(),
 });
 
+const ContactSchema = z.object({
+  id: z.number().optional(),
+  name: z.string(),
+  phone: z.string(),
+  message: z.string(),
+  isRead: z.boolean().optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+});
+
+const OurInfoSchema = z.object({
+  id: z.number().optional(),
+  phone: z.string(),
+  email: z.string(),
+  whatsApp: z.string(),
+  facebook: z.string().optional(),
+  instagram: z.string().optional(),
+  x: z.string().optional(),
+  tiktok: z.string().optional(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
+});
+
+type Contact = z.infer<typeof ContactSchema>;
+type OurInfo = z.infer<typeof OurInfoSchema>;
+
 type HeroSection = z.infer<typeof HeroSectionSchema>;
 
 type Signup = z.infer<typeof SignupSchema>;
@@ -151,6 +180,10 @@ export {
   SaleSliderSchema,
   WhatTheSaySchema,
   HeroSectionSchema,
+  ContactSchema,
+  OurInfoSchema,
+  type Contact,
+  type OurInfo,
   type Signup,
   type UserLogin,
   type WhatTheSay,

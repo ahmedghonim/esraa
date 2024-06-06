@@ -200,3 +200,26 @@ model SaleSlider {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OurInfo {
+  id        Int      @id @default(autoincrement())
+  phone     String
+  email     String
+  whatsApp  String
+  facebook  String?
+  instagram String?
+  x         String?
+  tiktok    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
