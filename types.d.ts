@@ -42,9 +42,27 @@ declare module "next-auth/jwt" {
 interface TProduct {
   id: number;
   name: string;
+  thumbnail: string;
+  description: string;
+  images: string[];
+  colors: TColor[];
+  sizes: TSize[];
+  selected_size: string;
+  qty: number;
+  price: number;
 }
 
 interface TCategory {
+  id: number;
+  name: string;
+}
+
+interface TColor {
+  id: number;
+  hexcode: string;
+  name: string;
+}
+interface TSize {
   id: number;
   name: string;
 }

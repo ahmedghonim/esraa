@@ -28,31 +28,31 @@ export default function ProductsList({ data }: Props) {
       <Table>
         <TableHeader className="bg-primary-100">
           <TableRow>
-            <TableHead className="!text-white text-center min-w-[100px] w-fit">
+            <TableHead className="!text-white text-center w-[200px]">
               {t("product")}
             </TableHead>
 
-            <TableHead className="!text-white text-center min-w-[100px] w-fit">
+            <TableHead className="!text-white text-center min-w-[70px]">
               {t("sizes")}
             </TableHead>
 
-            <TableHead className="!text-white text-center min-w-[100px] w-fit">
+            <TableHead className="!text-white text-center min-w-[100px]">
               {t("colors")}
             </TableHead>
 
-            <TableHead className="!text-white text-center min-w-[100px] w-fit">
+            <TableHead className="!text-white text-center min-w-[100px]">
               {t("stock")}
             </TableHead>
 
-            <TableHead className="!text-white text-center w-[220px]">
+            <TableHead className="!text-white text-center !max-w-[200px]">
               {t("description")}
             </TableHead>
 
-            <TableHead className="!text-white text-center min-w-[100px] w-fit">
+            <TableHead className="!text-white text-center min-w-[100px]">
               {t("price")}
             </TableHead>
 
-            <TableHead className="!text-white text-center min-w-[100px] w-fit">
+            <TableHead className="!text-white text-center min-w-[100px]">
               {t("actions")}
             </TableHead>
           </TableRow>

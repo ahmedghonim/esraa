@@ -4,38 +4,40 @@ import Image from "next/image";
 import { ChangeProductCount, EsraAlertDialog } from "@/components/ui";
 
 interface Props {
-  image: string;
+  thumbnail: string;
   name: string;
-  size: string;
+  selected_size: string;
   color: string;
   qty: number;
-  total: number;
-  subTotal: number;
+  price: number;
   onDeleteItem: () => void;
+  onIncrease: () => void;
+  onDecrease: () => void;
 }
 
 export default function SingleCartItem({
-  image,
+  thumbnail,
   name,
-  size,
+  selected_size,
   color,
   qty,
-  total,
-  subTotal,
+  price,
+  onIncrease,
+  onDecrease,
   onDeleteItem,
 }: Props) {
   return (
     <>
       <td className="py-4">
         <div className="flex gap-2.5">
-          <Image src={image} width={100} height={100} alt="product image" />
+          <Image src={thumbnail} width={100} height={100} alt="product image" />
           <div className="flex flex-col my-auto">
             <span className="text-lg font-bold leading-6 capitalize text-zinc-800">
               {name}
             </span>
             <div className="flex gap-3 mt-2.5 text-base  text-neutral-500">
               <span className="grid place-items-center border border-solid border-stone-300 px-5">
-                {size}
+                {selected_size}
               </span>
               <div
                 className="shrink-0  h-[37px] w-[37px]"
@@ -49,20 +51,20 @@ export default function SingleCartItem({
       <td className="py-4">
         <ChangeProductCount
           qty={qty}
-          onDecrease={() => {}}
-          onIncrease={() => {}}
+          onDecrease={onDecrease}
+          onIncrease={onIncrease}
         />
       </td>
 
-      <td className="text-[20px] text-primary-100 font-medium py-4 ">
-        {total} LE
+      <td className="text-[20px] text-primary-100 font-medium py-4 text-center">
+        {price} LE
       </td>
 
-      <td className="text-[20px] text-primary-100 font-medium py-4 ">
-        {subTotal} LE
+      <td className="text-[20px] text-primary-100 font-medium py-4 text-center">
+        {Number(price * qty).toLocaleString()} LE
       </td>
 
-      <td className="py-4">
+      <td className="py-4 text-center">
         {/* delete alert */}
         <EsraAlertDialog
           alertTitle="Are you absolutely sure?"

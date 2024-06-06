@@ -8,7 +8,7 @@ import { useCartActions } from "./helpers/useCartActions";
 type Props = {};
 
 export default function Cart({}: Props) {
-  const { cart, onDeleteItem } = useCartActions();
+  const { cart, onDeleteItem, onChangeQty } = useCartActions();
 
   const isCartHasItems = cart.items.length > 0;
 
@@ -16,10 +16,14 @@ export default function Cart({}: Props) {
     <main className="mb-10">
       {isCartHasItems ? (
         <>
-          <CartItems onDeleteItem={onDeleteItem} />
+          <CartItems
+            cart={cart}
+            onChangeQty={onChangeQty}
+            onDeleteItem={onDeleteItem}
+          />
           <CartTotal
             subTotal={cart.subTotal}
-            shipping={23}
+            shipping={cart.shipping}
             grandTotal={cart.total}
           />
         </>

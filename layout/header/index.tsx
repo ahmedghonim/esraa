@@ -1,6 +1,6 @@
 "use client";
 import { Link } from "@/utils/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "@/svg/logo.svg";
 import clsx from "clsx";
 import { MobileHeader } from "./mobile-header";
@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "@/utils/navigation";
 import { EsraButton, EsraLink } from "@/components/ui";
 import { ShoppingCart } from "lucide-react";
+import { CartContext, TCart } from "@/views/shopper/local-cart";
 export const links = [
   {
     name: "Home",
@@ -27,6 +28,11 @@ type Props = {};
 
 export default function Header({}: Props) {
   const t = useTranslations("common");
+
+  const { cart } = useContext<{
+    cart: TCart;
+    setCart: React.Dispatch<React.SetStateAction<TCart>>;
+  }>(CartContext as any);
 
   const asPath = usePathname();
 
@@ -52,7 +58,7 @@ export default function Header({}: Props) {
         ))}
       </ul>
 
-      <div className="max-lg:hidden flex  my-auto text-base font-bold leading-6 capitalize whitespace-nowrap">
+      <div className="relative max-lg:hidden flex  my-auto text-base font-bold leading-6 capitalize whitespace-nowrap">
         <EsraLink
           name={t("cart")}
           href="/cart"
@@ -64,6 +70,10 @@ export default function Header({}: Props) {
         >
           <ShoppingCart className="size-4 text-primary-100" />
         </Link>
+
+        <div className="absolute -top-3 ltr:-right-3 rtl:-left-3 w-6 h-6 rounded-full bg-white grid place-items-center">
+          {cart.items?.length}
+        </div>
       </div>
 
       {/* Mobile Header */}

@@ -2,12 +2,13 @@
 import { ProductCard } from "@/components/ui";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { Button } from "@/ui/button";
-import React, { useContext } from "react";
+import React, { MouseEvent, useContext } from "react";
 
 import EsraSectionTitle from "@/components/ui/section-title";
 import { Color, Product, Size } from "@prisma/client";
 import { TProduct } from "@/types";
 import { useTranslations } from "next-intl";
+import { useToast } from "@/components/ui/use-toast";
 
 type Props = {
   data: Array<Product & { sizes: Size[] } & { colors: Color[] }>;
@@ -15,6 +16,9 @@ type Props = {
 
 export default function OurProducts({ data }: Props) {
   const t = useTranslations("common");
+
+  const { toast } = useToast();
+
   const { cart, setCart } = useContext<{
     cart: TCart;
     setCart: React.Dispatch<React.SetStateAction<TCart>>;
@@ -24,13 +28,26 @@ export default function OurProducts({ data }: Props) {
     return cart.items.some((item) => item.id === id);
   };
 
-  const onAddToCart = (product: TProduct, isSelected: boolean) => {
-    if (isSelected) {
-      // toast info message that the product is selected
-      return;
-    }
+  const onAddToCart = (product: TProduct) => {
+    if (isItemSelected(product.id)) {
+      const filteredCart = cart.items.filter((item) => item.id !== product.id);
 
-    setCart({ ...cart, items: [...cart.items, product] });
+      setCart({ ...cart, items: filteredCart });
+      toast({
+        title: "Removed successfully",
+        description: "Product removed successfully",
+      });
+      return;
+    } else {
+      setCart({
+        ...cart,
+        items: [...cart.items, { ...product, qty: 1, selected_size: "M" }],
+      });
+      toast({
+        title: "Added successfully",
+        description: "Product added successfully",
+      });
+    }
   };
 
   /* ------------------------ */
@@ -46,8 +63,8 @@ export default function OurProducts({ data }: Props) {
           <ProductCard
             key={index}
             {...item}
-            isSelected={isItemSelected(0)}
-            onAddToCart={() => onAddToCart(item, isItemSelected(0))}
+            isSelected={isItemSelected(item.id)}
+            onAddToCart={() => onAddToCart(item)}
           />
         ))}
       </div>

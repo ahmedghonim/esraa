@@ -13,7 +13,9 @@ export default function EmptyCart({}: Props) {
       <h1 className="mt-6 w-full md:text-4xl text-2xl text-black whitespace-nowrap text-center">
         Your Cart Is Empty and Sad
       </h1>
-      <h2 className="mt-1.5 text-[#807D7E]">Add something to make it happy!</h2>
+      <h2 className="mt-1.5 text-[#807D7E] text-center">
+        Add something to make it happy!
+      </h2>
 
       <EsraLink
         name="Add Products"

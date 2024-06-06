@@ -9,13 +9,21 @@ interface Props {
 export interface TCart {
   items: TProduct[];
   total: number;
+  shipping: number;
   subTotal: number;
 }
 
 export const CartContext = createContext(null);
 
 export default function LocalCart({ children }: Props) {
-  const [cart, setCart] = useState<TCart>({ items: [], total: 0, subTotal: 0 });
+  const [cart, setCart] = useState<TCart>({
+    items: [],
+    total: 0,
+    subTotal: 0,
+    shipping: 0,
+  });
+
+  const [isCartSynced, setIsCartSynced] = useState<boolean>(false);
 
   /* ---------------------------------- */
   /*     Get cart on component mount    */
@@ -26,20 +34,30 @@ export default function LocalCart({ children }: Props) {
     if (localCart) {
       setCart(JSON.parse(localCart));
     }
+    setIsCartSynced(true);
   }, []);
 
   /* ------------------------------- */
   /*     Set cart on every change    */
   /* ------------------------------- */
   useEffect(() => {
-    localStorage.setItem("esra_cart_items", JSON.stringify(cart));
+    if (isCartSynced) {
+      localStorage.setItem("esra_cart_items", JSON.stringify(cart));
+    }
   }, [cart]);
 
   /* ------------------------------- */
   /*     Set cart Total Amounts     */
   /* ------------------------------- */
   useEffect(() => {
-    // map on cart items to get the totals
+    if (isCartSynced) {
+      const subTotal = cart.items.reduce(
+        (total, item) => total + item.qty * item.price,
+        0
+      );
+
+      // setCart({ ...cart, subTotal, total: subTotal - cart.shipping });
+    }
   }, [cart]);
 
   return (

@@ -1,15 +1,8 @@
 import React from "react";
 import SingleCartItem from "./single-cart-item";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/ui/table";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/ui/table";
+import { useCartActions } from "../helpers/useCartActions";
+import { TCart } from "../../local-cart";
 
 const dummyData = [
   {
@@ -60,10 +53,12 @@ const dummyData = [
 ];
 
 interface Props {
+  cart: TCart;
   onDeleteItem: (index: number) => void;
+  onChangeQty: (id: number, type: "inc" | "dec") => void;
 }
 
-export default function CartItems({ onDeleteItem }: Props) {
+export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
   return (
     <section className="flex flex-col mt-8">
       <Table>
@@ -85,11 +80,13 @@ export default function CartItems({ onDeleteItem }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {dummyData.map((product, index) => (
+          {cart.items?.map((product, index) => (
             <TableRow key={index} className="border-y-[1px] border-[#8C8C8C]">
               <SingleCartItem
                 {...product}
                 onDeleteItem={() => onDeleteItem(index)}
+                onDecrease={() => onChangeQty(product.id, "dec")}
+                onIncrease={() => onChangeQty(product.id, "inc")}
               />
             </TableRow>
           ))}

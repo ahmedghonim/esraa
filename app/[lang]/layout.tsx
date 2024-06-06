@@ -23,12 +23,12 @@ export default function RootLayout({
     <html lang={lang} dir={lang === "ar" ? "rtl" : "ltr"}>
       <body className={`${cairo_font.variable}`}>
         <NextIntlClientProvider messages={messages}>
-          <Layout>
-            <LocalCart>
+          <LocalCart>
+            <Layout>
               {children}
               <Toaster />
-            </LocalCart>
-          </Layout>
+            </Layout>
+          </LocalCart>
         </NextIntlClientProvider>
       </body>
     </html>

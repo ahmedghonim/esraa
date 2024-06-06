@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React, { HTMLAttributes, MouseEvent } from "react";
 import clsx from "clsx";
 import { Loader } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   name: string | React.ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
 }
@@ -22,7 +22,7 @@ export function EsraButton({
     <button
       className={clsx("bg-primary-100", className)}
       type={type}
-      onClick={onClick}
+      onClick={(e) => onClick?.(e)}
     >
       {isLoading ? (
         <Loader className={cn("size-6 fill-current mx-auto")} />
