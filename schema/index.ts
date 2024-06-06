@@ -1,4 +1,3 @@
-import { WhatsApp } from "@/svg/whatsapp.svg";
 import { z } from "zod";
 
 // Define the nested schemas for colors, categories, sizes, and collection
