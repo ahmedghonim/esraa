@@ -80,6 +80,11 @@
     "tiktok": "Tiktok",
     "phone_number": "Phone Number",
     "next": "Next",
-    "previous": "Previous"
+    "previous": "Previous",
+    "send": "Send",
+    "Message sent successfully": "Message sent successfully",
+    "success": "Success",
+    "read": "Read",
+    "contact_us_list:": "Contact Us List"
   }
 }

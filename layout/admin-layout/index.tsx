@@ -40,7 +40,7 @@ export default function AdminLayout({ children }: Props) {
     },
     {
       name: t("contact_us"),
-      href: "/dashboard/contact_us",
+      href: "/dashboard/contact-us",
     },
     {
       name: t("our_info"),

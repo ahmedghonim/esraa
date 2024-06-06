@@ -76,6 +76,11 @@
     "tiktok": "تيك توك",
     "phone_number": "رقم الهاتف",
     "next": "التالي",
-    "previous": "السابق"
+    "previous": "السابق",
+    "send": "إرسال",
+    "Message sent successfully": "تم إرسال الرسالة بنجاح",
+    "success": "نجاح",
+    "read": "قراءة",
+    "contact_us_list:": "قائمة اتصل بنا"
   }
 }

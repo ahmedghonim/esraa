@@ -1,4 +1,4 @@
-"use sever";
+"use server";
 import { ZodError } from "zod";
 import { Contact, ContactSchema } from "@/schema";
 import prisma from "@/lib/prisma";
