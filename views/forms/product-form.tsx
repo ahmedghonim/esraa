@@ -196,7 +196,7 @@ const ProductForm = ({
 
           <FormSelect
             isMulti
-            options={color.map((item) => ({
+            options={color?.map((item) => ({
               value: item.id,
               label: item?.name,
             }))}
