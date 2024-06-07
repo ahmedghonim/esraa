@@ -1,30 +1,82 @@
-import { useState } from "react";
+import { Color, Product, Size } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 export interface TFilterState {
-  category: number;
+  category: number | null;
   min_price: number;
   max_price: number;
-  color: string[];
-  size: string[];
+  color: number[] | [];
+  size: number[] | [];
 }
 
 export const initialFiterState = {
-  category: "",
+  category: null,
   min_price: 500,
   max_price: 1500,
   color: [],
   size: [],
 };
 
-const useFilterActions = () => {
+const useFilterActions = (
+  data: Array<
+    Product & { sizes: Size[] } & { colors: Color[] } & {
+      price: number;
+      category: { id: number };
+    }
+  >
+) => {
   const [filterControler, setFilterControler] = useState(initialFiterState);
+
+  const [products, setProducts] = useState<
+    Array<
+      Product & { sizes: Size[] } & { colors: Color[] } & {
+        price: number;
+        category: { id: number };
+      }
+    >
+  >(data);
+
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  useEffect(() => {
+    if (searchValue !== "") {
+      setProducts(data.filter((product) => product.name.includes(searchValue)));
+    } else setProducts(data);
+  }, [searchValue]);
 
   /* ------------------------ */
   /*      On Apply Filter     */
   /* ------------------------ */
-  const onApplyFilter = () => {};
+  const onApplyFilter = () => {
+    const filteredProducts = data.filter((product) => {
+      return (
+        product.category?.id === filterControler.category ||
+        (product.price >= filterControler.min_price &&
+          product.price <= filterControler.max_price) ||
+        product.sizes.some((size) => filterControler.size.includes(size.id)) ||
+        product.colors.some((color) => filterControler.color.includes(color.id))
+      );
+    });
 
-  return { filterControler, setFilterControler, onApplyFilter };
+    setProducts(filteredProducts);
+  };
+
+  /* ------------------------ */
+  /*      On Apply Filter     */
+  /* ------------------------ */
+  const onResetFilter = () => {
+    setFilterControler(initialFiterState);
+    setProducts(data);
+  };
+
+  return {
+    filterControler,
+    products,
+    onResetFilter,
+    setSearchValue,
+    setFilterControler,
+    onApplyFilter,
+  };
 };
 
 export { useFilterActions };

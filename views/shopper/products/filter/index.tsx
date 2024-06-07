@@ -5,10 +5,7 @@ import Price from "./price";
 import Colors from "./colors";
 import Sizes from "./sizes";
 import { EsraButton } from "@/components/ui";
-import {
-  initialFiterState,
-  useFilterActions,
-} from "./helpers/useFilterActions";
+import { TFilterState, initialFiterState } from "./helpers/useFilterActions";
 import { Category, Collection, Color, Size } from "@prisma/client";
 
 type Props = {
@@ -16,13 +13,23 @@ type Props = {
   category: Category[];
   sizes: Size[];
   collection: Collection[];
+  filterControler: TFilterState;
+  setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
+  onApplyFilter: () => void;
+  onResetFilter: () => void;
 };
 export const FilterContext = createContext<any>(null);
 
-export default function Filter({ color, category, sizes, collection }: Props) {
-  const { filterControler, setFilterControler, onApplyFilter } =
-    useFilterActions();
-
+export default function Filter({
+  color,
+  category,
+  sizes,
+  collection,
+  filterControler,
+  setFilterControler,
+  onResetFilter,
+  onApplyFilter,
+}: Props) {
   return (
     <section className="lg:col-span-3 col-span-12 flex flex-col gap-4">
       <FilterContext.Provider
@@ -45,7 +52,7 @@ export default function Filter({ color, category, sizes, collection }: Props) {
         <EsraButton
           name="Reset"
           className="bg-transparent border-[2px] border-primary-100 py-2"
-          onClick={() => setFilterControler(initialFiterState)}
+          onClick={onResetFilter}
         />
       </FilterContext.Provider>
     </section>

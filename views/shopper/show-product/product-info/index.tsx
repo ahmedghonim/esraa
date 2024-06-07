@@ -1,11 +1,14 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import Favorite from "@/svg/favorite.svg";
 import Share from "@/svg/share.svg";
 import { ChangeProductCount, EsraButton } from "@/components/ui";
 import { Link } from "@/utils/navigation";
 import { Category, Color, Product, Size } from "@prisma/client";
 import { useTranslations } from "next-intl";
+import { CartContext, TCart } from "../../local-cart";
+import { TProduct } from "@/types";
+import { toast } from "@/components/ui/use-toast";
 
 interface Props extends Product {
   sizes: Size[];
@@ -13,6 +16,7 @@ interface Props extends Product {
   categories: Category[];
 }
 export default function ProductInfo({
+  id,
   price,
   categories,
   name,
@@ -21,6 +25,41 @@ export default function ProductInfo({
   colors,
 }: Props) {
   const t = useTranslations("common");
+
+  const { cart, setCart } = useContext<{
+    cart: TCart;
+    setCart: React.Dispatch<React.SetStateAction<TCart>>;
+  }>(CartContext as any);
+
+  const isItemSelected = () => {
+    return cart.items.some((item) => item.id === id);
+  };
+
+  const onAddToCart = () => {
+    if (isItemSelected(id)) {
+      const filteredCart = cart.items.filter((item) => item.id !== id);
+
+      setCart({ ...cart, items: filteredCart });
+      toast({
+        title: "Removed successfully",
+        description: "Product removed successfully",
+      });
+      return;
+    } else {
+      setCart({
+        ...cart,
+        items: [
+          ...cart.items,
+          { name, stoke, sizes, colors, qty: 1, selected_size: "M" },
+        ],
+      });
+      toast({
+        title: "Added successfully",
+        description: "Product added successfully",
+      });
+    }
+  };
+
   return (
     <div className="col-span-12 lg:col-span-6 flex flex-col ml-5 max-md:ml-0">
       <div className="flex flex-col mt-1.5 max-md:mt-8 max-md:max-w-full">

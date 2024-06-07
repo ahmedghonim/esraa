@@ -70,6 +70,7 @@ const CustomerSchema = z.object({
   email: z.string().email().optional(),
   orders: z.array(z.number()),
 });
+
 const SaleSliderSchema = z.object({
   id: z.number().int().optional(),
   hidden: z.boolean().optional(),
@@ -78,6 +79,7 @@ const SaleSliderSchema = z.object({
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 });
+
 const WhatTheSaySchema = z.object({
   id: z.number().int().optional(),
   hidden: z.boolean().optional(),
@@ -148,22 +150,44 @@ const OurInfoSchema = z.object({
   updatedAt: z.date().optional(),
 });
 
+const ConfirmOrderSchema = z.object({
+  id: z.number().optional(),
+  phone: z.string(),
+  email: z.string(),
+  name: z.string(),
+  address: z.string(),
+});
+
 type Contact = z.infer<typeof ContactSchema>;
+
 type OurInfo = z.infer<typeof OurInfoSchema>;
 
 type HeroSection = z.infer<typeof HeroSectionSchema>;
 
 type Signup = z.infer<typeof SignupSchema>;
+
 type UserLogin = z.infer<typeof UserLoginSchema>;
+
 type WhatTheSay = z.infer<typeof WhatTheSaySchema>;
+
 type SaleSlider = z.infer<typeof SaleSliderSchema>;
+
 type Product = z.infer<typeof ProductSchema>;
+
 type Color = z.infer<typeof ColorSchema>;
+
 type Category = z.infer<typeof CategorySchema>;
+
 type Size = z.infer<typeof SizeSchema>;
+
 type Collection = z.infer<typeof CollectionSchema>;
+
 type OrderProduct = z.infer<typeof OrderProductSchema>;
+
 type Order = z.infer<typeof OrderSchema>;
+
+type ConfirmOrder = z.infer<typeof ConfirmOrderSchema>;
+
 type Customer = z.infer<typeof CustomerSchema>;
 
 export {
@@ -181,6 +205,7 @@ export {
   HeroSectionSchema,
   ContactSchema,
   OurInfoSchema,
+  ConfirmOrderSchema,
   type Contact,
   type OurInfo,
   type Signup,
@@ -196,4 +221,5 @@ export {
   type Customer,
   type SaleSlider,
   type HeroSection,
+  type ConfirmOrder,
 };

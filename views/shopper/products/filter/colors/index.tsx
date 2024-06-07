@@ -20,7 +20,7 @@ export default function Colors({ color }: Props) {
   /* ------------------------ */
   /*    on filter by color    */
   /* ------------------------ */
-  const onSelectColor = (color: string) => {
+  const onSelectColor = (color: number) => {
     const isColorExist = filterControler.color.some(
       (choosed_color) => choosed_color === color
     );
@@ -50,12 +50,12 @@ export default function Colors({ color }: Props) {
             <span
               className="block h-9 w-9 mb-3 mx-auto"
               style={{ background: color.hexCode }}
-              onClick={() => onSelectColor(color.hexCode)}
+              onClick={() => onSelectColor(color.id)}
             />
             <span
               className={clsx("text-[#8A8989] font-Heebo block duration-300", {
                 "!text-primary-100 font-bold": filterControler.color.includes(
-                  color.hexCode
+                  color.id
                 ),
               })}
             >

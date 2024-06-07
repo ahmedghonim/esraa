@@ -64,7 +64,7 @@ export default function OurProducts({ data }: Props) {
             key={index}
             {...item}
             isSelected={isItemSelected(item.id)}
-            onAddToCart={() => onAddToCart(item)}
+            onAddToCart={() => onAddToCart(item as any)}
           />
         ))}
       </div>

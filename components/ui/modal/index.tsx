@@ -43,6 +43,7 @@ export function EsraModal({
       <DialogTrigger asChild>
         <button>{openTrigger}</button>
       </DialogTrigger>
+
       <DialogContent
         className={clsx(
           "sm:max-w-[425px] max-h-[90%] overflow-auto",
@@ -53,7 +54,9 @@ export function EsraModal({
           <DialogTitle>{modalTitle}</DialogTitle>
           <DialogDescription>{modalDescription}</DialogDescription>
         </DialogHeader>
+
         {children}
+
         <DialogFooter>
           <DialogClose asChild>
             <button type="button">Close</button>

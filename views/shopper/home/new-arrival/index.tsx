@@ -1,6 +1,7 @@
 "use client";
 import { ProductCard } from "@/components/ui";
 import EsraSectionTitle from "@/components/ui/section-title";
+import { useToast } from "@/components/ui/use-toast";
 import { TProduct } from "@/types";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { Color, Product, Size } from "@prisma/client";
@@ -11,24 +12,38 @@ type Props = {
 };
 
 export default function NewArrivals({ data }: Props) {
+  const { toast } = useToast();
+
   const { cart, setCart } = useContext<{
     cart: TCart;
     setCart: React.Dispatch<React.SetStateAction<TCart>>;
   }>(CartContext as any);
 
   const isItemSelected = (id: number) => {
-    return cart.items?.some((item) => item.id === id);
+    return cart.items.some((item) => item.id === id);
   };
 
-  const onAddToCart = (product: TProduct, isSelected: boolean) => {
-    if (isSelected) {
-      // toast info message that the product is selected
+  const onAddToCart = (product: TProduct) => {
+    if (isItemSelected(product.id)) {
+      const filteredCart = cart.items.filter((item) => item.id !== product.id);
+
+      setCart({ ...cart, items: filteredCart });
+      toast({
+        title: "Removed successfully",
+        description: "Product removed successfully",
+      });
       return;
+    } else {
+      setCart({
+        ...cart,
+        items: [...cart.items, { ...product, qty: 1, selected_size: "M" }],
+      });
+      toast({
+        title: "Added successfully",
+        description: "Product added successfully",
+      });
     }
-
-    setCart({ ...cart, items: [...cart.items, product] });
   };
-
   return (
     <section className="flex flex-col font-bold leading-[150%] md:mt-[45px] mt-7">
       <EsraSectionTitle title="New Arrival" href="" />
@@ -37,8 +52,8 @@ export default function NewArrivals({ data }: Props) {
           <ProductCard
             {...item}
             key={item.id}
-            isSelected={isItemSelected(0)}
-            onAddToCart={() => onAddToCart(item, isItemSelected(0))}
+            isSelected={isItemSelected(item.id)}
+            onAddToCart={() => onAddToCart(item as any)}
           />
         ))}
       </div>

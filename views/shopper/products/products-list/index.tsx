@@ -1,8 +1,8 @@
 "use client";
+
 import {
   EsraButton,
   EsraInput,
-  EsraPagination,
   EsraSelect,
   ProductCard,
 } from "@/components/ui";
@@ -11,11 +11,16 @@ import Search from "@/svg/search.svg";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { TProduct } from "@/types";
 import { Color, Product, Size } from "@prisma/client";
+import { useToast } from "@/components/ui/use-toast";
+
 type Props = {
   data: Array<Product & { sizes: Size[] } & { colors: Color[] }>;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function ProductsList({ data }: Props) {
+export default function ProductsList({ data, setSearchValue }: Props) {
+  const { toast } = useToast();
+
   const { cart, setCart } = useContext<{
     cart: TCart;
     setCart: React.Dispatch<React.SetStateAction<TCart>>;
@@ -25,16 +30,27 @@ export default function ProductsList({ data }: Props) {
     return cart.items.some((item) => item.id === id);
   };
 
-  const onAddToCart = (product: TProduct, isSelected: boolean) => {
-    if (isSelected) {
-      // toast info message that the product is selected
+  const onAddToCart = (product: TProduct) => {
+    if (isItemSelected(product.id)) {
+      const filteredCart = cart.items.filter((item) => item.id !== product.id);
+
+      setCart({ ...cart, items: filteredCart });
+      toast({
+        title: "Removed successfully",
+        description: "Product removed successfully",
+      });
       return;
+    } else {
+      setCart({
+        ...cart,
+        items: [...cart.items, { ...product, qty: 1, selected_size: "M" }],
+      });
+      toast({
+        title: "Added successfully",
+        description: "Product added successfully",
+      });
     }
-
-    setCart({ ...cart, items: [...cart.items, product] });
   };
-
-  const searchResult = 5;
 
   const options = [
     { label: "Test Option", value: "1" },
@@ -51,6 +67,7 @@ export default function ProductsList({ data }: Props) {
           placeholder="Search for any product"
           startContent={<Search />}
           wrapperClassName="!flex-1"
+          onChange={(e) => setSearchValue(e.target.value)}
         />
 
         <EsraButton name="Search" className="text-white w-[150px] p-2" />
@@ -60,7 +77,7 @@ export default function ProductsList({ data }: Props) {
       <div className="flex justify-between items-center my-6">
         <div className="text-lg">
           <span className="text-primary-300">Search Results:</span>{" "}
-          <span className="font-bold text-primary-700">{searchResult}</span>
+          <span className="font-bold text-primary-700">{data?.length}</span>
         </div>
 
         <div>
@@ -70,17 +87,15 @@ export default function ProductsList({ data }: Props) {
 
       {/* products list */}
       <div className="grid md:grid-cols-3 gap-5 mt-[14px] mb-8">
-        {data.map((item, index) => (
+        {data.map((item) => (
           <ProductCard
             key={item.id}
             {...item}
-            isSelected={isItemSelected(0)}
-            onAddToCart={() => onAddToCart(item, isItemSelected(0))}
+            isSelected={isItemSelected(item.id)}
+            onAddToCart={() => onAddToCart(item as any)}
           />
         ))}
       </div>
-
-      <EsraPagination pagesCount={5} page={1} setPage={() => {}} />
     </section>
   );
 }
