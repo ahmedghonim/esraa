@@ -1,34 +1,27 @@
+"use server";
 import prisma from "@/lib/prisma";
-import { Customer, CustomerSchema } from "@/schema";
+import { CustomerSchema, CustomerType } from "@/schema";
 
 import { ZodError } from "zod";
 
 // Create or update customer
-const upsertCustomer = async (data: Customer) => {
+const upsertCustomer = async (data: CustomerType) => {
   try {
     const validatedData = CustomerSchema.parse(data);
-
-    if (validatedData.id) {
+    const isCustomerExist = await prisma.customer.findUnique({
+      where: { phone: validatedData.phone },
+    });
+    if (isCustomerExist) {
       return await prisma.customer.update({
-        where: { id: validatedData.id },
+        where: { phone: validatedData.phone },
         data: {
           ...validatedData,
-          orders: {
-            connect: validatedData.orders.map((id) => ({
-              id,
-            })),
-          },
         },
       });
     } else {
       return await prisma.customer.create({
         data: {
           ...validatedData,
-          orders: {
-            connect: validatedData.orders.map((id) => ({
-              id,
-            })),
-          },
         },
       });
     }

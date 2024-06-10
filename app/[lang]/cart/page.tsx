@@ -4,5 +4,5 @@ import React from "react";
 type Props = {};
 
 export default function CartPage({}: Props) {
-  return <Cart />;
+  return <Cart sapping={25} />;
 }

@@ -13,6 +13,7 @@ import {
 
 import clsx from "clsx";
 import { EsraButton } from "../esra_button";
+import { useTranslations } from "next-intl";
 
 interface Props {
   open: boolean;
@@ -23,7 +24,7 @@ interface Props {
   confirmClassName?: string;
   submitText?: string;
   modalClassName?: string;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   onOpenChange?: () => void;
 }
 export function EsraModal({
@@ -38,6 +39,7 @@ export function EsraModal({
   onConfirm,
   onOpenChange,
 }: Props) {
+  const t = useTranslations("common");
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
@@ -59,14 +61,15 @@ export function EsraModal({
 
         <DialogFooter>
           <DialogClose asChild>
-            <button type="button">Close</button>
+            <button type="button">{t("close")}</button>
           </DialogClose>
-
-          <EsraButton
-            name={submitText as string}
-            className={`py-2 text-center w-[100px] text-white !ms-4 ${confirmClassName}`}
-            onClick={onConfirm}
-          />
+          {onConfirm && (
+            <EsraButton
+              name={submitText as string}
+              className={`py-2 text-center w-[100px] text-white !ms-4 ${confirmClassName}`}
+              onClick={onConfirm}
+            />
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,45 +1,35 @@
+import { CustomerType, Order, OrderProduct } from "@/schema";
 import { TProduct } from "@/types";
 import { Link } from "@/utils/navigation";
 import React from "react";
 
 interface Props {
-  name: string;
-  phone: string;
-  address: string;
-  price: number;
-  products: TProduct[];
-  index: number;
+  data: any;
 }
 
-export default function OrderRow({
-  name,
-  phone,
-  address,
-  price,
-  products,
-  index,
-}: Props) {
+export default function OrderRow({ data }: Props) {
   return (
     <>
-      <td className="py-4 text-center">{index + 1}</td>
-      <td className="py-4 text-center">{name}</td>
+      <td className="py-4 text-center w-[10px]">{data.id}</td>
+      <td className="py-4 text-center w-[110px]">{data.customer.name}</td>
 
-      <td className="py-4 text-center">
-        <Link href={`tel:${phone}`}>{phone}</Link>
+      <td className="py-4 text-center w-[110px]">
+        <Link href={`tel:${data.customer.phone}`}>{data.customer.phone}</Link>
       </td>
 
       <td className="text-primary-100 font-medium py-4 text-center ">
-        <address>{address}</address>
+        <address>{data.customer.address}</address>
       </td>
 
-      <td className="text-primary-100 font-medium py-4 text-center ">
-        {products.map((product, index, arr) =>
-          index < arr.length - 1 ? ` ${product.name} - ` : product.name
+      <td className="text-primary-100 font-medium py-4 ">
+        {data.products.map(
+          ({ product, size, quantity, color }: any, index: any, arr: any) => (
+            <span key={product.id}>
+              ({product.price}){product.name} - {quantity} - {size} - {color}
+              {index !== arr.length - 1 && <br />}
+            </span>
+          )
         )}
-      </td>
-
-      <td className="text-primary-100 font-medium py-4 text-center ">
-        {Number(price).toLocaleString()} LE
       </td>
     </>
   );

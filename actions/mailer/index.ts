@@ -7,7 +7,7 @@ export async function onMailer({
   subject,
   html,
 }: {
-  email: string;
+  email?: string;
   subject: string;
   html: string;
 }) {

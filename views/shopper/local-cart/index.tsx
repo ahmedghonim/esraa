@@ -56,7 +56,7 @@ export default function LocalCart({ children }: Props) {
         0
       );
 
-      setCart({...cart,subTotal,total:subTotal-cart.shipping})
+      setCart({ ...cart, subTotal, total: +subTotal - cart.shipping });
     }
   }, [cart.items]);
 

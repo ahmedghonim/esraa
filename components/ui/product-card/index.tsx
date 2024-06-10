@@ -48,9 +48,6 @@ export function ProductCard({ id, name, price, colors, thumbnail }: Props) {
           href={`/products/${id}`}
           className="w-full bg-primary-200 text-white"
         />
-        <button className="flex justify-center items-center p-2 bg-[#7397273D] h-[38px] w-[38px]">
-          <Favorite />
-        </button>
       </div>
     </div>
   );

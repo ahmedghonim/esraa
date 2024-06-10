@@ -83,6 +83,13 @@
     "read": "قراءة",
     "contact_us_list:": "قائمة اتصل بنا",
     "log_out": "تسجيل الخروج",
-    "login": "تسجيل الدخول"
+    "login": "تسجيل الدخول",
+    "order_now": "اطلب الآن",
+    "grand_total": "المجموع الكلي",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "action": "أجراء",
+    "qty": "الكمية",
+    "order_placed_successfully": "تم تقديم الطلب بنجاح"
   }
 }

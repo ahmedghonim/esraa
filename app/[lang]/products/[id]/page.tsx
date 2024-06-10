@@ -13,6 +13,7 @@ export async function generateMetadata({
   };
 }) {
   const data = await getProductById(+id);
+
   return {
     title: data?.name || "Esra Modest Wear",
     description: data?.description || "Esra Modest Wear",

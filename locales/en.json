@@ -87,6 +87,13 @@
     "read": "Read",
     "contact_us_list:": "Contact Us List",
     "log_out": "Log Out",
-    "login": "Login"
+    "login": "Login",
+    "order_now": "Order Now",
+    "grand_total": "Grand Total",
+    "subtotal": "Sub total",
+    "shipping": "Shipping",
+    "action": "Action",
+    "qty": "Qty",
+    "order_placed_successfully": "Order Placed Successfully"
   }
 }

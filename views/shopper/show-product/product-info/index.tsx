@@ -145,10 +145,6 @@ export default function ProductInfo({ product }: Props) {
             className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
             onClick={() => onAddToCart(product)}
           />
-
-          {/* <button className="flex justify-center items-center p-2 bg-[#7397273D] h-[38px] w-[38px]">
-            <Favorite />
-          </button> */}
         </div>
       </div>
     </div>

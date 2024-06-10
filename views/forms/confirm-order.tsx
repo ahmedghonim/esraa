@@ -1,20 +1,26 @@
 "use client";
+import { upsertCustomer } from "@/actions/customer";
 import { createOrder } from "@/actions/order";
 import { EsraButton } from "@/components/ui";
 import { Form } from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormTextArea from "@/components/ui/form-textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { ConfirmOrderSchema } from "@/schema";
+import { CustomerSchema, CustomerType, Order, OrderProduct } from "@/schema";
+
 import { useRouter } from "@/utils/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Customer } from "@prisma/client";
 import { useTranslations } from "next-intl";
 import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { useCartActions } from "../shopper/cart/helpers/useCartActions";
+import { onMailer } from "@/actions/mailer";
 
 type Props = {};
 
 export default function ConfirmOrder({}: Props) {
+  const { cart, setCart } = useCartActions();
   const { toast } = useToast();
 
   const t = useTranslations("common");
@@ -23,20 +29,57 @@ export default function ConfirmOrder({}: Props) {
 
   const [isPending, startTransaction] = useTransition();
 
-  const form = useForm<{}>({
-    resolver: zodResolver(ConfirmOrderSchema),
+  const form = useForm<CustomerType>({
+    resolver: zodResolver(CustomerSchema),
   });
 
-  const onSubmit = async (values: ConfirmOrder) => {
+  const onSubmit = (values: CustomerType) => {
     startTransaction(() => {
-      createOrder(values)
-        .then(() => {
-          toast({
-            title: t("success"),
-            description: t("Message sent successfully"),
-          });
-          router.refresh();
-          form.reset();
+      upsertCustomer(values)
+        .then((customer: Customer) => {
+          const products: OrderProduct[] = cart.items.map((item) => ({
+            productId: +item.id,
+            quantity: +item.qty,
+            size: item.selected_size.name,
+            color: item.selected_color.name,
+          }));
+          createOrder({
+            customerId: customer.id,
+            products,
+          })
+            .then((order: any) => {
+              toast({
+                title: t("success"),
+                description: t("order_placed_successfully"),
+              });
+              onMailer({
+                email: customer?.email!,
+                subject: "Order Confirmation",
+                html: `
+                  <h1>Order Confirmation</h1>
+                  <p>Dear ${customer.name},</p>
+                  <p>Your order with ID ${order.id} has been placed successfully.</p>
+                  <p>Thank you for shopping with us!</p>
+                `,
+              });
+
+              onMailer({
+                subject: "You have a new order",
+                html: `
+                  <h1>New Order</h1>
+                  <p>Order ID: ${order.id}</p>
+                  <p>Customer: ${customer.name}</p>
+                  <p>Email: ${customer.email}</p>
+                  <p>Phone: ${customer.phone}</p>
+                  <p>Address: ${customer.address}</p>
+                `,
+              });
+            })
+            .catch((error) => {
+              toast({
+                title: t("error"),
+              });
+            });
         })
         .catch((error) => {
           toast({
@@ -44,6 +87,21 @@ export default function ConfirmOrder({}: Props) {
             description: error.message,
           });
         });
+      // createOrder({ ...customer, items: cart.items })
+      // .then(() => {
+      //   toast({
+      //     title: t("success"),
+      //     description: t("order_placed_successfully"),
+      //   });
+      //   router.refresh();
+      //   form.reset();
+      // })
+      // .catch((error) => {
+      //   toast({
+      //     title: t("error"),
+      //     description: error.message,
+      //   });
+      // });
     });
   };
 
@@ -57,6 +115,13 @@ export default function ConfirmOrder({}: Props) {
         <FormInput form={form} name="email" label={t("email")} type="email" />
       </div>
       <FormTextArea form={form} name="address" label={t("address")} />
+
+      <EsraButton
+        name={t("order_now")}
+        className="w-full p-2 text-white"
+        onClick={form.handleSubmit(onSubmit)}
+        isLoading={isPending}
+      />
     </Form>
   );
 }

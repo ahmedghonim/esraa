@@ -1,17 +1,13 @@
+"use server";
 import prisma from "@/lib/prisma";
-import { Order, OrderSchema } from "@/schema";
+import { Order, OrderProduct, OrderSchema } from "@/schema";
 
 import { ZodError } from "zod";
 
 // Create order-product relationships
 const createOrderProduct = async (
   orderId: number,
-  products: {
-    productId: number;
-    quantity: number;
-    size: string;
-    color: string;
-  }[]
+  products: OrderProduct[]
 ) => {
   const orderProducts = products.map((product) => ({
     orderId,
@@ -29,24 +25,19 @@ const createOrderProduct = async (
 // Create or update order
 const createOrder = async (data: Order) => {
   try {
+    console.log("data >>>> ", data);
     const validatedData = OrderSchema.parse(data);
 
     // Create the order first without products
     const createdOrder = await prisma.order.create({
       data: {
         customerId: validatedData.customerId,
-        orderDate: validatedData.orderDate,
       },
     });
 
     // Ensure that products array is defined and correctly typed
     if (validatedData.products) {
-      const products = validatedData?.products.map((product) => ({
-        productId: product.productId,
-        quantity: product.quantity || 1,
-        size: product.size,
-        color: product.color,
-      }));
+      const products = validatedData?.products;
 
       // Create order products
       await createOrderProduct(createdOrder.id, products);
@@ -102,7 +93,12 @@ const getAllOrders = async () => {
   try {
     return await prisma.order.findMany({
       include: {
-        products: true,
+        products: {
+          include: {
+            product: true,
+          },
+        },
+        customer: true,
       },
     });
   } catch (error) {

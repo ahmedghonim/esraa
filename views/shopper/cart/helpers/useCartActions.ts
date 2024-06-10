@@ -46,7 +46,7 @@ const useCartActions = () => {
     setCart({ ...cart, items: updatedItems });
   };
 
-  return { onDeleteItem, onChangeQty, cart };
+  return { onDeleteItem, onChangeQty, cart, setCart };
 };
 
 export { useCartActions };

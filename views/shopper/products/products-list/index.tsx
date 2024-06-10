@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  EsraButton,
-  EsraInput,
-  EsraSelect,
-  ProductCard,
-} from "@/components/ui";
+import { EsraButton, EsraInput, ProductCard } from "@/components/ui";
 import React, { useContext } from "react";
 import Search from "@/svg/search.svg";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
@@ -52,17 +47,10 @@ export default function ProductsList({ data, setSearchValue }: Props) {
     }
   };
 
-  const options = [
-    { label: "Test Option", value: "1" },
-    { label: "Test Option", value: "2" },
-    { label: "Test Option", value: "3" },
-    { label: "Test Option", value: "4" },
-  ];
-
   return (
     <section className="lg:col-span-9 col-span-12">
       {/* search */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-2">
         <EsraInput
           placeholder="Search for any product"
           startContent={<Search />}
@@ -78,10 +66,6 @@ export default function ProductsList({ data, setSearchValue }: Props) {
         <div className="text-lg">
           <span className="text-primary-300">Search Results:</span>{" "}
           <span className="font-bold text-primary-700">{data?.length}</span>
-        </div>
-
-        <div>
-          <EsraSelect options={options} placeholder="Sort By" />
         </div>
       </div>
 
