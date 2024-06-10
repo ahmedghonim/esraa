@@ -5,6 +5,7 @@ import { TFilterState } from "../helpers/useFilterActions";
 import { FilterContext } from "..";
 import clsx from "clsx";
 import { Size } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
 interface Props {
   sizes: Size[];
@@ -23,6 +24,8 @@ export const sizesData = [
 ];
 
 export default function Sizes({ sizes }: Props) {
+  const t = useTranslations("common");
+
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
@@ -54,7 +57,7 @@ export default function Sizes({ sizes }: Props) {
   };
 
   return (
-    <CollapseCard title={"Sizes"}>
+    <CollapseCard title={t("sizes")}>
       <div className="grid grid-cols-3 gap-4">
         {sizes.map((size, index) => (
           <button

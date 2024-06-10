@@ -134,7 +134,7 @@ export default function IntroSection({ data }: Props) {
 
             <EsraLink
               href="/products"
-              name={"Shop Now"}
+              name={t("shop_now")}
               className="p-2 mt-4 text-base font-bold leading-6 text-white capitalize bg-primary-100 max-md:px-5 w-[154px] h-10"
             />
           </div>

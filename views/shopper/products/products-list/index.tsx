@@ -44,7 +44,7 @@ export default function ProductsList({ data, setSearchValue }: Props) {
       {/* search */}
       <div className="flex justify-between items-center gap-2">
         <EsraInput
-          placeholder="Search for any product"
+          placeholder={t("search_placeholder")}
           startContent={<Search />}
           wrapperClassName="!flex-1"
           onChange={(e) => setSearchValue(e.target.value)}

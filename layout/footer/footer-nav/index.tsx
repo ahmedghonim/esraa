@@ -7,6 +7,7 @@ import React, { useEffect } from "react";
 
 export default function FooterNav() {
   const t = useTranslations("common");
+
   const [category, setCategory] = React.useState<Category[]>();
   useEffect(() => {
     getAllCategories({}).then((data) => {

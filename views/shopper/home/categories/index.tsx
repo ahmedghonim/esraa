@@ -1,6 +1,7 @@
 import EsraSectionTitle from "@/components/ui/section-title";
 import { Category } from "@/schema";
 import { Link } from "@/utils/navigation";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
 
@@ -9,9 +10,11 @@ type Props = {
 };
 
 export default function Categories({ data }: Props) {
+  const t = useTranslations("common");
+
   return (
     <section className="flex flex-col font-bold leading-[150%] mt-[45px]">
-      <EsraSectionTitle title="Top Categories" href="" />
+      <EsraSectionTitle title={t("top_categories")} href="" />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5 mt-[14px]">
         {data.map((item, index) => (
           <Link

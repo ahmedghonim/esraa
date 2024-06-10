@@ -6,19 +6,22 @@ import { FilterContext } from "..";
 import clsx from "clsx";
 import { TFilterState } from "../helpers/useFilterActions";
 import { Category } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
 type Props = {
   category: Category[];
 };
 
 export default function Categories({ category }: Props) {
+  const t = useTranslations("common");
+
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
   }>(FilterContext);
 
   return (
-    <CollapseCard title={"Categories"}>
+    <CollapseCard title={t("categories")}>
       {category?.map((category) => (
         <button
           key={category.id}

@@ -3,9 +3,12 @@ import CustomerSupportIcon from "@/svg/customer-support.svg";
 import FreeShipping from "@/svg/free-shipping.svg";
 import MoneyBack from "@/svg/money-back.svg";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 type Props = {};
 
 export default function CustomerSupport({}: Props) {
+  const t = useTranslations("common");
+
   return (
     <section className="flex justify-center items-center md:py-8 p-6 pb-10 bg-primary-100 mt-[45px]">
       <div className="w-full max-w-[884px] max-md:max-w-full">
@@ -24,10 +27,10 @@ export default function CustomerSupport({}: Props) {
                 <CustomerSupportIcon />
                 <div className="flex flex-col justify-center self-start mt-2">
                   <h1 className="md:text-2xl text-base text-center font-bold leading-7 text-white">
-                    24/7 Customer Support
+                    {t("customer_support")}
                   </h1>
                   <span className="mt-2 md:text-base text-sm leading-5 text-center text-neutral-200 font-Heebo">
-                    Friendly 24/7 Customer Support
+                    {t("customer_support_desc")}
                   </span>
                 </div>
               </div>
@@ -35,10 +38,10 @@ export default function CustomerSupport({}: Props) {
                 <MoneyBack />
                 <div className="flex flex-col justify-center my-auto">
                   <h1 className="md:text-2xl text-base font-bold leading-7 text-white">
-                    MONEY BACK GUARANTEE
+                    {t("money_back")}
                   </h1>
                   <span className="mt-2 md:text-base text-sm leading-5 text-center text-neutral-200 font-Heebo">
-                    We Return your Money Within 7 Days
+                    {t("money_back_desc")}
                   </span>
                 </div>
               </div>
@@ -47,10 +50,10 @@ export default function CustomerSupport({}: Props) {
                 <FreeShipping />
                 <div className="flex flex-col justify-center my-auto">
                   <h1 className="md:text-2xl text-base font-bold leading-7 text-white">
-                    FREE AND FAST DELIVERY
+                    {t("free_delivery")}
                   </h1>
                   <span className="mt-2 md:text-base text-sm leading-5 text-center text-neutral-200 font-Heebo">
-                    Free delivery for all orders over 10000 LE
+                    {t("free_delivery_desc")}
                   </span>
                 </div>
               </div>

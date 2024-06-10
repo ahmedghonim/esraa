@@ -47,18 +47,32 @@ const useFilterActions = (
   /* ------------------------ */
   /*      On Apply Filter     */
   /* ------------------------ */
+
   const onApplyFilter = () => {
     const filteredProducts = data.filter((product) => {
       return (
-        product.category?.id === filterControler.category ||
-        (product.price >= filterControler.min_price &&
-          product.price <= filterControler.max_price) ||
-        product.sizes.some((size) =>
-          filterControler.size.includes(size.id as never)
-        ) ||
-        product.colors.some((color) =>
-          filterControler.color.includes(color.id as never)
-        )
+        // categories check
+        (filterControler.category
+          ? product.categories.some(
+              (category) => category.id === filterControler.category
+            )
+          : true) &&
+        // min price check
+        product.price >= filterControler.min_price &&
+        // max price check
+        product.price <= filterControler.max_price &&
+        // // size check
+        (filterControler.size.length > 0
+          ? product.sizes.some((size) =>
+              filterControler.size.includes(size.id as never)
+            )
+          : true) &&
+        // // color check
+        (filterControler.color.length > 0
+          ? product.colors.some((color) =>
+              filterControler.color.includes(color.id as never)
+            )
+          : true)
       );
     });
 

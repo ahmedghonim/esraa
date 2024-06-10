@@ -146,7 +146,9 @@ export default function ProductInfo({ product }: Props) {
         <div className="flex gap-3.5 mt-3">
           <EsraButton
             name={
-              isItemSelected(product.id) ? "Remove From Cart" : "Add To Cart"
+              isItemSelected(product.id)
+                ? t("remove_from_cart")
+                : t("add_to_cart")
             }
             disabled={product.stoke === 0}
             className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"

@@ -30,7 +30,7 @@ export default function WhatsAppAndSocialMedia() {
               target="_blank"
               className="flex gap-2 justify-end mt-7"
             >
-              <span>Whatsapp</span>
+              <span>{t("whatsApp")}</span>
               <TopRight />
             </Link>
           </div>
