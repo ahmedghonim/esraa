@@ -7,15 +7,13 @@ import { getOurInfo } from "@/actions/our-info";
 import { OurInfo } from "@/schema";
 import { useTranslations } from "next-intl";
 
-type Props = {};
-
-export default function WhatsAppAndSocialMedia({}: Props) {
+export default function WhatsAppAndSocialMedia() {
   const t = useTranslations("common");
 
   const [info, setInfo] = React.useState<any>();
   useEffect(() => {
     getOurInfo().then((data) => {
-      setInfo(data as OurInfo);
+      setInfo(data as any);
     });
   }, []);
   return (

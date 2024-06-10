@@ -33,11 +33,11 @@ export default function Sizes({ sizes }: Props) {
   /* ------------------------*/
   const onSelectSize = (size: string) => {
     const isSizeExist = filterControler.size.some(
-      (choosed_size) => choosed_size === size
+      (choosed_size) => choosed_size === (size as never)
     );
     if (isSizeExist) {
       const filteredSizes = filterControler.size.filter(
-        (choosed_size) => choosed_size !== size
+        (choosed_size) => choosed_size !== (size as never)
       );
       setFilterControler({
         ...filterControler,
@@ -49,7 +49,7 @@ export default function Sizes({ sizes }: Props) {
 
     setFilterControler({
       ...filterControler,
-      size: [...filterControler.size, size],
+      size: [...(filterControler.size as never), size],
     });
   };
 
@@ -63,7 +63,7 @@ export default function Sizes({ sizes }: Props) {
               "uppercase border-[1px] border-secondary-600  py-1 text-primary-300 duration-300",
               {
                 "bg-primary-100 text-white font-bold":
-                  filterControler.size.includes(size.name),
+                  filterControler.size.includes(size.name as never),
               }
             )}
             onClick={() => onSelectSize(size.name)}

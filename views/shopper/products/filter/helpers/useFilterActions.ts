@@ -53,8 +53,12 @@ const useFilterActions = (
         product.category?.id === filterControler.category ||
         (product.price >= filterControler.min_price &&
           product.price <= filterControler.max_price) ||
-        product.sizes.some((size) => filterControler.size.includes(size.id)) ||
-        product.colors.some((color) => filterControler.color.includes(color.id))
+        product.sizes.some((size) =>
+          filterControler.size.includes(size.id as never)
+        ) ||
+        product.colors.some((color) =>
+          filterControler.color.includes(color.id as never)
+        )
       );
     });
 

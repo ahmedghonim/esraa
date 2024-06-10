@@ -43,7 +43,7 @@ export default function CartTotal({ cart }: Props) {
         modalTitle={"Confirm Order"}
         openTrigger={
           <EsraButton
-            name="Complete Order"
+            name={t("complete_order")}
             className="w-full justify-center items-center p-2 mt-5 text-base font-bold leading-6 text-white capitalize bg-primary-100"
           />
         }

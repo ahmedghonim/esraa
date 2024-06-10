@@ -34,7 +34,10 @@ export default function SimilarProducts({ data }: { data: Product[] }) {
     } else {
       setCart({
         ...cart,
-        items: [...cart.items, { ...product, qty: 1, selected_size: "M" }],
+        items: [
+          ...(cart.items as any),
+          { ...product, qty: 1, selected_size: "M" },
+        ],
       });
       toast({
         title: "Added successfully",

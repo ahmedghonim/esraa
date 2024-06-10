@@ -55,7 +55,7 @@ export default function Colors({ color }: Props) {
             <span
               className={clsx("text-[#8A8989] font-Heebo block duration-300", {
                 "!text-primary-100 font-bold": filterControler.color.includes(
-                  color.id
+                  color.id as never
                 ),
               })}
             >

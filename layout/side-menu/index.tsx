@@ -14,7 +14,7 @@ export default function SideMenu({}: Props) {
   const [info, setInfo] = React.useState<any>();
   useEffect(() => {
     getOurInfo().then((data) => {
-      setInfo(data as OurInfo);
+      setInfo(data as any);
     });
   }, []);
   return (

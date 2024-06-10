@@ -15,7 +15,7 @@ const useProductsActions = () => {
   /*  Apply Product Actions  */
   /* ------------------------ */
   const onEditProduct = (product: TCategory) => {
-    setEditControler(product);
+    setEditControler(product as any);
     setOpen(true);
   };
 

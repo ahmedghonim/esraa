@@ -8,26 +8,19 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import React from "react";
 
-export async function generateMetadata(
-  {
-    params: { lang },
-  }: {
-    params: { lang: string };
-  },
-  cookieLang: string | undefined
-): Promise<Metadata> {
+export async function generateMetadata({
+  params: { lang },
+}: {
+  params: { lang: string };
+}): Promise<Metadata> {
   const t = await getTranslations("common");
   return {
     title: t("products"),
-    // description: t("description"),
-    // keywords: t("keywords"),
     authors: [{ name: "esramodestwear" }],
     applicationName: "esramodestwear",
     metadataBase: new URL("https://www.esramodestwear.com"),
     alternates: {
-      canonical: `${
-        cookieLang ? "/" + (lang === "en" ? "en/products" : ``) : "products"
-      }`,
+      canonical: `${lang === "en" ? "en/products" : "products"}`,
       languages: {
         en: "/en/products",
         "en-US": "/en/products",
