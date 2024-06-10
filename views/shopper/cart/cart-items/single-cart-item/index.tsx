@@ -6,8 +6,8 @@ import { ChangeProductCount, EsraAlertDialog } from "@/components/ui";
 interface Props {
   thumbnail: string;
   name: string;
-  selected_size: string;
-  color: string;
+  selected_size: { id: number; name: string };
+  selected_color: { id: number; hexCode: string; name: string };
   qty: number;
   price: number;
   onDeleteItem: () => void;
@@ -19,7 +19,7 @@ export default function SingleCartItem({
   thumbnail,
   name,
   selected_size,
-  color,
+  selected_color,
   qty,
   price,
   onIncrease,
@@ -37,11 +37,11 @@ export default function SingleCartItem({
             </span>
             <div className="flex gap-3 mt-2.5 text-base  text-neutral-500">
               <span className="grid place-items-center border border-solid border-stone-300 px-5">
-                {selected_size}
+                {selected_size.name}
               </span>
               <div
                 className="shrink-0  h-[37px] w-[37px]"
-                style={{ background: color }}
+                style={{ background: selected_color?.hexCode || "" }}
               />
             </div>
           </div>

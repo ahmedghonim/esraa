@@ -61,7 +61,9 @@ export default function IntroSection({ data }: Props) {
             <div className="flex gap-5 justify-between w-full font-medium max-md:flex-wrap max-md:max-w-full">
               <div className="text-lg tracking-tight leading-7 text-zinc-800">
                 <span className="text-2xl text-zinc-800">
-                  0{activeSlide + 1}
+                  {activeSlide + 1 >= 10
+                    ? activeSlide + 1
+                    : `0${activeSlide + 1 || 0}`}
                 </span>
                 <span className="text-zinc-800">
                   /0{data?.products?.length}

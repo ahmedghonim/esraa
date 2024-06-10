@@ -1,63 +1,61 @@
 "use client";
-import React, { useContext } from "react";
-import Favorite from "@/svg/favorite.svg";
-import Share from "@/svg/share.svg";
+import React from "react";
 import { ChangeProductCount, EsraButton } from "@/components/ui";
-import { Link } from "@/utils/navigation";
-import { Category, Color, Product, Size } from "@prisma/client";
 import { useTranslations } from "next-intl";
-import { CartContext, TCart } from "../../local-cart";
+import { useShowProductActions } from "../helpers/useShowProductActions";
 import { TProduct } from "@/types";
-import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 
-interface Props extends Product {
-  sizes: Size[];
-  colors: Color[];
-  categories: Category[];
+interface Props {
+  product: TProduct;
 }
-export default function ProductInfo({
-  id,
-  price,
-  categories,
-  name,
-  stoke,
-  sizes,
-  colors,
-}: Props) {
+export default function ProductInfo({ product }: Props) {
   const t = useTranslations("common");
 
-  const { cart, setCart } = useContext<{
-    cart: TCart;
-    setCart: React.Dispatch<React.SetStateAction<TCart>>;
-  }>(CartContext as any);
+  const { toast } = useToast();
 
-  const isItemSelected = () => {
-    return cart.items.some((item) => item.id === id);
+  const {
+    onAddToCart,
+    onChangeQty,
+    isItemSelected,
+    setProductControler,
+    productControler,
+  } = useShowProductActions();
+
+  const onChangeProductQtyWithoutCart = (type: "inc" | "dec") => {
+    if (type === "dec") {
+      productControler.qty > 1 &&
+        setProductControler({
+          ...productControler,
+          qty: productControler.qty - 1,
+        });
+    } else
+      setProductControler({
+        ...productControler,
+        qty: productControler.qty + 1,
+      });
   };
 
-  const onAddToCart = () => {
-    if (isItemSelected(id)) {
-      const filteredCart = cart.items.filter((item) => item.id !== id);
-
-      setCart({ ...cart, items: filteredCart });
-      toast({
-        title: "Removed successfully",
-        description: "Product removed successfully",
-      });
-      return;
-    } else {
-      setCart({
-        ...cart,
-        items: [
-          ...cart.items,
-          { name, stoke, sizes, colors, qty: 1, selected_size: "M" },
-        ],
-      });
-      toast({
-        title: "Added successfully",
-        description: "Product added successfully",
+  const onChangeProductQty = (id: number, type: "inc" | "dec") => {
+    if (!productControler.color) {
+      return toast({
+        title: "Select The Color",
+        description: "Please Select The Product Color",
       });
     }
+
+    if (!productControler.size) {
+      return toast({
+        title: "Select The Size",
+        description: "Please Select The Product Size",
+      });
+    }
+
+    if (isItemSelected(id)) {
+      onChangeQty(id, type);
+      onChangeProductQtyWithoutCart(type);
+    } else onChangeProductQtyWithoutCart(type);
   };
 
   return (
@@ -65,7 +63,7 @@ export default function ProductInfo({
       <div className="flex flex-col mt-1.5 max-md:mt-8 max-md:max-w-full">
         {/* Main Information */}
         <h1 className="text-lg font-medium text-green-600 max-md:max-w-full">
-          {t("stoke")} {stoke}
+          {t("stoke")} {product.stoke}
         </h1>
         <div className="flex gap-5 justify-between mt-2 w-full font-medium text-primary-100 max-md:flex-wrap max-md:max-w-full">
           <div className="my-auto text-lg">
@@ -73,16 +71,16 @@ export default function ProductInfo({
               {t("home")} / {t("products")} /{" "}
             </span>
             <span className="text-3xl text-primary-100">
-              {categories[0].name}
+              {product.categories[0].name}
             </span>
           </div>
           <div className="flex gap-2 justify-between text-3xl text-right whitespace-nowrap">
-            <div>{price}</div>
+            <div>{product.price}</div>
             <div>LE</div>
           </div>
         </div>
         <div className="mt-5 text-3xl font-medium text-zinc-800 max-md:max-w-full">
-          {name}
+          {product.name}
         </div>
 
         {/* Produtc Size */}
@@ -90,10 +88,14 @@ export default function ProductInfo({
           {t("size")}
         </h1>
         <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-          {sizes.map((size) => (
+          {product.sizes.map((size) => (
             <button
               key={size.id}
-              className="text-center  p-2 border border-solid border-stone-300 uppercase"
+              className={cn(
+                "text-center  p-2 border border-solid border-stone-300 uppercase",
+                { "bg-[#dcdcdc]": productControler.size?.id === size.id }
+              )}
+              onClick={() => setProductControler({ ...productControler, size })}
             >
               {size.name}
             </button>
@@ -103,11 +105,20 @@ export default function ProductInfo({
         {/* Product Color */}
         <h1 className="self-start mt-3 text-lg text-zinc-800">{t("color")}</h1>
         <div className="flex gap-3 mt-1">
-          {colors.map((color) => (
+          {product.colors.map((color) => (
             <button
               key={color.id}
-              className="shrink-0 border-2 border-solid border-zinc-600 h-[37px] w-[37px]"
+              className={cn(
+                "shrink-0 border-2 border-solid border-zinc-600 h-[37px] w-[37px]",
+                {
+                  "border-[2px] border-[#dcdcdc]":
+                    productControler.color?.id === color.id,
+                }
+              )}
               style={{ background: color.hexCode }}
+              onClick={() =>
+                setProductControler({ ...productControler, color })
+              }
             />
           ))}
         </div>
@@ -116,35 +127,29 @@ export default function ProductInfo({
         <h1 className="mt-2.5 text-lg text-zinc-800 max-md:max-w-full">
           {t("pieces")}
         </h1>
-        <div>
+
+        <div className="flex justify-start">
           <ChangeProductCount
-            qty={1}
-            onDecrease={() => {}}
-            onIncrease={() => {}}
+            qty={productControler.qty}
+            onDecrease={() => onChangeProductQty(product.id, "dec")}
+            onIncrease={() => onChangeProductQty(product.id, "inc")}
           />
         </div>
 
         {/* Product Actions */}
         <div className="flex gap-3.5 mt-3">
           <EsraButton
-            name="Add To Cart"
+            name={
+              isItemSelected(product.id) ? "Remove From Cart" : "Add To Cart"
+            }
             className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
+            onClick={() => onAddToCart(product)}
           />
 
           {/* <button className="flex justify-center items-center p-2 bg-[#7397273D] h-[38px] w-[38px]">
             <Favorite />
           </button> */}
         </div>
-        {/* 
-        <div className="flex items-center gap-3.5 mt-3 max-md:flex-wrap max-md:max-w-full">
-          <Link
-            href={""}
-            className="flex-1 p-2 text-center text-base font-bold leading-6 border-2 border-solid border-zinc-600 text-primary-100 max-md:px-5"
-          >
-            Order On Whatsapp
-          </Link>
-          <Share />
-        </div> */}
       </div>
     </div>
   );

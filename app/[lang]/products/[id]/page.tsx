@@ -80,7 +80,7 @@ export default async function ViewProductPage({ params: { id } }: Props) {
       <section className="grid grid-cols-12">
         <ProductGallery images={[data?.thumbnail, ...data.images]} />
 
-        <ProductInfo {...data} />
+        <ProductInfo product={data} />
       </section>
 
       <ProductExtraInfo description={data?.description || ""} />

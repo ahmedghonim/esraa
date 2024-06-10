@@ -40,6 +40,8 @@ declare module "next-auth/jwt" {
 }
 
 interface TProduct {
+  categories: any;
+  stoke: ReactNode;
   id: number;
   name: string;
   thumbnail: string;
@@ -47,7 +49,8 @@ interface TProduct {
   images: string[];
   colors: TColor[];
   sizes: TSize[];
-  selected_size: string;
+  selected_size: TSize;
+  selected_color: TColor;
   qty: number;
   price: number;
 }
@@ -58,6 +61,7 @@ interface TCategory {
 }
 
 interface TColor {
+  hexCode: Background<string | number> | undefined;
   id: number;
   hexcode: string;
   name: string;

@@ -6,25 +6,16 @@ import Image from "next/image";
 import { EsraButton } from "../esra_button";
 import { Product } from "@prisma/client";
 import { Color, Size } from "@/schema";
+import { EsraLink } from "../link";
 interface Props extends Product {
   id: number;
   name: string;
   price: number;
   sizes: Size[];
   colors: Color[];
-  isSelected?: boolean;
-  onAddToCart: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export function ProductCard({
-  id,
-  isSelected,
-  name,
-  price,
-  colors,
-  thumbnail,
-  onAddToCart,
-}: Props) {
+export function ProductCard({ id, name, price, colors, thumbnail }: Props) {
   return (
     <div className="flex flex-col md:max-w-[243px]">
       <Link href={`/products/${id}`}>
@@ -35,7 +26,7 @@ export function ProductCard({
           loading="lazy"
           src={thumbnail || "/product.png"}
           className="w-full aspect-[0.91]"
-        />{" "}
+        />
       </Link>
       <div className="flex gap-5 justify-between mt-2 text-lg font-bold leading-6 capitalize">
         <div className="text-zinc-800">{name}</div>
@@ -52,10 +43,10 @@ export function ProductCard({
       </div>
 
       <div className="flex gap-4 mt-3.5">
-        <EsraButton
-          name={isSelected ? "Remove From Cart" : "Add To Cart"}
-          className="justify-center p-2 text-base font-bold leading-6 text-white flex-1 !rounded-0"
-          onClick={(e) => onAddToCart(e)}
+        <EsraLink
+          name={"Show Product"}
+          href={`/products/${id}`}
+          className="w-full bg-primary-200 text-white"
         />
         <button className="flex justify-center items-center p-2 bg-[#7397273D] h-[38px] w-[38px]">
           <Favorite />
