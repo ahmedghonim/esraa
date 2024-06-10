@@ -31,10 +31,11 @@ export default function ProductInfo({ product }: Props) {
           qty: productControler.qty - 1,
         });
     } else
-      setProductControler({
-        ...productControler,
-        qty: productControler.qty + 1,
-      });
+      product.stoke > productControler.qty &&
+        setProductControler({
+          ...productControler,
+          qty: productControler.qty + 1,
+        });
   };
 
   const onChangeProductQty = (id: number, type: "inc" | "dec") => {
@@ -62,7 +63,12 @@ export default function ProductInfo({ product }: Props) {
     <div className="col-span-12 lg:col-span-6 flex flex-col ml-5 max-md:ml-0">
       <div className="flex flex-col mt-1.5 max-md:mt-8 max-md:max-w-full">
         {/* Main Information */}
-        <h1 className="text-lg font-medium text-green-600 max-md:max-w-full">
+        <h1
+          className={cn("text-lg font-medium max-md:max-w-full", {
+            "text-red-500": product.stoke === 0,
+            "text-green-500": product.stoke > 0,
+          })}
+        >
           {t("stoke")} {product.stoke}
         </h1>
         <div className="flex gap-5 justify-between mt-2 w-full font-medium text-primary-100 max-md:flex-wrap max-md:max-w-full">
@@ -142,6 +148,7 @@ export default function ProductInfo({ product }: Props) {
             name={
               isItemSelected(product.id) ? "Remove From Cart" : "Add To Cart"
             }
+            disabled={product.stoke === 0}
             className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
             onClick={() => onAddToCart(product)}
           />

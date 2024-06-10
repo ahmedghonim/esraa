@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { Order, OrderProduct, OrderSchema } from "@/schema";
 
 import { ZodError } from "zod";
+import { onMailer } from "./mailer";
 
 // Create order-product relationships
 const createOrderProduct = async (
@@ -20,12 +21,26 @@ const createOrderProduct = async (
   await prisma.orderProduct.createMany({
     data: orderProducts,
   });
+
+  for (const product of products) {
+    const data = await prisma.product.update({
+      where: { id: product.productId },
+      data: { stoke: { decrement: product.quantity } },
+    });
+
+    if (data.stoke < 2) {
+      // stoke is less than 2
+      onMailer({
+        subject: "Product out of stoke",
+        html: `<h1>Product ${data.name} out of stoke</h1>`,
+      });
+    }
+  }
 };
 
 // Create or update order
 const createOrder = async (data: Order) => {
   try {
-    console.log("data >>>> ", data);
     const validatedData = OrderSchema.parse(data);
 
     // Create the order first without products

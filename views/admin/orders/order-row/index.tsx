@@ -1,5 +1,3 @@
-import { CustomerType, Order, OrderProduct } from "@/schema";
-import { TProduct } from "@/types";
 import { Link } from "@/utils/navigation";
 import React from "react";
 

@@ -94,6 +94,7 @@
     "shipping": "Shipping",
     "action": "Action",
     "qty": "Qty",
-    "order_placed_successfully": "Order Placed Successfully"
+    "order_placed_successfully": "Order Placed Successfully",
+    "close": "Close"
   }
 }

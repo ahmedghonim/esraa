@@ -90,6 +90,9 @@
     "shipping": "الشحن",
     "action": "أجراء",
     "qty": "الكمية",
-    "order_placed_successfully": "تم تقديم الطلب بنجاح"
+    "order_placed_successfully": "تم تقديم الطلب بنجاح",
+    "general-info": "معلومات عامة",
+    "stock": "المخزون",
+    "close": "إغلاق"
   }
 }

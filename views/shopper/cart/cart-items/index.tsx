@@ -39,7 +39,9 @@ export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
                 {...product}
                 onDeleteItem={() => onDeleteItem(index)}
                 onDecrease={() => onChangeQty(product.id, "dec")}
-                onIncrease={() => onChangeQty(product.id, "inc")}
+                onIncrease={() =>
+                  product.stoke > product.qty && onChangeQty(product.id, "inc")
+                }
               />
             </TableRow>
           ))}

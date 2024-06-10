@@ -9,6 +9,7 @@ interface Props extends HTMLAttributes<HTMLButtonElement> {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 export function EsraButton({
@@ -17,10 +18,15 @@ export function EsraButton({
   onClick,
   isLoading,
   type,
+  disabled,
 }: Props) {
   return (
     <button
-      className={clsx("bg-primary-100", className)}
+      disabled={disabled}
+      className={clsx("bg-primary-100", className, {
+        "cursor-not-allowed": disabled,
+        "opacity-50": disabled,
+      })}
       type={type}
       onClick={(e) => onClick?.(e)}
     >

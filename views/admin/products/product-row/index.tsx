@@ -2,7 +2,7 @@
 import React, { useTransition } from "react";
 import Delete from "@/svg/delete.svg";
 import Edit from "@/svg/edit.svg";
-import { EsraAlertDialog, EsraButton } from "@/components/ui";
+import { EsraButton } from "@/components/ui";
 import Image from "next/image";
 import { Color, Product, Size } from "@prisma/client";
 import { Link, useRouter } from "@/utils/navigation";
@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { useTranslations } from "use-intl";
 import { productDelete } from "@/actions/product";
+import { cn } from "@/lib/utils";
 
 interface Props extends Product {
   sizes: Size[];
@@ -50,10 +51,15 @@ export default function ProductRow({
   };
   return (
     <>
-      <td className="py-4">
-        <div className="flex gap-2.5">
-          <Image src={thumbnail} width={100} height={100} alt="product image" />
+      <td className="py-4 w-[100px]">
+        <div>
           <div className="flex flex-col my-auto">
+            <Image
+              src={thumbnail}
+              width={100}
+              height={100}
+              alt="product image"
+            />
             <span className="text-lg font-bold leading-6 capitalize text-zinc-800">
               {name}
             </span>
@@ -61,12 +67,12 @@ export default function ProductRow({
         </div>
       </td>
 
-      <td className="py-4">
-        <div className="flex justify-center flex-wrap gap-2">
+      <td className="py-4 w-[200px]">
+        <div className="flex justify-center flex-wrap gap-2 ">
           {sizes.map(({ name }) => (
             <span
               key={name}
-              className="grid place-items-center border border-solid border-stone-300 px-5"
+              className="border border-solid border-stone-300 px-5"
             >
               {name}
             </span>
@@ -74,8 +80,8 @@ export default function ProductRow({
         </div>
       </td>
 
-      <td className="py-4">
-        <div className="flex justify-center gap-2 flex-wrap">
+      <td className="py-4 w-[20px]">
+        <div className="flex flex-col items-center justify-center gap-2 flex-wrap">
           {colors.map(({ hexCode }) => (
             <div
               key={hexCode}
@@ -86,9 +92,18 @@ export default function ProductRow({
         </div>
       </td>
 
-      <td className="py-4 text-center">{stoke} Item</td>
+      <td
+        className={cn("py-4 text-center", {
+          "text-red-500": stoke < 10,
+          "text-green-500": stoke > 10,
+        })}
+      >
+        {stoke}
+      </td>
 
-      <td className="py-4 text-center">{description}</td>
+      <td className="py-4 text-center text-wrap !w-[400px] overflow-hidden">
+        {description}
+      </td>
 
       <td className="py-4 text-center">{Number(price).toLocaleString()} LE</td>
 
