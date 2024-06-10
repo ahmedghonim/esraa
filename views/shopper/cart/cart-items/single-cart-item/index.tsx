@@ -2,6 +2,7 @@ import React from "react";
 import Delete from "@/svg/delete.svg";
 import Image from "next/image";
 import { ChangeProductCount, EsraAlertDialog } from "@/components/ui";
+import { useTranslations } from "next-intl";
 
 interface Props {
   thumbnail: string;
@@ -26,6 +27,7 @@ export default function SingleCartItem({
   onDecrease,
   onDeleteItem,
 }: Props) {
+  const t = useTranslations("common");
   return (
     <>
       <td className="py-4">
