@@ -7,6 +7,7 @@ import { EsraButton } from "../esra_button";
 import { Product } from "@prisma/client";
 import { Color, Size } from "@/schema";
 import { EsraLink } from "../link";
+import { useTranslations } from "next-intl";
 interface Props extends Product {
   id: number;
   name: string;
@@ -16,6 +17,7 @@ interface Props extends Product {
 }
 
 export function ProductCard({ id, name, price, colors, thumbnail }: Props) {
+  const t = useTranslations("common");
   return (
     <div className="flex flex-col md:max-w-[243px]">
       <Link href={`/products/${id}`}>
@@ -44,7 +46,7 @@ export function ProductCard({ id, name, price, colors, thumbnail }: Props) {
 
       <div className="flex gap-4 mt-3.5">
         <EsraLink
-          name={"Show Product"}
+          name={t("show_product")}
           href={`/products/${id}`}
           className="w-full bg-primary-200 text-white"
         />
