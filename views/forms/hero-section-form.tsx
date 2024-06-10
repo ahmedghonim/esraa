@@ -55,7 +55,7 @@ function HeroSectionForm({
     <Form {...form}>
       <div className="flex flex-col gap-6">
         <FormInput form={form} name="title" label={t("title")} />
-        <FormEditor form={form} name="description" label={t(" description")} />
+        <FormEditor form={form} name="description" label={t("description")} />
 
         <FormSelect
           isMulti

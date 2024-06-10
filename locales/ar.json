@@ -4,7 +4,7 @@
     "Home": "الرئيسية",
     "About Us": "معلومات عنا",
     "Services": "خدمات",
-    "Collections": "مجموعات",
+    "Collections": "تشكيلات",
     "products": "منتجات",
     "cart": "السلة",
     "orders": "طلبات",
@@ -28,7 +28,9 @@
     "description": "وصف",
     "image": "صورة",
     "size": "مقاس",
-    "collection": "مجموعة",
+    "collection": "تشكيلة",
+    "reset": "إعادة تعيين",
+    "apply_filter": "تطبيق الفلتر",
     "delete": "حذف",
     "products_list:": "قائمة المنتجات:",
     "sizes": "الأحجام",
@@ -98,6 +100,8 @@
     "search_results:": "نتائج البحث:",
     "home": "الرئيسية",
     "color": "اللون",
-    "complete_order": "أكمل الطلب"
+    "complete_order": "أكمل الطلب",
+    "title": "العنوان",
+    "main_product": "المنتج الرئيسي"
   }
 }

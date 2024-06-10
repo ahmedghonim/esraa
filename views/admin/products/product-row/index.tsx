@@ -53,7 +53,7 @@ export default function ProductRow({
     <>
       <td className="py-4 w-[100px]">
         <div>
-          <div className="flex flex-col my-auto">
+          <div className="flex flex-col my-auto justify-start items-center">
             <Image
               src={thumbnail}
               width={100}

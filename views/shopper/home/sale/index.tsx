@@ -22,7 +22,7 @@ export default function Sale({ data }: Props) {
         {data.map((slide, index) => (
           <SwiperSlide className="!flex max-md:flex-col-reverse" key={index}>
             <div className="flex flex-col w-[34%] max-md:ml-0 max-md:w-full">
-              <div className="h-full flex flex-col justify-center px-10 md:ps-[66px] max-md:py-[60px] w-full bg-primary-100">
+              <div className="h-full flex flex-col justify-center px-10 md:ps-[66px] max-md:py-[60px] w-full bg-primary-100 text-white">
                 {parser(slide.description)}
               </div>
             </div>

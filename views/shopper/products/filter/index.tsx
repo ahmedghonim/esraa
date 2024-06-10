@@ -7,6 +7,7 @@ import Sizes from "./sizes";
 import { EsraButton } from "@/components/ui";
 import { TFilterState, initialFiterState } from "./helpers/useFilterActions";
 import { Category, Collection, Color, Size } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
 type Props = {
   color: Color[];
@@ -30,6 +31,7 @@ export default function Filter({
   onResetFilter,
   onApplyFilter,
 }: Props) {
+  const t = useTranslations("common");
   return (
     <section className="lg:col-span-3 col-span-12 flex flex-col gap-4">
       <FilterContext.Provider
@@ -44,13 +46,13 @@ export default function Filter({
         <Sizes sizes={sizes} />
 
         <EsraButton
-          name="Apply Filter"
+          name={t("apply_filter")}
           className="py-2 text-white"
           onClick={onApplyFilter}
         />
 
         <EsraButton
-          name="Reset"
+          name={t("reset")}
           className="bg-transparent border-[2px] border-primary-100 py-2"
           onClick={onResetFilter}
         />
