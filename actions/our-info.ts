@@ -11,11 +11,17 @@ const upsertOurInfo = async (data: OurInfo) => {
     if (validatedData.id) {
       return await prisma.ourInfo.update({
         where: { id: 1 },
-        data: validatedData,
+        data: {
+          ...validatedData,
+          shipping: +validatedData.shipping,
+        },
       });
     } else {
       return await prisma.ourInfo.create({
-        data: validatedData,
+        data: {
+          ...validatedData,
+          shipping: +validatedData.shipping,
+        },
       });
     }
   } catch (error) {

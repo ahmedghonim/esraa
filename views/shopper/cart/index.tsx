@@ -6,19 +6,19 @@ import CartTotal from "./cart-total";
 import { useCartActions } from "./helpers/useCartActions";
 
 type Props = {
-  sapping: number;
+  shipping: number;
 };
 
-export default function Cart({ sapping }: Props) {
+export default function Cart({ shipping }: Props) {
   const { cart, onDeleteItem, onChangeQty, setCart } = useCartActions();
 
   const isCartHasItems = cart.items.length > 0;
   useEffect(() => {
     setCart({
       ...cart,
-      shipping: sapping,
+      shipping: shipping,
     });
-  }, [sapping]);
+  }, [shipping]);
 
   return (
     <main className="mb-10">

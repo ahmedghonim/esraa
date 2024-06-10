@@ -7,7 +7,6 @@ const useCartActions = () => {
     cart: TCart;
     setCart: React.Dispatch<React.SetStateAction<TCart>>;
   }>(CartContext as any);
-
   /* ------------------------ */
   /*      On Delete Item     */
   /* ------------------------ */

@@ -95,6 +95,8 @@
     "action": "Action",
     "qty": "Qty",
     "order_placed_successfully": "Order Placed Successfully",
-    "close": "Close"
+    "close": "Close",
+    "whatsApp": "WhatsApp",
+    "search_results:": "Search Results:"
   }
 }

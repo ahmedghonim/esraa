@@ -93,6 +93,10 @@
     "order_placed_successfully": "تم تقديم الطلب بنجاح",
     "general-info": "معلومات عامة",
     "stock": "المخزون",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "whatsApp": "واتساب",
+    "search_results:": "نتائج البحث:",
+    "home": "الرئيسية",
+    "color": "اللون"
   }
 }

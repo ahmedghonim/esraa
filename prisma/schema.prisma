@@ -220,6 +220,7 @@ model OurInfo {
   instagram String?
   x         String?
   tiktok    String?
+  shipping  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

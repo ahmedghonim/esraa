@@ -142,6 +142,7 @@ const OurInfoSchema = z.object({
   whatsApp: z.string(),
   facebook: z.string().optional(),
   instagram: z.string().optional(),
+  shipping: z.string(),
   x: z.string().optional(),
   tiktok: z.string().optional(),
   createdAt: z.date().optional(),

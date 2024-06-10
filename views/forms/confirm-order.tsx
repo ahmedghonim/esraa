@@ -74,6 +74,8 @@ export default function ConfirmOrder({}: Props) {
                   <p>Address: ${customer.address}</p>
                 `,
               });
+              setCart({ items: [], total: 0, subTotal: 0, shipping: 0 });
+              router.push("/");
             })
             .catch((error) => {
               toast({
@@ -87,21 +89,6 @@ export default function ConfirmOrder({}: Props) {
             description: error.message,
           });
         });
-      // createOrder({ ...customer, items: cart.items })
-      // .then(() => {
-      //   toast({
-      //     title: t("success"),
-      //     description: t("order_placed_successfully"),
-      //   });
-      //   router.refresh();
-      //   form.reset();
-      // })
-      // .catch((error) => {
-      //   toast({
-      //     title: t("error"),
-      //     description: error.message,
-      //   });
-      // });
     });
   };
 

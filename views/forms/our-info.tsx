@@ -41,11 +41,23 @@ function OurInfoForm({ values }: { values: OurInfo }) {
         });
     });
   };
-
+  console.log("form. >>>> ", form.formState.errors);
   return (
     <Form {...form}>
       <div className="flex flex-col gap-6">
+        <FormInput
+          form={form}
+          name="shipping"
+          label={t("shipping")}
+          type="number"
+        />
         <FormInput form={form} name="phone" label={t("phone")} type="tel" />
+        <FormInput
+          form={form}
+          name="whatsApp"
+          label={t("whatsApp")}
+          type="tel"
+        />
         <FormInput form={form} name="email" label={t("email")} type="email" />
         <FormInput form={form} name="facebook" label={t("facebook")} />
         <FormInput form={form} name="instagram" label={t("instagram")} />
