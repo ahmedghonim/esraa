@@ -14,7 +14,6 @@ type Props = {
 
 export default function Categories({ category }: Props) {
   const t = useTranslations("common");
-
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;

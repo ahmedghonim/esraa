@@ -9,7 +9,6 @@ type Props = {};
 
 export default function NewsSubscribe({}: Props) {
   const t = useTranslations("common");
-
   const [email, setEmail] = useState<string>("");
 
   /* ------------------------ */

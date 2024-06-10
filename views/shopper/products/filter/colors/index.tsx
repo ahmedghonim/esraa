@@ -14,7 +14,6 @@ interface Props {
 
 export default function Colors({ color }: Props) {
   const t = useTranslations("common");
-
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;

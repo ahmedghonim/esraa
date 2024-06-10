@@ -25,7 +25,6 @@ export const sizesData = [
 
 export default function Sizes({ sizes }: Props) {
   const t = useTranslations("common");
-
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;

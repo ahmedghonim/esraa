@@ -82,7 +82,7 @@ export default function ProductInfo({ product }: Props) {
           </div>
           <div className="flex gap-2 justify-between text-3xl text-right whitespace-nowrap">
             <div>{product.price}</div>
-            <div>LE</div>
+            <div>{t("LE")}</div>
           </div>
         </div>
         <div className="mt-5 text-3xl font-medium text-zinc-800 max-md:max-w-full">

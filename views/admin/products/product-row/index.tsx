@@ -105,7 +105,9 @@ export default function ProductRow({
         {description}
       </td>
 
-      <td className="py-4 text-center">{Number(price).toLocaleString()} LE</td>
+      <td className="py-4 text-center">
+        {Number(price).toLocaleString()} {t("LE")}
+      </td>
 
       <td className="py-4">
         <div className="flex justify-center items-center gap-4">

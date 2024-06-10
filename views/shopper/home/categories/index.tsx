@@ -11,7 +11,6 @@ type Props = {
 
 export default function Categories({ data }: Props) {
   const t = useTranslations("common");
-
   return (
     <section className="flex flex-col font-bold leading-[150%] mt-[45px]">
       <EsraSectionTitle title={t("top_categories")} href="" />
