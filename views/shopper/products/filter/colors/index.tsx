@@ -6,12 +6,14 @@ import { TFilterState } from "../helpers/useFilterActions";
 import { FilterContext } from "..";
 import clsx from "clsx";
 import { Color } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
 interface Props {
   color: Color[];
 }
 
 export default function Colors({ color }: Props) {
+  const t = useTranslations("common");
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
@@ -43,7 +45,7 @@ export default function Colors({ color }: Props) {
   };
 
   return (
-    <CollapseCard title={"Colors"}>
+    <CollapseCard title={t("colors")}>
       <div className="grid grid-cols-4 gap-4">
         {color?.map((color, index) => (
           <button key={index}>

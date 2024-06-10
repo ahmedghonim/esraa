@@ -6,17 +6,19 @@ import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import { TFilterState } from "../helpers/useFilterActions";
 import { FilterContext } from "..";
+import { useTranslations } from "next-intl";
 
 interface Props {}
 
 export default function Price({}: Props) {
+  const t = useTranslations("common");
   const { filterControler, setFilterControler } = useContext<{
     filterControler: TFilterState;
     setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
   }>(FilterContext);
 
   return (
-    <CollapseCard title={"Price"}>
+    <CollapseCard title={t("price")}>
       <RangeSlider
         className="!h-[3px]"
         step={100}
