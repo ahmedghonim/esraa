@@ -32,7 +32,9 @@ export function ProductCard({ id, name, price, colors, thumbnail }: Props) {
       </Link>
       <div className="flex gap-5 justify-between mt-2 text-lg font-bold leading-6 capitalize">
         <div className="text-zinc-800">{name}</div>
-        <div className="text-primary-100">{price} LE</div>
+        <div className="text-primary-100">
+          {price} {t("LE")}
+        </div>
       </div>
       <div className="flex gap-1 pr-20 mt-1">
         {colors?.map((color) => (

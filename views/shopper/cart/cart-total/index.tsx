@@ -19,21 +19,21 @@ export default function CartTotal({ cart }: Props) {
       <div className="flex gap-5 justify-between items-center text-2xl tracking-wide">
         <h1 className="text-neutral-500 text-[22px]">{t("subtotal")}</h1>
         <span className="font-bold text-primary-600 !font-Heebo">
-          {Number(cart.subTotal).toLocaleString()} LE
+          {Number(cart.subTotal).toLocaleString()} {t("LE")}
         </span>
       </div>
 
       <div className="flex gap-5 justify-between items-center mt-4 text-2xl tracking-wide">
         <h1 className="text-neutral-500 text-[22px]">{t("shipping")}</h1>
         <span className="font-bold text-primary-600 !font-Heebo">
-          {cart.shipping} LE
+          {cart.shipping} {t("LE")}
         </span>
       </div>
 
       <div className="flex gap-5 justify-between items-center mt-7 text-2xl tracking-wide">
         <h1 className="text-neutral-500 text-[22px]">{t("grand_total")}</h1>
         <span className="font-bold text-right text-primary-600 !font-Heebo">
-          {Number(cart.total).toLocaleString()} LE
+          {Number(cart.total).toLocaleString()} {t("LE")}
         </span>
       </div>
 

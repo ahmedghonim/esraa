@@ -36,10 +36,10 @@ export default function Price({}: Props) {
 
       <div className="flex items-center justify-center gap-4 mt-4 font-Heebo text-center text-base text-primary-300">
         <div className="w-[73px] py-1 border-[1px] border-secondary-600">
-          {filterControler.min_price} LE
+          {filterControler.min_price} {t("LE")}
         </div>
         <div className="w-[73px] py-1 border-[1px] border-secondary-600">
-          {filterControler.max_price} LE
+          {filterControler.max_price} {t("LE")}
         </div>
       </div>
     </CollapseCard>
