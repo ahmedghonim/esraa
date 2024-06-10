@@ -21,11 +21,7 @@ export default function Cart({}: Props) {
             onChangeQty={onChangeQty}
             onDeleteItem={onDeleteItem}
           />
-          <CartTotal
-            subTotal={cart.subTotal}
-            shipping={cart.shipping}
-            grandTotal={cart.total}
-          />
+          <CartTotal cart={cart} />
         </>
       ) : (
         <EmptyCart />

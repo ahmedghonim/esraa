@@ -57,7 +57,7 @@ export default function SingleCartItem({
       </td>
 
       <td className="text-[20px] text-primary-100 font-medium py-4 text-center">
-        {price} LE
+        {Number(price).toLocaleString()} LE
       </td>
 
       <td className="text-[20px] text-primary-100 font-medium py-4 text-center">

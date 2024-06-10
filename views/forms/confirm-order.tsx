@@ -5,7 +5,7 @@ import { Form } from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormTextArea from "@/components/ui/form-textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { ConfirmOrder, ConfirmOrderSchema } from "@/schema";
+import { ConfirmOrderSchema } from "@/schema";
 import { useRouter } from "@/utils/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -57,14 +57,6 @@ export default function ConfirmOrder({}: Props) {
         <FormInput form={form} name="email" label={t("email")} type="email" />
       </div>
       <FormTextArea form={form} name="address" label={t("address")} />
-
-      <EsraButton
-        isLoading={isPending}
-        onClick={form.handleSubmit(onSubmit)}
-        type="submit"
-        className="bg-primary-100 text-white p-2 rounded-sm mt-4"
-        name={t("confirm_order")}
-      />
     </Form>
   );
 }
