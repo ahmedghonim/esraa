@@ -17,17 +17,17 @@ export function ProductCard({ id, name, price, colors, thumbnail }: Props) {
   const t = useTranslations("common");
   return (
     <div className="flex flex-col md:max-w-[243px]">
-      <Link href={`/products/${id}`}>
+      <Link href={`/products/${id}`} className="h-full">
         <Image
           alt="product image"
           width={2000}
           height={2000}
           loading="lazy"
           src={thumbnail || "/product.png"}
-          className="w-full aspect-[0.91]"
+          className="w-full  h-full object-cover object-center"
         />
       </Link>
-      <div className="flex gap-5 justify-between mt-2 text-lg font-bold leading-6 capitalize">
+      <div className="flex gap-5 justify-between mt-5 text-lg font-bold leading-6 capitalize">
         <div className="text-zinc-800">{name}</div>
         <div className="text-primary-100">
           {price} {t("LE")}
