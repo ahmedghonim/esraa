@@ -47,34 +47,34 @@ export default function ConfirmOrder({}: Props) {
             customerId: customer.id,
             products,
           })
-            .then((order: any) => {
+            .then(async (order: any) => {
+              await onMailer({
+                email: customer?.email!,
+                subject: "Order Confirmation",
+                html: `
+                   <h1>Order Confirmation</h1>
+                   <p>Dear ${customer.name},</p>
+                   <p>Your order with ID ${order.id} has been placed successfully.</p>
+                   <p>Thank you for shopping with us!</p>
+                 `,
+              });
+
+              await onMailer({
+                subject: "You have a new order",
+                html: `
+                   <h1>New Order</h1>
+                   <p>Order ID: ${order.id}</p>
+                   <p>Customer: ${customer.name}</p>
+                   <p>Email: ${customer.email}</p>
+                   <p>Phone: ${customer.phone}</p>
+                   <p>Address: ${customer.address}</p>
+                 `,
+              });
               toast({
                 title: t("success"),
                 description: t("order_placed_successfully"),
               });
 
-              onMailer({
-                email: customer?.email!,
-                subject: "Order Confirmation",
-                html: `
-                  <h1>Order Confirmation</h1>
-                  <p>Dear ${customer.name},</p>
-                  <p>Your order with ID ${order.id} has been placed successfully.</p>
-                  <p>Thank you for shopping with us!</p>
-                `,
-              });
-
-              onMailer({
-                subject: "You have a new order",
-                html: `
-                  <h1>New Order</h1>
-                  <p>Order ID: ${order.id}</p>
-                  <p>Customer: ${customer.name}</p>
-                  <p>Email: ${customer.email}</p>
-                  <p>Phone: ${customer.phone}</p>
-                  <p>Address: ${customer.address}</p>
-                `,
-              });
               setCart({ items: [], total: 0, subTotal: 0, shipping: 0 });
               router.push("/");
             })
