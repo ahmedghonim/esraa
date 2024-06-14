@@ -31,7 +31,7 @@ const FileUpload = ({
             <Image
               src={value}
               alt="uploaded image"
-              className="object-cover w-full h-full"
+              className="object-contain w-full h-full"
               fill
             />
           </div>

@@ -51,10 +51,10 @@ const useFilterActions = (
   const onApplyFilter = () => {
     const filteredProducts = data.filter((product) => {
       return (
-        // categories check
         (filterControler.category
-          ? product.categories.some(
-              (category) => category.id === filterControler.category
+          ? // @ts-ignore
+            product?.categories?.some(
+              (category: any) => category.id === filterControler.category
             )
           : true) &&
         // min price check

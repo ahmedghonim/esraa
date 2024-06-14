@@ -49,7 +49,7 @@ export default function IntroSection({ data }: Props) {
             className="!max-h-[650px]"
           />
           <Link
-            href={`/product/${mainProduct?.id}`}
+            href={`/products/${mainProduct?.id}`}
             className="absolute top-[17%] translate-y-1/2 right-3 duration-300 hover:scale-90"
           >
             <Plus />
@@ -113,7 +113,7 @@ export default function IntroSection({ data }: Props) {
                       />
 
                       <Link
-                        href={`/product/${product?.id}`}
+                        href={`/products/${product?.id}`}
                         className="absolute bottom-4 right-3 duration-300 hover:scale-90"
                       >
                         <Plus />

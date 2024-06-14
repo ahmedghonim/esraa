@@ -22,19 +22,19 @@ export default function Sale({ data }: Props) {
         {data.map((slide, index) => (
           <SwiperSlide className="!flex max-md:flex-col-reverse" key={index}>
             <div className="flex flex-col w-[34%] max-md:ml-0 max-md:w-full">
-              <div className="h-full flex flex-col justify-center px-10 md:ps-[66px] max-md:py-[60px] w-full bg-primary-100 text-white">
+              <div className="h-full flex flex-col justify-center px-10 md:ps-[66px] max-md:py-[60px] w-full bg-primary-100 text-white text-wrap">
                 {parser(slide.description)}
               </div>
             </div>
 
             <div className="flex flex-col w-[66%] max-md:w-full">
-              <div className="flex overflow-hidden relative flex-col grow justify-center items-end md:min-h-[487px] max-md:max-w-full">
+              <div className="flex overflow-hidden relative flex-col grow justify-center items-end max-md:max-w-full max-w-[687px] max-h-[487px]">
                 <Image
                   src={slide.image || "/sale-poster.png"}
                   width={1200}
                   height={1200}
                   alt="sale poster"
-                  className="w-full h-full"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
             </div>
