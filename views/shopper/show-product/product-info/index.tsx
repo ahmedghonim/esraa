@@ -60,7 +60,7 @@ export default function ProductInfo({ product }: Props) {
   };
 
   return (
-    <div className="col-span-12 lg:col-span-6 flex flex-col ml-5 max-md:ml-0">
+    <div className="col-span-12 lg:col-span-6 flex flex-col max-md:ml-0">
       <div className="flex flex-col mt-1.5 max-md:mt-8 max-md:max-w-full">
         {/* Main Information */}
         <h1

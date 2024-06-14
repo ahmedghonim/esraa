@@ -78,7 +78,7 @@ export default async function ViewProductPage({ params: { id } }: Props) {
   const data = (await getProductById(+id)) as any;
   return (
     <main className="mt-[95px]">
-      <section className="grid grid-cols-12">
+      <section className="grid grid-cols-12 gap-5">
         <ProductGallery images={[data?.thumbnail, ...data.images]} />
 
         <ProductInfo product={data} />

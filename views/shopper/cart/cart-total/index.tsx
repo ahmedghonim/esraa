@@ -33,7 +33,7 @@ export default function CartTotal({ cart }: Props) {
       <div className="flex gap-5 justify-between items-center mt-7 text-2xl tracking-wide">
         <h1 className="text-neutral-500 text-[22px]">{t("grand_total")}</h1>
         <span className="font-bold text-right text-primary-600 !font-Heebo">
-          {Number(cart.total).toLocaleString()} {t("LE")}
+          {Number(cart.total + cart.shipping).toLocaleString()} {t("LE")}
         </span>
       </div>
 

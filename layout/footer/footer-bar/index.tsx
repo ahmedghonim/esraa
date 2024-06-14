@@ -1,5 +1,9 @@
-import { Link } from "@/utils/navigation";
-import { useTranslations } from "next-intl";
+"use client";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+
+import { Link, usePathname } from "@/utils/navigation";
+import { useLocale, useTranslations } from "next-intl";
 
 import React from "react";
 
@@ -9,7 +13,16 @@ const currentYear = new Date().getFullYear();
 
 export default function FooterBar({}: Props) {
   const t = useTranslations("common");
+  const { replace } = useRouter();
 
+  const fullPath = usePathname();
+  const lang = useLocale();
+
+  const redirectedPathName = async (locale: any) => {
+    const path = fullPath.replace(lang, "");
+
+    replace("/" + locale + "/" + path);
+  };
   return (
     <div className="flex justify-center items-center self-stretch px-16 py-5 mt-12 w-full text-sm leading-5 bg-primary-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
       <div className="flex gap-5 justify-between w-full max-w-[1044px] max-md:flex-wrap max-md:max-w-full">
@@ -27,8 +40,22 @@ export default function FooterBar({}: Props) {
           </div>
         </div>
         <div className="flex gap-5 justify-between font-medium tracking-wide uppercase whitespace-nowrap">
-          <button className="text-neutral-50">{t("en")}</button>
-          <button className="text-neutral-400">{t("ar")}</button>
+          <button
+            className={cn("text-neutral-400", {
+              "text-neutral-50": lang === "en",
+            })}
+            onClick={() => redirectedPathName("en")}
+          >
+            {t("en")}
+          </button>
+          <button
+            className={cn("text-neutral-400", {
+              "text-neutral-50": lang === "ar",
+            })}
+            onClick={() => redirectedPathName("ar")}
+          >
+            {t("ar")}
+          </button>
         </div>
       </div>
     </div>

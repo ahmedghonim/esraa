@@ -52,6 +52,7 @@ export default function ConfirmOrder({}: Props) {
                 title: t("success"),
                 description: t("order_placed_successfully"),
               });
+
               onMailer({
                 email: customer?.email!,
                 subject: "Order Confirmation",
