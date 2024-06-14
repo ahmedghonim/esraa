@@ -83,7 +83,7 @@ export default function SayRow({
       <td className="py-4">
         <div className="flex justify-center items-center gap-4">
           {/* edit alert */}
-          <Link href={"/dashboard/Sale Sliders/" + id}>
+          <Link href={"/dashboard/say/" + id}>
             <Edit className="size-5" />
           </Link>
           {/* delete alert */}
