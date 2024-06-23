@@ -4,9 +4,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { useContext, useState } from "react";
 import { CartContext, TCart } from "../../local-cart";
 import { TColor, TProduct, TSize } from "@/types";
+import { useTranslations } from "next-intl";
 
 const useShowProductActions = () => {
   const { toast } = useToast();
+
+  const t = useTranslations("common");
 
   const [productControler, setProductControler] = useState<{
     qty: number;
@@ -20,20 +23,43 @@ const useShowProductActions = () => {
   }>(CartContext as any);
 
   const isItemSelected = (id: number) => {
-    return cart.items.some((item: TProduct) => item.id === id);
+    return cart.items.some(
+      (item: TProduct) =>
+        item.id === id &&
+        item.selected_size.id === productControler.size?.id &&
+        item.selected_color.id === productControler.color?.id
+    );
   };
 
   const onAddToCart = (product: TProduct) => {
-    if (isItemSelected(product.id)) {
-      const filteredCart = cart.items.filter(
-        (item: TProduct) => item.id !== product.id
-      );
-
-      setCart({ ...cart, items: filteredCart });
-      toast({
-        title: "Removed successfully",
-        description: "Product removed successfully",
+    if (!productControler.size) {
+      return toast({
+        title: t("select_size"),
+        description: t("please_select_size"),
       });
+    }
+
+    if (!productControler.color) {
+      return toast({
+        title: t("select_color"),
+        description: t("please_select_color"),
+      });
+    }
+
+    if (isItemSelected(product.id)) {
+      const updatedProducts = cart.items.map((item: TProduct) => {
+        if (
+          item.id === product.id &&
+          item.selected_size.id === productControler.size?.id &&
+          item.selected_color.id === productControler.color?.id
+        ) {
+          return { ...item, qty: (item.qty += 1) };
+        }
+        return item;
+      });
+
+      setCart({ ...cart, items: updatedProducts });
+
       return;
     } else {
       setCart({
@@ -48,47 +74,16 @@ const useShowProductActions = () => {
           },
         ],
       });
-      toast({
-        title: "Added successfully",
-        description: "Product added successfully",
-      });
-    }
-  };
-
-  /* ------------------------ */
-  /*      On Change Item QTY    */
-  /* -------------------------- */
-  const onChangeQty = (id: number, type: "inc" | "dec") => {
-    const getProduct = cart.items.find(
-      (product: TProduct) => product.id === id
-    );
-
-    if (!getProduct) {
-      return;
     }
 
-    const updatedProduct = { ...getProduct };
-
-    if (type === "dec") {
-      if (updatedProduct.qty > 1) {
-        updatedProduct.qty -= 1;
-      }
-    }
-
-    if (type === "inc") {
-      updatedProduct.qty += 1;
-    }
-
-    const updatedItems = cart.items.map((product: TProduct) =>
-      product.id === id ? updatedProduct : product
-    );
-
-    setCart({ ...cart, items: updatedItems });
+    toast({
+      title: t("item_added"),
+      description: t("item_added_succesfully"),
+    });
   };
 
   return {
     onAddToCart,
-    onChangeQty,
     isItemSelected,
     productControler,
     setProductControler,

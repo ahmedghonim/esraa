@@ -49,6 +49,7 @@ export default function LocalCart({ children }: Props) {
   /* ------------------------------- */
   /*     Set cart Total Amounts     */
   /* ------------------------------- */
+
   useEffect(() => {
     if (isCartSynced) {
       const subTotal = cart.items.reduce(
@@ -58,7 +59,7 @@ export default function LocalCart({ children }: Props) {
 
       setCart({ ...cart, subTotal, total: +subTotal - cart.shipping });
     }
-  }, [cart.items]);
+  }, [cart.items.length]);
 
   return (
     <div>

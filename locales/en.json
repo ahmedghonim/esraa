@@ -132,6 +132,12 @@
     "remove_from_cart": "Remove From Cart",
     "add_to_cart": "Add To Cart",
     "en": "En",
-    "ar": "Ar"
+    "ar": "Ar",
+    "select_size": "Size not selected",
+    "please_select_size": "Please select the product size first",
+    "select_color": "Color not selected",
+    "please_select_color": "Please select the product color first",
+    "item_added": "Item Added",
+    "item_added_succesfully": "Item has been added successfully"
   }
 }

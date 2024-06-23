@@ -11,9 +11,7 @@ interface Props {
 export default function CartTotal({ cart }: Props) {
   const [open, setOpen] = useState<boolean>(false);
   const t = useTranslations("common");
-  /* ------------------------ */
-  /*     on confirm order     */
-  /* ------------------------ */
+
   return (
     <section className="flex flex-col justify-center p-6 bg-neutral-200 max-w-[453px] mt-5 ms-auto">
       <div className="flex gap-5 justify-between items-center text-2xl tracking-wide">

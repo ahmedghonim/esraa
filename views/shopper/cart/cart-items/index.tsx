@@ -3,11 +3,17 @@ import SingleCartItem from "./single-cart-item";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/ui/table";
 import { TCart } from "../../local-cart";
 import { useTranslations } from "next-intl";
+import { TColor, TSize } from "@/types";
 
 interface Props {
   cart: TCart;
   onDeleteItem: (index: number) => void;
-  onChangeQty: (id: number, type: "inc" | "dec") => void;
+  onChangeQty: (
+    id: number,
+    selected_size: TSize,
+    selected_color: TColor,
+    type: "inc" | "dec"
+  ) => void;
 }
 
 export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
@@ -38,9 +44,22 @@ export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
               <SingleCartItem
                 {...product}
                 onDeleteItem={() => onDeleteItem(index)}
-                onDecrease={() => onChangeQty(product.id, "dec")}
+                onDecrease={() =>
+                  onChangeQty(
+                    product.id,
+                    product.selected_size,
+                    product.selected_color,
+                    "dec"
+                  )
+                }
                 onIncrease={() =>
-                  product.stoke > product.qty && onChangeQty(product.id, "inc")
+                  product.stoke > product.qty &&
+                  onChangeQty(
+                    product.id,
+                    product.selected_size,
+                    product.selected_color,
+                    "inc"
+                  )
                 }
               />
             </TableRow>

@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { useShowProductActions } from "../helpers/useShowProductActions";
 import { TProduct } from "@/types";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/components/ui/use-toast";
 
 interface Props {
   product: TProduct;
@@ -13,17 +12,10 @@ interface Props {
 export default function ProductInfo({ product }: Props) {
   const t = useTranslations("common");
 
-  const { toast } = useToast();
+  const { onAddToCart, setProductControler, productControler } =
+    useShowProductActions();
 
-  const {
-    onAddToCart,
-    onChangeQty,
-    isItemSelected,
-    setProductControler,
-    productControler,
-  } = useShowProductActions();
-
-  const onChangeProductQtyWithoutCart = (type: "inc" | "dec") => {
+  const onChangeProductQty = (type: "inc" | "dec") => {
     if (type === "dec") {
       productControler.qty > 1 &&
         setProductControler({
@@ -36,27 +28,6 @@ export default function ProductInfo({ product }: Props) {
           ...productControler,
           qty: productControler.qty + 1,
         });
-  };
-
-  const onChangeProductQty = (id: number, type: "inc" | "dec") => {
-    if (!productControler.color) {
-      return toast({
-        title: "Select The Color",
-        description: "Please Select The Product Color",
-      });
-    }
-
-    if (!productControler.size) {
-      return toast({
-        title: "Select The Size",
-        description: "Please Select The Product Size",
-      });
-    }
-
-    if (isItemSelected(id)) {
-      onChangeQty(id, type);
-      onChangeProductQtyWithoutCart(type);
-    } else onChangeProductQtyWithoutCart(type);
   };
 
   return (
@@ -137,20 +108,16 @@ export default function ProductInfo({ product }: Props) {
         <div className="flex justify-start">
           <ChangeProductCount
             qty={productControler.qty}
-            onDecrease={() => onChangeProductQty(product.id, "dec")}
-            onIncrease={() => onChangeProductQty(product.id, "inc")}
+            onDecrease={() => onChangeProductQty("dec")}
+            onIncrease={() => onChangeProductQty("inc")}
           />
         </div>
 
         {/* Product Actions */}
         <div className="flex gap-3.5 mt-3">
           <EsraButton
-            name={
-              isItemSelected(product.id)
-                ? t("remove_from_cart")
-                : t("add_to_cart")
-            }
-            disabled={product.stoke === 0}
+            name={t("add_to_cart")}
+            // disabled={product.stoke === 0}
             className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
             onClick={() => onAddToCart(product)}
           />

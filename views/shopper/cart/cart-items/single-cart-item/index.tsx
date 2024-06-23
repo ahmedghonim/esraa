@@ -39,7 +39,7 @@ export default function SingleCartItem({
             </span>
             <div className="flex gap-3 mt-2.5 text-base  text-neutral-500">
               <span className="grid place-items-center border border-solid border-stone-300 px-5">
-                {selected_size.name}
+                {selected_size?.name}
               </span>
               <div
                 className="shrink-0  h-[37px] w-[37px]"

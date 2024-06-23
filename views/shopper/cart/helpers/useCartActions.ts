@@ -1,4 +1,5 @@
 "use client";
+import { TColor, TSize } from "@/types";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { useContext } from "react";
 
@@ -19,8 +20,18 @@ const useCartActions = () => {
   /* ------------------------ */
   /*      On Change Item QTY    */
   /* -------------------------- */
-  const onChangeQty = (id: number, type: "inc" | "dec") => {
-    const getProduct = cart.items.find((product) => product.id === id);
+  const onChangeQty = (
+    id: number,
+    selected_size: TSize,
+    selected_color: TColor,
+    type: "inc" | "dec"
+  ) => {
+    const getProduct = cart.items.find(
+      (product) =>
+        product.id === id &&
+        product.selected_size.id === selected_size.id &&
+        product.selected_color.id === selected_color.id
+    );
 
     if (!getProduct) {
       return;
@@ -39,7 +50,11 @@ const useCartActions = () => {
     }
 
     const updatedItems = cart.items.map((product) =>
-      product.id === id ? updatedProduct : product
+      product.id === id &&
+      product.selected_size.id === selected_size.id &&
+      product.selected_color.id === selected_color.id
+        ? updatedProduct
+        : product
     );
 
     setCart({ ...cart, items: updatedItems });
