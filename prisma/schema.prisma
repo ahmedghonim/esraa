@@ -1,17 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model User {
@@ -46,28 +40,24 @@ model OtpCode {
 }
 
 model Product {
-  id              Int               @id @default(autoincrement())
+  id              Int              @id @default(autoincrement())
   name            String
   description     String
   images          String[]
   thumbnail       String
-  stoke           Int               @default(1)
   price           Float
-  newArrival      Boolean           @default(false)
+  newPrice        Float?
+  newArrival      Boolean          @default(false)
   slug            String
-  colors          Color[]           @relation("ProductColors")
-  categories      Category[]        @relation("ProductCategories")
-  sizes           Size[]            @relation("ProductSizes")
-  collection      Collection?       @relation(fields: [collectionId], references: [id])
+  categories      Category[]       @relation("ProductCategories")
+  collection      Collection?      @relation(fields: [collectionId], references: [id])
   collectionId    Int?
-  ProductColor    ProductColor[]
-  ProductCategory ProductCategory[]
-  ProductSize     ProductSize[]
   OrderProduct    OrderProduct[]
-  relatedProducts Product[]         @relation("RelatedProducts")
-  parentProducts  Product[]         @relation("RelatedProducts")
-  HeroSection     HeroSection?      @relation(fields: [heroSectionId], references: [id])
+  relatedProducts Product[]        @relation("RelatedProducts")
+  parentProducts  Product[]        @relation("RelatedProducts")
+  HeroSection     HeroSection?     @relation(fields: [heroSectionId], references: [id])
   heroSectionId   Int?
+  ProductVariant  ProductVariant[]
 
   @@index([name])
 }
@@ -83,31 +73,28 @@ model HeroSection {
 }
 
 model Color {
-  id           Int            @id @default(autoincrement())
-  name         String
-  hexCode      String
-  products     Product[]      @relation("ProductColors")
-  ProductColor ProductColor[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  hexCode        String
+  ProductVariant ProductVariant[]
 
   @@unique([name])
 }
 
 model Category {
-  id              Int               @id @default(autoincrement())
-  name            String
-  image           String
-  topCategory     Boolean           @default(false)
-  products        Product[]         @relation("ProductCategories")
-  ProductCategory ProductCategory[]
+  id          Int       @id @default(autoincrement())
+  name        String
+  image       String
+  topCategory Boolean   @default(false)
+  products    Product[] @relation("ProductCategories")
 
   @@unique([name])
 }
 
 model Size {
-  id          Int           @id @default(autoincrement())
-  name        String
-  products    Product[]     @relation("ProductSizes")
-  ProductSize ProductSize[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  ProductVariant ProductVariant[]
 
   @@unique([name])
 }
@@ -120,35 +107,17 @@ model Collection {
   @@unique([name])
 }
 
-// Create a junction table for many-to-many relationships
-model ProductColor {
+model ProductVariant {
+  id        Int     @id @default(autoincrement())
   productId Int
   colorId   Int
-
-  product Product @relation(fields: [productId], references: [id])
-  color   Color   @relation(fields: [colorId], references: [id])
-
-  @@id([productId, colorId])
-}
-
-model ProductCategory {
-  productId  Int
-  categoryId Int
-
-  product  Product  @relation(fields: [productId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
-
-  @@id([productId, categoryId])
-}
-
-model ProductSize {
-  productId Int
   sizeId    Int
+  stoke     Int     @default(1)
+  product   Product @relation(fields: [productId], references: [id])
+  color     Color   @relation(fields: [colorId], references: [id])
+  size      Size    @relation(fields: [sizeId], references: [id])
 
-  product Product @relation(fields: [productId], references: [id])
-  size    Size    @relation(fields: [sizeId], references: [id])
-
-  @@id([productId, sizeId])
+  @@unique([productId, colorId, sizeId])
 }
 
 model Customer {
@@ -167,6 +136,8 @@ model Order {
   delivered  Boolean        @default(false)
   customer   Customer       @relation(fields: [customerId], references: [id])
   products   OrderProduct[]
+
+  @@index([customerId])
 }
 
 model OrderProduct {
@@ -176,10 +147,8 @@ model OrderProduct {
   quantity  Int     @default(1)
   size      String
   color     String
-  order     Order   @relation(fields: [orderId], references: [id])
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id])
-
-  @@unique([orderId, productId])
 }
 
 model WhatTheSay {
@@ -220,7 +189,14 @@ model OurInfo {
   instagram String?
   x         String?
   tiktok    String?
-  shipping  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Shipping {
+  id        Int      @id @default(autoincrement())
+  city      String
+  price     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

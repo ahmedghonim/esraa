@@ -33,9 +33,9 @@ export default function Testimonials({ data }: Props) {
                 <h1 className="self-center text-3xl leading-10 text-black">
                   {feedback.name}
                 </h1>
-                <p className="mt-3 text-xl leading-8 text-center text-[#515151] font-Heebo">
+                <div className="mt-3 text-xl leading-8 text-center text-[#515151] font-Heebo">
                   {parser(feedback.message)}
-                </p>
+                </div>
                 <button
                   className="grid place-items-center mt-10 bg-primary-100 h-[50px] w-[84px]"
                   ref={navigationPrevRef}

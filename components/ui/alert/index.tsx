@@ -11,13 +11,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
+import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 interface Props {
   openTrigger: React.ReactNode | string;
   alertTitle: string;
   alertDescription: string;
   confirmClassName?: string;
   onAccept: () => void;
+  isLoading?: boolean;
 }
 export function EsraAlertDialog({
   openTrigger,
@@ -25,19 +27,23 @@ export function EsraAlertDialog({
   alertDescription,
   confirmClassName,
   onAccept,
+  isLoading,
 }: Props) {
+  const t = useTranslations("common");
   return (
     <AlertDialog>
-      <AlertDialogTrigger>{openTrigger}</AlertDialogTrigger>
+      <AlertDialogTrigger>
+        {isLoading ? <Loader2 /> : openTrigger}
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{alertTitle}</AlertDialogTitle>
           <AlertDialogDescription>{alertDescription}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={onAccept} className={confirmClassName}>
-            Confirm
+            {t("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

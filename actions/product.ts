@@ -39,7 +39,6 @@ const productUpsert = async (value: Product) => {
         price: +value.price as number,
         thumbnail: value.thumbnail,
         description: value.description,
-        stoke: +value.stoke,
         newArrival: value.newArrival,
         slug: slugify(value.name, {
           replacement: "-",
@@ -49,14 +48,8 @@ const productUpsert = async (value: Product) => {
           strict: true,
           trim: true,
         }),
-        colors: {
-          connect: value.colors?.map((id) => ({ id })),
-        },
         categories: {
           connect: value.categories?.map((id) => ({ id })),
-        },
-        sizes: {
-          connect: value.sizes?.map((id) => ({ id })),
         },
         collection: value.collectionId
           ? {
@@ -69,6 +62,27 @@ const productUpsert = async (value: Product) => {
                 connect: value?.relatedProducts?.map((id) => ({ id })),
               }
             : undefined,
+        ProductVariant: {
+          deleteMany: {}, // Delete existing variants to handle the update
+          create: value.variants.map((variant) => ({
+            stoke: variant.stoke,
+            color: {
+              connectOrCreate: {
+                where: { id: variant.color.id },
+                create: {
+                  name: variant.color.name,
+                  hexCode: variant.color.hexCode,
+                },
+              },
+            },
+            size: {
+              connectOrCreate: {
+                where: { id: variant.size.id },
+                create: { name: variant.size.name },
+              },
+            },
+          })),
+        },
       },
     });
   } else {
@@ -79,7 +93,6 @@ const productUpsert = async (value: Product) => {
         price: +value.price as number,
         thumbnail: value.thumbnail,
         description: value.description,
-        stoke: +value.stoke,
         newArrival: value.newArrival,
         slug: slugify(value.name, {
           replacement: "-",
@@ -89,20 +102,36 @@ const productUpsert = async (value: Product) => {
           strict: true,
           trim: true,
         }),
-        colors: {
-          connect: value.colors?.map((id) => ({ id })),
-        },
         categories: {
           connect: value.categories?.map((id) => ({ id })),
         },
-        sizes: {
-          connect: value.sizes?.map((id) => ({ id })),
-        },
-        collection: {
-          connect: { id: value.collectionId },
-        },
+        collection: value.collectionId
+          ? {
+              connect: { id: value.collectionId },
+            }
+          : undefined,
         relatedProducts: {
           connect: value.relatedProducts?.map((id) => ({ id })),
+        },
+        ProductVariant: {
+          create: value.variants.map((variant) => ({
+            stoke: variant.stoke,
+            color: {
+              connectOrCreate: {
+                where: { id: variant.color.id },
+                create: {
+                  name: variant.color.name,
+                  hexCode: variant.color.hexCode,
+                },
+              },
+            },
+            size: {
+              connectOrCreate: {
+                where: { id: variant.size.id },
+                create: { name: variant.size.name },
+              },
+            },
+          })),
         },
       },
     });
@@ -123,9 +152,8 @@ const getProductById = (id: number) => {
       id,
     },
     include: {
-      colors: true,
+      ProductVariant: { include: { color: true, size: true } },
       categories: true,
-      sizes: true,
       collection: true,
       relatedProducts: true,
     },
@@ -138,9 +166,8 @@ const getProductBySlug = (slug: string) => {
       slug,
     },
     include: {
-      colors: true,
+      ProductVariant: { include: { color: true, size: true } },
       categories: true,
-      sizes: true,
       collection: true,
     },
   });
@@ -149,9 +176,8 @@ const getProductBySlug = (slug: string) => {
 const getAllProducts = () => {
   return prisma.product.findMany({
     include: {
-      colors: true,
+      ProductVariant: { include: { color: true, size: true } },
       categories: true,
-      sizes: true,
       collection: true,
     },
   });

@@ -24,21 +24,26 @@ const CollectionSchema = z.object({
   name: z.string().min(1),
 });
 
+// Define the ProductVariant schema
+const ProductVariantSchema = z.object({
+  color: ColorSchema,
+  size: SizeSchema,
+  stoke: z.number().or(z.string().transform(Number)),
+});
+
 // Define the main Product schema
 const ProductSchema = z.object({
   id: z.number().optional(),
   newArrival: z.boolean().optional(),
-  price: z.number().or(z.string()),
-  stoke: z.number().or(z.string()),
+  price: z.union([z.number(), z.string().transform(Number)]),
   name: z.string().min(1),
   description: z.string().min(1),
-  images: z.array(z.string()),
-  thumbnail: z.string(),
-  colors: z.array(z.number()),
-  categories: z.array(z.number()),
-  sizes: z.array(z.number()),
+  images: z.array(z.string().url()), // Ensuring that each image URL is valid
+  thumbnail: z.string().url(), // Ensuring that the thumbnail URL is valid
+  categories: z.array(z.number()), // Array of category IDs
   collectionId: z.number().optional(),
-  relatedProducts: z.array(z.number()).optional(),
+  relatedProducts: z.array(z.number()).optional(), // Array of related product IDs
+  variants: z.array(ProductVariantSchema), // Array of product variants
 });
 
 // Define schema for OrderProduct

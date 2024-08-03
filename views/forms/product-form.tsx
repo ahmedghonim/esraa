@@ -79,7 +79,7 @@ const ProductForm = ({
         });
     });
   };
-  console.log("form.watch() >>>> ", form.watch());
+
   return (
     <Form {...form}>
       <div className="space-y-4">
