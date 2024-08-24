@@ -23,7 +23,7 @@ export default function ProductInfo({ product }: Props) {
           qty: productControler.qty - 1,
         });
     } else
-      product.stoke > productControler.qty &&
+      product.stock > productControler.qty &&
         setProductControler({
           ...productControler,
           qty: productControler.qty + 1,
@@ -36,11 +36,11 @@ export default function ProductInfo({ product }: Props) {
         {/* Main Information */}
         <h1
           className={cn("text-lg font-medium max-md:max-w-full", {
-            "text-red-500": product.stoke === 0,
-            "text-green-500": product.stoke > 0,
+            "text-red-500": product.stock === 0,
+            "text-green-500": product.stock > 0,
           })}
         >
-          {t("stoke")} {product.stoke}
+          {t("stock")} {product.stock}
         </h1>
         <div className="flex gap-5 justify-between mt-2 w-full font-medium text-primary-100 max-md:flex-wrap max-md:max-w-full">
           <div className="my-auto text-lg">
@@ -117,7 +117,7 @@ export default function ProductInfo({ product }: Props) {
         <div className="flex gap-3.5 mt-3">
           <EsraButton
             name={t("add_to_cart")}
-            // disabled={product.stoke === 0}
+            // disabled={product.stock === 0}
             className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
             onClick={() => onAddToCart(product)}
           />

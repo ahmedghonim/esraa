@@ -53,7 +53,7 @@ export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
                   )
                 }
                 onIncrease={() =>
-                  product.stoke > product.qty &&
+                  product.stock > product.qty &&
                   onChangeQty(
                     product.id,
                     product.selected_size,

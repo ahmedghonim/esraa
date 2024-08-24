@@ -10,9 +10,9 @@ import {
 } from "@/schema";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { productUpsert, productDelete } from "@/actions/product";
+import { productUpsert } from "@/actions/product";
 import { useRouter } from "@/utils/navigation";
 import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
@@ -22,7 +22,6 @@ import FormInput from "@/components/ui/form-input";
 import FormTextArea from "@/components/ui/form-textarea";
 import FormSelect from "@/components/ui/form-select";
 import { useToast } from "@/components/ui/use-toast";
-
 const ProductForm = ({
   values,
   color,
@@ -47,24 +46,43 @@ const ProductForm = ({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       id: undefined,
-      stoke: 1,
+      variants: [],
       newArrival: false,
     },
     values: {
       ...values,
       categories: values?.categories?.map((item: any) => item.id),
-      colors: values?.colors?.map((item: any) => item.id),
-      sizes: values?.sizes?.map((item: any) => item.id),
+      collectionId: values?.collectionId || null,
       relatedProducts: values?.products?.map((item: any) => item.id),
+      variants:
+        values?.ProductVariant?.map((variant: any) => ({
+          ...variant,
+          colorId: variant.color.id,
+          sizeId: variant.size.id,
+        })) || [],
     },
   });
 
-  const onSubmit = (values: Product) => {
+  const { append: appendVariant, remove: removeVariant } = useFieldArray({
+    control: form.control,
+    name: "variants",
+  });
+  const onSubmit = () => {
+    const values = form.getValues();
+    const formattedValues = {
+      ...values,
+      price: Number(values.price),
+      productVariant: values?.variants?.map((variant: any) => ({
+        ...variant,
+        stock: Number(variant.stock),
+      })),
+    };
+
     startTransaction(() => {
-      productUpsert(values)
+      productUpsert(formattedValues)
         .then(() => {
           toast({
-            title: "Save successfully",
+            title: "Saved successfully",
             description: "Product saved successfully",
           });
           router.push("/dashboard/products");
@@ -97,8 +115,8 @@ const ProductForm = ({
           name="thumbnail"
         />
 
-        <div className="grid  grid-cols-1 lg:grid-cols-3 gap-4 w-full items-center">
-          {form.getValues("images")?.map((_phone, index) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full items-center">
+          {form.getValues("images")?.map((_image, index) => (
             <div className="flex-1 w-full flex flex-col gap-2" key={index}>
               <FormUpload
                 className="w-full min-h-[350px]"
@@ -114,11 +132,9 @@ const ProductForm = ({
                     form.setValue(`images[${index}]` as any, "");
 
                     const images = form.getValues("images");
-                    const newPhones = images
-                      .filter((images, i) => images !== "")
-                      .filter((images) => images);
+                    const newImages = images.filter((image) => image);
 
-                    form.setValue("images", newPhones);
+                    form.setValue("images", newImages);
                   });
                 }}
                 name={
@@ -147,7 +163,63 @@ const ProductForm = ({
             key: t("images"),
           })}
         />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full">
+
+        <div className="space-y-4">
+          {form.getValues("variants").map((variant, index) => (
+            <div
+              className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full "
+              key={index}
+            >
+              <FormSelect
+                form={form}
+                label={t("color")}
+                name={`variants[${index}].colorId`}
+                options={color.map((c) => ({ value: c.id, label: c.name }))}
+              />
+              <FormSelect
+                form={form}
+                label={t("size")}
+                name={`variants[${index}].sizeId`}
+                options={sizes.map((s) => ({ value: s.id, label: s.name }))}
+              />
+              <FormInput
+                form={form}
+                label={t("stock")}
+                name={`variants[${index}].stock`}
+                type="number"
+              />
+              <EsraButton
+                className="bg-red-500 text-white p-2 rounded-sm text-center !mt-auto h-fit"
+                onClick={() => {
+                  removeVariant(index);
+                }}
+                name={
+                  <span className="flex items-center gap-2 justify-center">
+                    {t("remove")} {t("variant")}
+                    <Trash2 />
+                  </span>
+                }
+              />
+            </div>
+          ))}
+        </div>
+
+        <EsraButton
+          className="bg-primary-100 text-white p-2 rounded-sm"
+          isLoading={isPending}
+          onClick={() => {
+            appendVariant({
+              colorId: null,
+              sizeId: null,
+              stock: 0,
+            } as any);
+          }}
+          name={t("add_", {
+            key: t("variant"),
+          })}
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full items-center">
           <FormInput form={form} label={t("name")} name="name" />
           <FormInput
             form={form}
@@ -156,12 +228,6 @@ const ProductForm = ({
             type="number"
           />
           <div className="flex gap-4 items-center">
-            <FormInput
-              form={form}
-              label={t("stoke")}
-              name="stoke"
-              type="number"
-            />
             <FormInput
               form={form}
               label={t("is_new_arrival")}
@@ -192,28 +258,6 @@ const ProductForm = ({
             form={form}
             label={t("categories")}
             name="categories"
-          />
-
-          <FormSelect
-            isMulti
-            options={color?.map((item) => ({
-              value: item.id,
-              label: item?.name,
-            }))}
-            form={form}
-            label={t("color")}
-            name="colors"
-          />
-
-          <FormSelect
-            isMulti
-            options={sizes.map((item) => ({
-              value: item.id,
-              label: item?.name,
-            }))}
-            form={form}
-            label={t("sizes")}
-            name="sizes"
           />
         </div>
 

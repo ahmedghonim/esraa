@@ -64,8 +64,8 @@ const productUpsert = async (value: Product) => {
             : undefined,
         ProductVariant: {
           deleteMany: {}, // Delete existing variants to handle the update
-          create: value.variants.map((variant) => ({
-            stoke: variant.stoke,
+          create: value.variants.map((variant: any) => ({
+            stock: parseInt(variant.stock, 10), // Ensure stock is an integer
             color: {
               connectOrCreate: {
                 where: { id: variant.color.id },
@@ -114,8 +114,8 @@ const productUpsert = async (value: Product) => {
           connect: value.relatedProducts?.map((id) => ({ id })),
         },
         ProductVariant: {
-          create: value.variants.map((variant) => ({
-            stoke: variant.stoke,
+          create: value.variants.map((variant: any) => ({
+            stock: parseInt(variant.stock, 10), // Ensure stock is an integer
             color: {
               connectOrCreate: {
                 where: { id: variant.color.id },

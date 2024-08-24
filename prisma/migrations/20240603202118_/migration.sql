@@ -18,8 +18,8 @@ CREATE TABLE "Account" (
     "providerId" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
     "refreshToken" TEXT,
-    "accessToken" TEXT,
-    "accessTokenExpires" TIMESTAMP(3),
+    "accesstockn" TEXT,
+    "accesstocknExpires" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

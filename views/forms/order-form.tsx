@@ -39,7 +39,7 @@ const ProductForm = ({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       id: undefined,
-      stoke: 1,
+      stock: 1,
       newArrival: false,
     },
     values: {
@@ -150,8 +150,8 @@ const ProductForm = ({
           <div className="flex gap-4 items-center">
             <FormInput
               form={form}
-              label={t("stoke")}
-              name="stoke"
+              label={t("stock")}
+              name="stock"
               type="number"
             />
             <FormInput

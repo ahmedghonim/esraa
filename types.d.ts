@@ -41,7 +41,7 @@ declare module "next-auth/jwt" {
 
 interface TProduct {
   categories: any;
-  stoke: ReactNode;
+  stock: ReactNode;
   id: number;
   name: string;
   thumbnail: string;

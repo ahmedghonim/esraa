@@ -25,8 +25,8 @@ model Account {
   providerId         String
   providerAccountId  String
   refreshToken       String?
-  accessToken        String?
-  accessTokenExpires DateTime?
+  accesstockn        String?
+  accesstocknExpires DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
   user               User      @relation(fields: [userId], references: [id])
@@ -37,6 +37,16 @@ model Account {
 model OtpCode {
   id  Int    @id @default(autoincrement())
   otp String
+}
+
+model HeroSection {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  products    Product[]
+  mainProduct Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Product {
@@ -52,24 +62,26 @@ model Product {
   categories      Category[]       @relation("ProductCategories")
   collection      Collection?      @relation(fields: [collectionId], references: [id])
   collectionId    Int?
-  OrderProduct    OrderProduct[]
   relatedProducts Product[]        @relation("RelatedProducts")
   parentProducts  Product[]        @relation("RelatedProducts")
   HeroSection     HeroSection?     @relation(fields: [heroSectionId], references: [id])
   heroSectionId   Int?
   ProductVariant  ProductVariant[]
 
+  OrderProduct OrderProduct[] // Remove onDelete from here
+
   @@index([name])
 }
 
-model HeroSection {
-  id          Int       @id @default(autoincrement())
-  title       String
-  description String
-  products    Product[]
-  mainProduct Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+model OrderProduct {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int     @default(1)
+  size      String
+  color     String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade) // Keep onDelete here
 }
 
 model Color {
@@ -99,25 +111,25 @@ model Size {
   @@unique([name])
 }
 
+model ProductVariant {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  colorId   Int
+  sizeId    Int
+  stock     Int
+  product   Product @relation(fields: [productId], references: [id])
+  color     Color   @relation(fields: [colorId], references: [id])
+  size      Size    @relation(fields: [sizeId], references: [id])
+
+  @@unique([productId, colorId, sizeId])
+}
+
 model Collection {
   id       Int       @id @default(autoincrement())
   name     String
   products Product[]
 
   @@unique([name])
-}
-
-model ProductVariant {
-  id        Int     @id @default(autoincrement())
-  productId Int
-  colorId   Int
-  sizeId    Int
-  stoke     Int     @default(1)
-  product   Product @relation(fields: [productId], references: [id])
-  color     Color   @relation(fields: [colorId], references: [id])
-  size      Size    @relation(fields: [sizeId], references: [id])
-
-  @@unique([productId, colorId, sizeId])
 }
 
 model Customer {
@@ -138,17 +150,6 @@ model Order {
   products   OrderProduct[]
 
   @@index([customerId])
-}
-
-model OrderProduct {
-  id        Int     @id @default(autoincrement())
-  orderId   Int
-  productId Int
-  quantity  Int     @default(1)
-  size      String
-  color     String
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id])
 }
 
 model WhatTheSay {

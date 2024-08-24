@@ -4,7 +4,7 @@ import Delete from "@/svg/delete.svg";
 import Edit from "@/svg/edit.svg";
 import { EsraButton } from "@/components/ui";
 import Image from "next/image";
-import { Color, Product, Size } from "@prisma/client";
+import { Color, Product, Size, ProductVariant } from "@prisma/client";
 import { Link, useRouter } from "@/utils/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
@@ -13,24 +13,26 @@ import { productDelete } from "@/actions/product";
 import { cn } from "@/lib/utils";
 
 interface Props extends Product {
-  sizes: Size[];
-  colors: Color[];
+  ProductVariant: {
+    size: Size;
+    color: Color;
+    stock: number;
+  }[];
 }
 
 export default function ProductRow({
   name,
-  sizes,
-  colors,
   thumbnail,
   price,
-  stoke,
   description,
+  ProductVariant,
   id,
 }: Props) {
   const { toast } = useToast();
   const t = useTranslations("common");
   const router = useRouter();
   const [isPending, startTransaction] = useTransition();
+
   const onDelete = (id: number) => {
     startTransaction(() => {
       productDelete(id)
@@ -49,6 +51,7 @@ export default function ProductRow({
         });
     });
   };
+
   return (
     <>
       <td className="py-4 w-[100px]">
@@ -67,38 +70,38 @@ export default function ProductRow({
         </div>
       </td>
 
-      <td className="py-4 w-[200px]">
-        <div className="flex justify-center flex-wrap gap-2 ">
-          {sizes.map(({ name }) => (
-            <span
-              key={name}
-              className="border border-solid border-stone-300 px-5"
-            >
-              {name}
-            </span>
-          ))}
-        </div>
-      </td>
-
-      <td className="py-4 w-[20px]">
-        <div className="flex flex-col items-center justify-center gap-2 flex-wrap">
-          {colors.map(({ hexCode }) => (
-            <div
-              key={hexCode}
-              className="shrink-0 h-5 w-5"
-              style={{ background: hexCode }}
-            />
-          ))}
-        </div>
-      </td>
-
-      <td
-        className={cn("py-4 text-center", {
-          "text-red-500": stoke < 10,
-          "text-green-500": stoke > 10,
-        })}
-      >
-        {stoke}
+      {/* Table for Color, Size, Stock */}
+      <td className="w-[200px] ">
+        <table className="w-full border-0">
+          <thead>
+            <tr>
+              <th className="text-center">{t("color")}</th>
+              <th className="text-center">{t("size")}</th>
+              <th className="text-center">{t("stock")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ProductVariant?.map(({ size, color, stock }, index) => (
+              <tr key={index}>
+                <td className="text-center">
+                  <div
+                    className="shrink-0 h-5 w-5 mx-auto"
+                    style={{ background: color.hexCode }}
+                  />
+                </td>
+                <td className="text-center">{size.name}</td>
+                <td
+                  className={cn("text-center", {
+                    "text-red-500": stock < 10,
+                    "text-green-500": stock >= 10,
+                  })}
+                >
+                  {stock}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </td>
 
       <td className="py-4 text-center text-wrap !w-[400px] overflow-hidden">
@@ -111,11 +114,10 @@ export default function ProductRow({
 
       <td className="py-4">
         <div className="flex justify-center items-center gap-4">
-          {/* edit alert */}
           <Link href={"/dashboard/products/" + id}>
             <Edit className="size-5" />
           </Link>
-          {/* delete alert */}
+
           <EsraButton
             className="bg-transparent"
             name={<Delete />}
@@ -123,7 +125,6 @@ export default function ProductRow({
               toast({
                 title: "Are you sure?",
                 description: "This action is irreversible",
-
                 action: (
                   <ToastAction altText="Delete" onClick={() => onDelete(id)}>
                     {t("delete")}

@@ -1,7 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { Order, OrderProduct, OrderSchema } from "@/schema";
-
 import { ZodError } from "zod";
 import { onMailer } from "./mailer";
 
@@ -23,17 +22,47 @@ const createOrderProduct = async (
   });
 
   for (const product of products) {
-    const data = await prisma.product.update({
-      where: { id: product.productId },
-      data: { stoke: { decrement: product.quantity } },
-    });
-
-    if (data.stoke < 2) {
-      // stoke is less than 2
-      onMailer({
-        subject: "Product out of stoke",
-        html: `<h1>Product ${data.name} out of stoke</h1>`,
+    if (product.size || product.color) {
+      // If the product has variants (size/color)
+      const variant = await prisma.productVariant.findFirst({
+        where: {
+          productId: product.productId,
+          size: product.size,
+          color: product.color,
+        },
       });
+
+      if (variant) {
+        const updatedVariant = await prisma.productVariant.update({
+          where: { id: variant.id },
+          data: { stock: { decrement: product.quantity } },
+        });
+
+        if (updatedVariant.stock < 2) {
+          // Stock is less than 2
+          const productData = await prisma.product.findUnique({
+            where: { id: product.productId },
+          });
+          onMailer({
+            subject: "Product variant out of stock",
+            html: `<h1>Product variant (${productData?.name} - ${product.size} / ${product.color}) out of stock</h1>`,
+          });
+        }
+      }
+    } else {
+      // If the product does not have variants
+      const updatedProduct = await prisma.product.update({
+        where: { id: product.productId },
+        data: { stock: { decrement: product.quantity } },
+      });
+
+      if (updatedProduct.stock < 2) {
+        // Stock is less than 2
+        onMailer({
+          subject: "Product out of stock",
+          html: `<h1>Product ${updatedProduct.name} out of stock</h1>`,
+        });
+      }
     }
   }
 };
@@ -52,7 +81,7 @@ const createOrder = async (data: Order) => {
 
     // Ensure that products array is defined and correctly typed
     if (validatedData.products) {
-      const products = validatedData?.products;
+      const products = validatedData.products;
 
       // Create order products
       await createOrderProduct(createdOrder.id, products);
@@ -84,6 +113,15 @@ const deleteOrder = async (id: number) => {
     });
   } catch (error) {
     console.error(`Error deleting order with id ${id}:`, error);
+    throw error;
+  }
+};
+
+const deleteAllOrders = async () => {
+  try {
+    await prisma.order.deleteMany();
+  } catch (error) {
+    console.error(`Error deleting all orders:`, error);
     throw error;
   }
 };
@@ -122,4 +160,10 @@ const getAllOrders = async () => {
   }
 };
 
-export { deleteOrder, getOrderById, getAllOrders, createOrder };
+export {
+  deleteOrder,
+  getOrderById,
+  getAllOrders,
+  createOrder,
+  deleteAllOrders,
+};
