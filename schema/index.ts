@@ -43,7 +43,6 @@ const ProductSchema = z.object({
   categories: z.array(z.number()), // Array of category IDs
   collectionId: z.number().optional(),
   relatedProducts: z.array(z.number()).optional(), // Array of related product IDs
-  variants: z.array(ProductVariantSchema),
 });
 
 // Define schema for OrderProduct

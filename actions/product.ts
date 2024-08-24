@@ -64,22 +64,14 @@ const productUpsert = async (value: Product) => {
             : undefined,
         ProductVariant: {
           deleteMany: {}, // Delete existing variants to handle the update
-          create: value.variants.map((variant: any) => ({
-            stock: parseInt(variant.stock, 10), // Ensure stock is an integer
+          // @ts-ignore
+          create: value.productVariant.map((variant) => ({
+            stock: variant.stock, // Ensure correct field name here
             color: {
-              connectOrCreate: {
-                where: { id: variant.color.id },
-                create: {
-                  name: variant.color.name,
-                  hexCode: variant.color.hexCode,
-                },
-              },
+              connect: { id: variant.colorId },
             },
             size: {
-              connectOrCreate: {
-                where: { id: variant.size.id },
-                create: { name: variant.size.name },
-              },
+              connect: { id: variant.sizeId },
             },
           })),
         },
@@ -114,22 +106,14 @@ const productUpsert = async (value: Product) => {
           connect: value.relatedProducts?.map((id) => ({ id })),
         },
         ProductVariant: {
-          create: value.variants.map((variant: any) => ({
-            stock: parseInt(variant.stock, 10), // Ensure stock is an integer
+          // @ts-ignore
+          create: value?.productVariant.map((variant: any) => ({
+            stock: variant.stock, // Ensure correct field name here
             color: {
-              connectOrCreate: {
-                where: { id: variant.color.id },
-                create: {
-                  name: variant.color.name,
-                  hexCode: variant.color.hexCode,
-                },
-              },
+              connect: { id: variant.colorId },
             },
             size: {
-              connectOrCreate: {
-                where: { id: variant.size.id },
-                create: { name: variant.size.name },
-              },
+              connect: { id: variant.sizeId },
             },
           })),
         },

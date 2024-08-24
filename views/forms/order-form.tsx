@@ -39,7 +39,6 @@ const ProductForm = ({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       id: undefined,
-      stock: 1,
       newArrival: false,
     },
     values: {
@@ -71,7 +70,7 @@ const ProductForm = ({
         });
     });
   };
-  console.log("form.watch() >>>> ", form.watch());
+
   return (
     <Form {...form}>
       <div className="space-y-4">

@@ -41,7 +41,7 @@ function OurInfoForm({ values }: { values: OurInfo }) {
         });
     });
   };
-  console.log("form. >>>> ", form.formState.errors);
+
   return (
     <Form {...form}>
       <div className="flex flex-col gap-6">

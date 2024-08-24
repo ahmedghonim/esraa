@@ -5,11 +5,16 @@ import { useTranslations } from "next-intl";
 import { useShowProductActions } from "../helpers/useShowProductActions";
 import { TProduct } from "@/types";
 import { cn } from "@/lib/utils";
+import { ProductVariant } from "@prisma/client";
 
 interface Props {
-  product: TProduct;
+  product: TProduct & {
+    ProductVariant: ProductVariant[];
+  };
 }
 export default function ProductInfo({ product }: Props) {
+  const [variant, setVariant] = React.useState(product.ProductVariant[0]);
+
   const t = useTranslations("common");
 
   const { onAddToCart, setProductControler, productControler } =
@@ -64,8 +69,8 @@ export default function ProductInfo({ product }: Props) {
         <h1 className="mt-7 text-lg text-zinc-800 max-md:max-w-full">
           {t("size")}
         </h1>
-        <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-          {product.sizes.map((size) => (
+        {/* <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
+          {product.ProductVariant.map(({size}) => (
             <button
               key={size.id}
               className={cn(
@@ -77,11 +82,11 @@ export default function ProductInfo({ product }: Props) {
               {size.name}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Product Color */}
         <h1 className="self-start mt-3 text-lg text-zinc-800">{t("color")}</h1>
-        <div className="flex gap-3 mt-1">
+        {/* <div className="flex gap-3 mt-1">
           {product.colors.map((color) => (
             <button
               key={color.id}
@@ -98,7 +103,7 @@ export default function ProductInfo({ product }: Props) {
               }
             />
           ))}
-        </div>
+        </div> */}
 
         {/* Product Pieces */}
         <h1 className="mt-2.5 text-lg text-zinc-800 max-md:max-w-full">

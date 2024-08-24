@@ -46,7 +46,6 @@ const ProductForm = ({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
       id: undefined,
-      variants: [],
       newArrival: false,
     },
     values: {
@@ -65,6 +64,7 @@ const ProductForm = ({
 
   const { append: appendVariant, remove: removeVariant } = useFieldArray({
     control: form.control,
+    // @ts-ignore
     name: "variants",
   });
   const onSubmit = () => {
@@ -72,6 +72,7 @@ const ProductForm = ({
     const formattedValues = {
       ...values,
       price: Number(values.price),
+      // @ts-ignore
       productVariant: values?.variants?.map((variant: any) => ({
         ...variant,
         stock: Number(variant.stock),
@@ -165,6 +166,7 @@ const ProductForm = ({
         />
 
         <div className="space-y-4">
+          {/*  @ts-ignore */}
           {form.getValues("variants").map((variant, index) => (
             <div
               className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full "
