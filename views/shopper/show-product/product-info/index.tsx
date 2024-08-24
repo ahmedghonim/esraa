@@ -6,6 +6,7 @@ import { useShowProductActions } from "../helpers/useShowProductActions";
 import { TProduct } from "@/types";
 import { cn } from "@/lib/utils";
 import { ProductVariant } from "@prisma/client";
+import { object } from "zod";
 
 interface Props {
   product: TProduct & {
@@ -13,8 +14,19 @@ interface Props {
   };
 }
 export default function ProductInfo({ product }: Props) {
-  const [variant, setVariant] = React.useState(product.ProductVariant[0]);
+  let info: any = {};
 
+  product.ProductVariant.forEach(({ colorId, ...variant }) => {
+    info[colorId] = [...(info[colorId] || []), variant];
+  });
+
+  const [variant, setVariant] = React.useState<any>(
+    info[product.ProductVariant[0].colorId]
+  );
+
+  const [stock, setStock] = React.useState(
+    info[product.ProductVariant[0].colorId][0].stock
+  );
   const t = useTranslations("common");
 
   const { onAddToCart, setProductControler, productControler } =
@@ -28,13 +40,13 @@ export default function ProductInfo({ product }: Props) {
           qty: productControler.qty - 1,
         });
     } else
-      product.stock > productControler.qty &&
+      stock > productControler.qty &&
         setProductControler({
           ...productControler,
           qty: productControler.qty + 1,
         });
   };
-
+  console.log("productControler >>>> ", productControler);
   return (
     <div className="col-span-12 lg:col-span-6 flex flex-col max-md:ml-0">
       <div className="flex flex-col mt-1.5 max-md:mt-8 max-md:max-w-full">
@@ -45,7 +57,7 @@ export default function ProductInfo({ product }: Props) {
             "text-green-500": product.stock > 0,
           })}
         >
-          {t("stock")} {product.stock}
+          {t("stock")} {stock}
         </h1>
         <div className="flex gap-5 justify-between mt-2 w-full font-medium text-primary-100 max-md:flex-wrap max-md:max-w-full">
           <div className="my-auto text-lg">
@@ -69,41 +81,51 @@ export default function ProductInfo({ product }: Props) {
         <h1 className="mt-7 text-lg text-zinc-800 max-md:max-w-full">
           {t("size")}
         </h1>
-        {/* <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-          {product.ProductVariant.map(({size}) => (
+        <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
+          {variant.map(({ size, stock }: any) => (
             <button
               key={size.id}
               className={cn(
                 "text-center  p-2 border border-solid border-stone-300 uppercase",
                 { "bg-[#dcdcdc]": productControler.size?.id === size.id }
               )}
-              onClick={() => setProductControler({ ...productControler, size })}
+              onClick={() => {
+                setProductControler({ ...productControler, size, qty: 1 });
+                setStock(stock);
+              }}
             >
               {size.name}
             </button>
           ))}
-        </div> */}
+        </div>
 
         {/* Product Color */}
         <h1 className="self-start mt-3 text-lg text-zinc-800">{t("color")}</h1>
-        {/* <div className="flex gap-3 mt-1">
-          {product.colors.map((color) => (
+        <div className="flex gap-3 mt-1">
+          {Object.values(info).map((item: any) => (
             <button
-              key={color.id}
+              key={item[0].color.id}
               className={cn(
-                "shrink-0 border-2 border-solid border-zinc-600 h-[37px] w-[37px]",
+                "shrink-0 border-2 border-solid border-white h-[37px] w-[37px]",
                 {
-                  "border-[2px] border-[#dcdcdc]":
-                    productControler.color?.id === color.id,
+                  "border-[2px] border-[#186718]":
+                    productControler.color?.id === item[0].color.id,
                 }
               )}
-              style={{ background: color.hexCode }}
-              onClick={() =>
-                setProductControler({ ...productControler, color })
-              }
-            />
+              style={{ background: item[0].color.hexCode }}
+              onClick={() => {
+                console.log("item[0].color >>>> ", item[0].color);
+                setProductControler({
+                  color: item[0].color,
+                  size: item[0].size,
+                  qty: 1,
+                });
+                setVariant(info[item[0].color.id]);
+                setStock(info[item[0].color.id][0].stock);
+              }}
+            ></button>
           ))}
-        </div> */}
+        </div>
 
         {/* Product Pieces */}
         <h1 className="mt-2.5 text-lg text-zinc-800 max-md:max-w-full">
@@ -122,7 +144,7 @@ export default function ProductInfo({ product }: Props) {
         <div className="flex gap-3.5 mt-3">
           <EsraButton
             name={t("add_to_cart")}
-            // disabled={product.stock === 0}
+            disabled={stock === 0}
             className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
             onClick={() => onAddToCart(product)}
           />
