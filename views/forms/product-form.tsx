@@ -167,7 +167,7 @@ const ProductForm = ({
 
         <div className="space-y-4">
           {/*  @ts-ignore */}
-          {form.getValues("variants").map((variant, index) => (
+          {form.getValues("variants")?.map((variant, index) => (
             <div
               className="grid grid-cols-1 lg:grid-cols-4 gap-4 w-full "
               key={index}
@@ -227,6 +227,12 @@ const ProductForm = ({
             form={form}
             label={t("price")}
             name="price"
+            type="number"
+          />
+          <FormInput
+            form={form}
+            label={t("new_price")}
+            name="newPrice"
             type="number"
           />
           <div className="flex gap-4 items-center">

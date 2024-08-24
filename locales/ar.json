@@ -1,5 +1,6 @@
 {
   "common": {
+    "new_price": "السعر الجديد",
     "variant": "المتغير",
     "delete_all_orders": "حذف جميع الطلبات",
     "export_csv": "تصدير CSV",

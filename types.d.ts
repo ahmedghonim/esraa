@@ -53,6 +53,7 @@ interface TProduct {
   selected_color: TColor;
   qty: number;
   price: number;
+  newPrice: number;
 }
 
 interface TCategory {

@@ -69,7 +69,18 @@ export default function ProductInfo({ product }: Props) {
             </span>
           </div>
           <div className="flex gap-2 justify-between text-3xl text-right whitespace-nowrap">
-            <div>{product.price}</div>
+            <div
+              className={cn("", {
+                "line-through text-primary-100/50 px-2": product.newPrice,
+              })}
+            >
+              {product.price}
+            </div>
+
+            {product.newPrice && (
+              <div className="font-bold">{product.newPrice}</div>
+            )}
+
             <div>{t("LE")}</div>
           </div>
         </div>

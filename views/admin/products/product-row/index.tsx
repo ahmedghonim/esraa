@@ -24,6 +24,7 @@ export default function ProductRow({
   name,
   thumbnail,
   price,
+  newPrice,
   description,
   ProductVariant,
   id,
@@ -32,7 +33,7 @@ export default function ProductRow({
   const t = useTranslations("common");
   const router = useRouter();
   const [isPending, startTransaction] = useTransition();
-
+  console.log("newPrice >>>> ", newPrice);
   const onDelete = (id: number) => {
     startTransaction(() => {
       productDelete(id)
@@ -108,8 +109,15 @@ export default function ProductRow({
         {description}
       </td>
 
-      <td className="py-4 text-center">
-        {Number(price).toLocaleString()} {t("LE")}
+      <td className="py-4 text-center ">
+        <span
+          className={cn("", {
+            "line-through text-red-500 p-2": newPrice,
+          })}
+        >
+          {Number(price).toLocaleString()} {t("LE")} <br />
+        </span>
+        {newPrice && Number(newPrice).toLocaleString()} {t("LE")}
       </td>
 
       <td className="py-4">

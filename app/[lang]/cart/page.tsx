@@ -5,7 +5,7 @@ import React from "react";
 type Props = {};
 
 export default async function CartPage({}: Props) {
-  const data = await getOurInfo();
+  const data = (await getOurInfo()) as any;
 
   return <Cart shipping={data?.shipping || 0} />;
 }

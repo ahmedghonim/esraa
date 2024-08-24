@@ -36,6 +36,7 @@ const ProductSchema = z.object({
   id: z.number().optional(),
   newArrival: z.boolean().optional(),
   price: z.union([z.number(), z.string().transform(Number)]),
+  newPrice: z.union([z.number(), z.string().transform(Number)]),
   name: z.string().min(1),
   description: z.string().min(1),
   images: z.array(z.string().url()), // Ensuring that each image URL is valid
