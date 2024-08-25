@@ -1,5 +1,6 @@
 {
   "common": {
+    "about-us": "About Us",
     "new_price": "New Price",
     "variant": "Variant",
     "delete_all_orders": "Delete All Orders",

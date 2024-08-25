@@ -46,7 +46,7 @@ export default function ProductInfo({ product }: Props) {
           qty: productControler.qty + 1,
         });
   };
-  console.log("productControler >>>> ", productControler);
+
   return (
     <div className="col-span-12 lg:col-span-6 flex flex-col max-md:ml-0">
       <div className="flex flex-col mt-1.5 max-md:mt-8 max-md:max-w-full">
