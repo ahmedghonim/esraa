@@ -18,6 +18,7 @@ interface Props {
 
 export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
   const t = useTranslations("common");
+
   return (
     <section className="flex flex-col mt-8">
       <Table>
@@ -52,15 +53,22 @@ export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
                     "dec"
                   )
                 }
-                onIncrease={() =>
-                  product.stock > product.qty &&
-                  onChangeQty(
-                    product.id,
-                    product.selected_size,
-                    product.selected_color,
-                    "inc"
-                  )
-                }
+                onIncrease={() => {
+                  const variant = product?.ProductVariant?.find(
+                    (variant) =>
+                      variant.sizeId === product.selected_size.id &&
+                      variant.colorId === product.selected_color.id
+                  );
+
+                  if (variant && variant.stock > product.qty) {
+                    onChangeQty(
+                      product.id,
+                      product.selected_size,
+                      product.selected_color,
+                      "inc"
+                    );
+                  }
+                }}
               />
             </TableRow>
           ))}

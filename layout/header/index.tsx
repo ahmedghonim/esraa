@@ -1,14 +1,16 @@
 "use client";
 import { Link } from "@/utils/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Logo from "@/svg/logo.svg";
 import clsx from "clsx";
 import { MobileHeader } from "./mobile-header";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/utils/navigation";
-import { EsraButton, EsraLink } from "@/components/ui";
+import { EsraLink } from "@/components/ui";
 import { ShoppingCart } from "lucide-react";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
+import { getAllCategories } from "@/actions/category";
+import { Category } from "@/schema";
 export const links = [
   {
     name: "Home",
@@ -37,7 +39,12 @@ export default function Header({}: Props) {
   const asPath = usePathname();
 
   const isActive = (href: string) => asPath === href;
-
+  const [category, setCategory] = React.useState<Category[]>();
+  useEffect(() => {
+    getAllCategories({}).then((data) => {
+      setCategory(data);
+    });
+  }, []);
   return (
     <header className="flex gap-5 justify-between items-center max-md:flex-wrap max-lg:mt-6">
       <Link href="/">
@@ -56,6 +63,20 @@ export default function Header({}: Props) {
             <Link href={link.href}>{t(link.name)}</Link>
           </li>
         ))}
+        <li className="group relative">
+          <Link href="/products">{t("categories")}</Link>
+          <ul className=" absolute flex-col top-2 -start-3  bg-white z-50 shadow hidden duration-150 rounded-lg text-nowrap p-2 group-hover:flex gap-3 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
+            {category?.map((category) => (
+              <Link
+                className="hover:bg-primary-200 hover:text-white px-1 rounded-md"
+                key={category.id}
+                href={`/products?categories=${category.id}`}
+              >
+                {category.name}
+              </Link>
+            ))}
+          </ul>
+        </li>
       </ul>
 
       <div className="relative max-lg:hidden flex  my-auto text-base font-bold leading-6 capitalize whitespace-nowrap">

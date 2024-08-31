@@ -13,8 +13,6 @@ const useCartActions = () => {
   /* ------------------------ */
   const onDeleteItem = (index: number) => {
     cart.items.splice(index, 1);
-
-    setCart({ ...cart });
   };
 
   /* ------------------------ */
@@ -29,8 +27,11 @@ const useCartActions = () => {
     const getProduct = cart.items.find(
       (product) =>
         product.id === id &&
-        product.selected_size.id === selected_size.id &&
-        product.selected_color.id === selected_color.id
+        product.ProductVariant.find(
+          (variant) =>
+            variant.sizeId === selected_size.id &&
+            variant.colorId === selected_color.id
+        )
     );
 
     if (!getProduct) {
@@ -51,8 +52,11 @@ const useCartActions = () => {
 
     const updatedItems = cart.items.map((product) =>
       product.id === id &&
-      product.selected_size.id === selected_size.id &&
-      product.selected_color.id === selected_color.id
+      product.ProductVariant.find(
+        (variant) =>
+          variant.sizeId === selected_size.id &&
+          variant.colorId === selected_color.id
+      )
         ? updatedProduct
         : product
     );

@@ -49,9 +49,9 @@ const ProductSchema = z.object({
 // Define schema for OrderProduct
 const OrderProductSchema = z.object({
   productId: z.number(),
-  quantity: z.number().optional(),
-  color: z.string().optional(), // Color is optional
-  size: z.string().optional(), // Size is optional
+  quantity: z.number(),
+  color: z.string(), // Color is optional
+  size: z.string(), // Size is optional
 });
 
 // Define schema for Order

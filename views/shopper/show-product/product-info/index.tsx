@@ -17,16 +17,16 @@ export default function ProductInfo({ product }: Props) {
   let info: any = {};
 
   product.ProductVariant.forEach(({ colorId, ...variant }) => {
+    if (variant.stock <= 0) {
+      return;
+    }
     info[colorId] = [...(info[colorId] || []), variant];
   });
+  const pro = Object.values(info).flat() as any;
 
-  const [variant, setVariant] = React.useState<any>(
-    info[product.ProductVariant[0].colorId]
-  );
+  const [variant, setVariant] = React.useState<any>(info[pro[0].color.id]);
 
-  const [stock, setStock] = React.useState(
-    info[product.ProductVariant[0].colorId][0].stock
-  );
+  const [stock, setStock] = React.useState(info[pro[0].color.id][0].stock);
   const t = useTranslations("common");
 
   const { onAddToCart, setProductControler, productControler } =
@@ -125,7 +125,6 @@ export default function ProductInfo({ product }: Props) {
               )}
               style={{ background: item[0].color.hexCode }}
               onClick={() => {
-                console.log("item[0].color >>>> ", item[0].color);
                 setProductControler({
                   color: item[0].color,
                   size: item[0].size,

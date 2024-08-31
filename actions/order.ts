@@ -22,45 +22,32 @@ const createOrderProduct = async (
   });
 
   for (const product of products) {
-    if (product.size || product.color) {
-      // If the product has variants (size/color)
-      const variant = await prisma.productVariant.findFirst({
-        where: {
-          productId: product.productId,
-          size: product.size,
-          color: product.color,
-        },
-      });
+    // If the product has variants (size/color)
+    const variant = await prisma.productVariant.findFirst({
+      where: {
+        productId: product.productId,
+      },
+    });
 
-      if (variant) {
-        const updatedVariant = await prisma.productVariant.update({
-          where: { id: variant.id },
-          data: { stock: { decrement: product.quantity } },
-        });
-
-        if (updatedVariant.stock < 2) {
-          // Stock is less than 2
-          const productData = await prisma.product.findUnique({
-            where: { id: product.productId },
-          });
-          onMailer({
-            subject: "Product variant out of stock",
-            html: `<h1>Product variant (${productData?.name} - ${product.size} / ${product.color}) out of stock</h1>`,
-          });
-        }
+    if (variant) {
+      if (variant?.stock < product.quantity) {
+        throw {
+          status: 400,
+          message: `Stock is not enough for ${product.size} / ${product.color} currant stock is ${variant.stock}`,
+        };
       }
-    } else {
-      // If the product does not have variants
-      const updatedProduct = await prisma.product.update({
-        where: { id: product.productId },
+      const updatedVariant = await prisma.productVariant.update({
+        where: { id: variant.id },
         data: { stock: { decrement: product.quantity } },
       });
-
-      if (updatedProduct.stock < 2) {
+      if (updatedVariant.stock < 2) {
         // Stock is less than 2
+        const productData = await prisma.product.findUnique({
+          where: { id: product.productId },
+        });
         onMailer({
-          subject: "Product out of stock",
-          html: `<h1>Product ${updatedProduct.name} out of stock</h1>`,
+          subject: "Product variant out of stock",
+          html: `<h1>Product variant (${productData?.name} - ${product.size} / ${product.color}) out of stock</h1>`,
         });
       }
     }
@@ -71,7 +58,6 @@ const createOrderProduct = async (
 const createOrder = async (data: Order) => {
   try {
     const validatedData = OrderSchema.parse(data);
-
     // Create the order first without products
     const createdOrder = await prisma.order.create({
       data: {
@@ -96,12 +82,14 @@ const createOrder = async (data: Order) => {
     });
 
     return orderWithProducts;
-  } catch (error) {
-    console.error("Error creating/updating order:", error);
+  } catch (error: any) {
     if (error instanceof ZodError) {
-      throw { status: 400, message: error.errors };
+      return { status: 400, message: error.errors };
     }
-    throw error;
+    return {
+      status: error.status || 500,
+      message: error.message || "An unexpected error occurred",
+    };
   }
 };
 
@@ -145,6 +133,11 @@ const getOrderById = async (id: number) => {
 const getAllOrders = async () => {
   try {
     return await prisma.order.findMany({
+      orderBy: [
+        {
+          id: "desc",
+        },
+      ],
       include: {
         products: {
           include: {

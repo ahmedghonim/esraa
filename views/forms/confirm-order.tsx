@@ -48,6 +48,10 @@ export default function ConfirmOrder({}: Props) {
             products,
           })
             .then(async (order: any) => {
+              console.log("order >>>> ", order);
+              if (order.status !== 200) {
+                throw order;
+              }
               await onMailer({
                 email: customer?.email!,
                 subject: "Order Confirmation",
@@ -58,7 +62,6 @@ export default function ConfirmOrder({}: Props) {
                    <p>Thank you for shopping with us!</p>
                  `,
               });
-
               await onMailer({
                 subject: "You have a new order",
                 html: `
@@ -74,20 +77,20 @@ export default function ConfirmOrder({}: Props) {
                 title: t("success"),
                 description: t("order_placed_successfully"),
               });
-
               setCart({ items: [], total: 0, subTotal: 0, shipping: 0 });
               router.push("/");
             })
             .catch((error) => {
               toast({
                 title: t("error"),
+                description: error.message || t("something_went_wrong"),
               });
             });
         })
         .catch((error) => {
           toast({
             title: t("error"),
-            description: error.message,
+            description: error.message || t("something_went_wrong"),
           });
         });
     });

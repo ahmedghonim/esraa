@@ -1,4 +1,5 @@
 import { Color, Product, Size } from "@prisma/client";
+import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export interface TFilterState {
@@ -25,6 +26,9 @@ const useFilterActions = (
     }
   >
 ) => {
+  const param = useSearchParams();
+  const categories = param.get("categories");
+
   const [filterControler, setFilterControler] = useState(initialFiterState);
 
   const [products, setProducts] = useState<
@@ -42,7 +46,19 @@ const useFilterActions = (
     if (searchValue !== "") {
       setProducts(data.filter((product) => product.name.includes(searchValue)));
     } else setProducts(data);
-  }, [searchValue]);
+    if (categories) {
+      setProducts(
+        // @ts-ignore
+        data.filter((product) =>
+          // @ts-ignore
+          product.categories.some(
+            // @ts-ignore
+            (category) => category.id === Number(categories)
+          )
+        )
+      );
+    }
+  }, [searchValue, categories]);
 
   /* ------------------------ */
   /*      On Apply Filter     */

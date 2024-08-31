@@ -33,7 +33,7 @@ export default function ProductRow({
   const t = useTranslations("common");
   const router = useRouter();
   const [isPending, startTransaction] = useTransition();
-  console.log("newPrice >>>> ", newPrice);
+
   const onDelete = (id: number) => {
     startTransaction(() => {
       productDelete(id)

@@ -45,6 +45,9 @@ export default function SimilarProducts({ data }: { data: Product[] }) {
       });
     }
   };
+
+  if (data.length === 0) return null;
+
   return (
     <section className="mt-[106px] mb-[56px]">
       <EsraSectionTitle title={t("similar_products")} href="" />

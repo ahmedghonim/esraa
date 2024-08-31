@@ -28,6 +28,7 @@ declare module "next-auth" {
   }
 }
 
+import { ProductVariant } from "@prisma/client";
 // The `JWT` interface can be found in the `next-auth/jwt` submodule
 import { JWT } from "next-auth/jwt";
 
@@ -40,6 +41,7 @@ declare module "next-auth/jwt" {
 }
 
 interface TProduct {
+  ProductVariant: ProductVariant[];
   categories: any;
   stock: ReactNode;
   id: number;
