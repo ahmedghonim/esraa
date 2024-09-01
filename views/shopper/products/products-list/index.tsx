@@ -5,12 +5,12 @@ import React, { useContext } from "react";
 import Search from "@/svg/search.svg";
 import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { TProduct } from "@/types";
-import { Color, Product, Size } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "next-intl";
 
 type Props = {
-  data: Array<Product & { sizes: Size[] } & { colors: Color[] }>;
+  data: any;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -63,7 +63,7 @@ export default function ProductsList({ data, setSearchValue }: Props) {
 
       {/* products list */}
       <div className="grid md:grid-cols-3 gap-5 mt-[14px] mb-8">
-        {data.map((item) => (
+        {data.map((item: any) => (
           <ProductCard key={item.id} {...item} />
         ))}
       </div>
