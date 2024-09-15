@@ -5,6 +5,6 @@ import React from "react";
 type Props = {};
 
 export default async function OrdersPage({}: Props) {
-  const data = await getAllOrders();
+  const data = (await getAllOrders()) as any;
   return <OrdersList data={data} />;
 }
