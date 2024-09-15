@@ -45,12 +45,6 @@ function OurInfoForm({ values }: { values: OurInfo }) {
   return (
     <Form {...form}>
       <div className="flex flex-col gap-6">
-        <FormInput
-          form={form}
-          name="shipping"
-          label={t("shipping")}
-          type="number"
-        />
         <FormInput form={form} name="phone" label={t("phone")} type="tel" />
         <FormInput
           form={form}

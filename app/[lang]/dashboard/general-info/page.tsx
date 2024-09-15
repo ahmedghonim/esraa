@@ -11,6 +11,8 @@ import { getAllCollections } from "@/actions/collection";
 import { getAllSizes } from "@/actions/size";
 import CategoriesForm from "@/views/forms/general-form/categories-form";
 import { Link } from "@/utils/navigation";
+import { getAllShipping } from "@/actions/shipping";
+import ShippingForm from "@/views/forms/general-form/shipping-form";
 
 async function GeneralInfo({
   searchParams,
@@ -19,11 +21,12 @@ async function GeneralInfo({
 }) {
   const t = await getTranslations("common");
   const tab = searchParams.tab as string | undefined;
-  const tabs = ["color", "size", "collection", "category"];
+  const tabs = ["color", "size", "collection", "category","shipping"];
   const color = await getAllColors();
   const category = await getAllCategories({});
   const collection = await getAllCollections();
   const sizes = await getAllSizes();
+  const shipping = await getAllShipping();
   return (
     <div>
       <div className="flex gap-3 p-8">
@@ -51,6 +54,7 @@ async function GeneralInfo({
         {tab === "size" && <SizeForm sizes={sizes} />}
         {tab === "category" && <CategoriesForm category={category} />}
         {tab === "collection" && <CollectionForm collection={collection} />}
+        {tab === "shipping" && <ShippingForm shipping={shipping}/>}
       </div>
     </div>
   );

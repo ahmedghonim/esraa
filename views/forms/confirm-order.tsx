@@ -41,6 +41,8 @@ export default function ConfirmOrder({}: Props) {
             productId: +item.id,
             quantity: +item.qty,
             size: item.selected_size.name,
+            colorId: item.selected_color.id,
+            sizeId: item.selected_size.id,
             color: item.selected_color.name,
           }));
           createOrder({
@@ -48,10 +50,6 @@ export default function ConfirmOrder({}: Props) {
             products,
           })
             .then(async (order: any) => {
-              console.log("order >>>> ", order);
-              if (order.status !== 200) {
-                throw order;
-              }
               await onMailer({
                 email: customer?.email!,
                 subject: "Order Confirmation",

@@ -26,18 +26,6 @@ export default function ProductsList({ data, setSearchValue }: Props) {
     return cart.items.some((item) => item.id === id);
   };
 
-  const onAddToCart = (product: TProduct) => {
-    if (isItemSelected(product.id)) {
-      const filteredCart = cart.items.filter((item) => item.id !== product.id);
-
-      setCart({ ...cart, items: filteredCart });
-      toast({
-        title: "Removed successfully",
-        description: "Product removed successfully",
-      });
-      return;
-    }
-  };
 
   return (
     <section className="lg:col-span-9 col-span-12">

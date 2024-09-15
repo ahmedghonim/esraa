@@ -68,7 +68,7 @@ export default function Header({}: Props) {
           <ul className=" absolute flex-col top-2 -start-3  bg-white z-50 shadow hidden duration-150 rounded-lg text-nowrap p-2 group-hover:flex gap-3 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
             {category?.map((category) => (
               <Link
-                className="hover:bg-primary-200 hover:text-white px-1 rounded-md"
+                className="hover:bg-primary-200 hover:text-white px-2 p-1  rounded-md"
                 key={category.id}
                 href={`/products?categories=${category.id}`}
               >

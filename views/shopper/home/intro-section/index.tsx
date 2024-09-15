@@ -2,7 +2,6 @@
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import Previous from "@/svg/previous.svg";
-import Plus from "@/svg/plus.svg";
 import Next from "@/svg/next.svg";
 import { EsraLink } from "@/components/ui";
 import { SwiperSlide, Swiper } from "swiper/react";
@@ -10,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { HeroSection, Product } from "@/schema";
 import { Link } from "@/utils/navigation";
 import parser from "html-react-parser";
+import { Eye } from "lucide-react";
 type Props = {
   data: HeroSection;
 };
@@ -50,9 +50,9 @@ export default function IntroSection({ data }: Props) {
           />
           <Link
             href={`/products/${mainProduct?.id}`}
-            className="absolute top-[17%] translate-y-1/2 right-3 duration-300 hover:scale-90"
+            className="absolute top-[17%] translate-y-1/2 right-3 duration-300 hover:scale-90 border border-white p-2 rounded-full bg-white/40"
           >
-            <Plus />
+            <Eye className="text-white" />
           </Link>
         </div>
 
@@ -114,9 +114,9 @@ export default function IntroSection({ data }: Props) {
 
                       <Link
                         href={`/products/${product?.id}`}
-                        className="absolute bottom-4 right-3 duration-300 hover:scale-90"
+                        className="absolute bottom-4 right-3 duration-300 hover:scale-90 border border-white p-1 rounded-full bg-white/40"
                       >
-                        <Plus />
+                        <Eye className="text-white" />
                       </Link>
                     </div>
                   </SwiperSlide>

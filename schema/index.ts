@@ -14,6 +14,12 @@ const CategorySchema = z.object({
   topCategory: z.boolean().optional(),
 });
 
+const ShippingSchema = z.object({
+  id: z.number().optional(),
+  city: z.string().min(1),
+  price: z.number().or(z.string().transform(Number)),
+});
+
 const SizeSchema = z.object({
   id: z.number().optional(),
   name: z.string().min(1),
@@ -36,7 +42,7 @@ const ProductSchema = z.object({
   id: z.number().optional(),
   newArrival: z.boolean().optional(),
   price: z.union([z.number(), z.string().transform(Number)]),
-  newPrice: z.union([z.number(), z.string().transform(Number)]),
+  newPrice: z.union([z.number(), z.string().transform(Number)]).optional(),
   name: z.string().min(1),
   description: z.string().min(1),
   images: z.array(z.string().url()), // Ensuring that each image URL is valid
@@ -52,6 +58,8 @@ const OrderProductSchema = z.object({
   quantity: z.number(),
   color: z.string(), // Color is optional
   size: z.string(), // Size is optional
+  colorId: z.number(),
+  sizeId: z.number(),
 });
 
 // Define schema for Order
@@ -147,7 +155,6 @@ const OurInfoSchema = z.object({
   whatsApp: z.string(),
   facebook: z.string().optional(),
   instagram: z.string().optional(),
-  shipping: z.string(),
   x: z.string().optional(),
   tiktok: z.string().optional(),
   createdAt: z.date().optional(),
@@ -184,6 +191,8 @@ type Order = z.infer<typeof OrderSchema>;
 
 type CustomerType = z.infer<typeof CustomerSchema>;
 type ProductVariant = z.infer<typeof ProductVariantSchema>;
+
+type Shipping = z.infer<typeof ShippingSchema>;
 export {
   SignupSchema,
   ProductSchema,
@@ -199,6 +208,8 @@ export {
   HeroSectionSchema,
   ContactSchema,
   OurInfoSchema,
+  ShippingSchema,
+  type Shipping,
   type Contact,
   type OurInfo,
   type Signup,

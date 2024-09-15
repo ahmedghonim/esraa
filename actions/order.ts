@@ -23,11 +23,16 @@ const createOrderProduct = async (
 
   for (const product of products) {
     // If the product has variants (size/color)
-    const variant = await prisma.productVariant.findFirst({
+    const variants = await prisma.productVariant.findMany({
       where: {
-        productId: product.productId,
+        AND: [
+          { productId: product.productId },
+          { sizeId: product.sizeId },
+          { colorId: product.colorId },
+        ],
       },
     });
+    const variant = variants[0]; // Access the first item in the array
 
     if (variant) {
       if (variant?.stock < product.quantity) {

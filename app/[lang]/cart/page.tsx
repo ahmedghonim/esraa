@@ -1,11 +1,10 @@
-import { getOurInfo } from "@/actions/our-info";
+"use client";
+
 import Cart from "@/views/shopper/cart";
 import React from "react";
 
 type Props = {};
 
-export default async function CartPage({}: Props) {
-  const data = (await getOurInfo()) as any;
-
-  return <Cart shipping={data?.shipping || 0} />;
+export default function CartPage({}: Props) {
+  return <Cart />;
 }

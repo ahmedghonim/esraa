@@ -13,14 +13,12 @@ const upsertOurInfo = async (data: OurInfo) => {
         where: { id: 1 },
         data: {
           ...validatedData,
-          shipping: +validatedData.shipping,
         },
       });
     } else {
       return await prisma.ourInfo.create({
         data: {
           ...validatedData,
-          shipping: +validatedData.shipping,
         },
       });
     }
