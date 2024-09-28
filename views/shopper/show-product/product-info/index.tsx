@@ -24,9 +24,9 @@ export default function ProductInfo({ product }: Props) {
   });
   const pro = Object.values(info).flat() as any;
 
-  const [variant, setVariant] = React.useState<any>(info[pro[0].color.id]);
+  const [variant, setVariant] = React.useState<any>(info[pro[0]?.color?.id]);
 
-  const [stock, setStock] = React.useState(info[pro[0].color.id][0].stock);
+  const [stock, setStock] = React.useState(info[pro[0]?.color?.id]?.[0]?.stock);
   const t = useTranslations("common");
 
   const { onAddToCart, setProductControler, productControler } =
@@ -93,7 +93,7 @@ export default function ProductInfo({ product }: Props) {
           {t("size")}
         </h1>
         <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-          {variant.map(({ size, stock }: any) => (
+          {variant?.map(({ size, stock }: any) => (
             <button
               key={size.id}
               className={cn(
