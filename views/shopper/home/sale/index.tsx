@@ -28,7 +28,7 @@ export default function Sale({ data }: Props) {
             </div>
 
             <div className="flex flex-col w-[66%] max-md:w-full">
-              <div className="flex overflow-hidden relative flex-col grow justify-center items-end max-md:max-w-full max-w-[687px] max-h-[487px]">
+              <div className="flex overflow-hidden relative flex-col grow justify-center items-end w-full ms-auto  max-h-[487px]">
                 <Image
                   src={slide.image || "/sale-poster.png"}
                   width={1200}

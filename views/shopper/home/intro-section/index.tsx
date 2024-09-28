@@ -48,12 +48,12 @@ export default function IntroSection({ data }: Props) {
             alt="image"
             className="!max-h-[650px]"
           />
-          <Link
+        {mainProduct?.thumbnail && <Link
             href={`/products/${mainProduct?.id}`}
             className="absolute top-[17%] translate-y-1/2 right-3 duration-300 hover:scale-90 border border-white p-2 rounded-full bg-white/40"
           >
             <Eye className="text-white" />
-          </Link>
+          </Link>}
         </div>
 
         <div className="flex flex-col ms-5 w-[59%] max-md:ms-0 max-md:w-full">
