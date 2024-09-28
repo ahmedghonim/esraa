@@ -50,7 +50,7 @@ export default function Cart() {
                 onChange={(value: any) => {
                   setCart({
                     ...cart,
-                    shipping: value?.value,
+                    shipping: +value?.value,
                   });
                 }}
                 defaultValue={shipping[0]?.price.toString()}

@@ -22,9 +22,10 @@ export default function ProductInfo({ product }: Props) {
     }
     info[colorId] = [...(info[colorId] || []), variant];
   });
+
   const pro = Object.values(info).flat() as any;
 
-  const [variant, setVariant] = React.useState<any>(info[pro[0]?.color?.id]);
+  const [variant, setVariant] = React.useState<any>(Object.values(info).flat());
 
   const [stock, setStock] = React.useState(info[pro[0]?.color?.id]?.[0]?.stock);
   const t = useTranslations("common");
@@ -88,7 +89,9 @@ export default function ProductInfo({ product }: Props) {
           {product.name}
         </div>
         {!variant ? (
-          <div className="mt-5 text-3xl font-medium text-red-900 max-md:max-w-full" >{t("out_of_stock")}</div>
+          <div className="mt-5 text-3xl font-medium text-red-900 max-md:max-w-full">
+            {t("out_of_stock")}
+          </div>
         ) : (
           <>
             {/* Produtc Size */}
