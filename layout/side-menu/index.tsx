@@ -18,7 +18,7 @@ export default function SideMenu({}: Props) {
     });
   }, []);
   return (
-    <section className="max-lg:hidden absolute left-0 top-0">
+    <section className="max-lg:hidden fixed left-0 top-0">
       <div className="flex flex-col justify-between items-center h-[730px] max-w-[96px] bg-primary-100 pt-[55px] pb-9">
         <button>
           <LeftArrow />
