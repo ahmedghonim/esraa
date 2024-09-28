@@ -6,7 +6,6 @@ import Tiktok from "@/svg/tiktok.svg";
 import Instagram from "@/svg/instagram.svg";
 import { Link } from "@/utils/navigation";
 import { getOurInfo } from "@/actions/our-info";
-import { OurInfo } from "@/schema";
 
 type Props = {};
 
