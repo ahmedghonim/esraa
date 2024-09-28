@@ -120,6 +120,7 @@
     "subtotal": "Sub total",
     "shipping": "Shipping",
     "action": "Action",
+    "out_of_stock": "Out of Stock",
     "qty": "Qty",
     "order_placed_successfully": "Order Placed Successfully",
     "close": "Close",

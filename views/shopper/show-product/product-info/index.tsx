@@ -87,78 +87,85 @@ export default function ProductInfo({ product }: Props) {
         <div className="mt-5 text-3xl font-medium text-zinc-800 max-md:max-w-full">
           {product.name}
         </div>
+        {!variant ? (
+          <div className="mt-5 text-3xl font-medium text-red-900 max-md:max-w-full" >{t("out_of_stock")}</div>
+        ) : (
+          <>
+            {/* Produtc Size */}
+            <h1 className="mt-7 text-lg text-zinc-800 max-md:max-w-full">
+              {t("size")}
+            </h1>
+            <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
+              {variant?.map(({ size, stock }: any) => (
+                <button
+                  key={size.id}
+                  className={cn(
+                    "text-center  p-2 border border-solid border-stone-300 uppercase",
+                    { "bg-[#dcdcdc]": productControler.size?.id === size.id }
+                  )}
+                  onClick={() => {
+                    setProductControler({ ...productControler, size, qty: 1 });
+                    setStock(stock);
+                  }}
+                >
+                  {size.name}
+                </button>
+              ))}
+            </div>
 
-        {/* Produtc Size */}
-        <h1 className="mt-7 text-lg text-zinc-800 max-md:max-w-full">
-          {t("size")}
-        </h1>
-        <div className="grid grid-cols-5 pr-10 mt-1 text-base whitespace-nowrap max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-          {variant?.map(({ size, stock }: any) => (
-            <button
-              key={size.id}
-              className={cn(
-                "text-center  p-2 border border-solid border-stone-300 uppercase",
-                { "bg-[#dcdcdc]": productControler.size?.id === size.id }
-              )}
-              onClick={() => {
-                setProductControler({ ...productControler, size, qty: 1 });
-                setStock(stock);
-              }}
-            >
-              {size.name}
-            </button>
-          ))}
-        </div>
+            {/* Product Color */}
+            <h1 className="self-start mt-3 text-lg text-zinc-800">
+              {t("color")}
+            </h1>
+            <div className="flex gap-3 mt-1">
+              {Object.values(info).map((item: any) => (
+                <button
+                  key={item[0].color.id}
+                  className={cn(
+                    "shrink-0 border-2 border-solid border-white h-[37px] w-[37px]",
+                    {
+                      "border-[2px] border-[#186718]":
+                        productControler.color?.id === item[0].color.id,
+                    }
+                  )}
+                  style={{ background: item[0].color.hexCode }}
+                  onClick={() => {
+                    setProductControler({
+                      color: item[0].color,
+                      size: item[0].size,
+                      qty: 1,
+                    });
+                    setVariant(info[item[0].color.id]);
+                    setStock(info[item[0].color.id][0].stock);
+                  }}
+                ></button>
+              ))}
+            </div>
 
-        {/* Product Color */}
-        <h1 className="self-start mt-3 text-lg text-zinc-800">{t("color")}</h1>
-        <div className="flex gap-3 mt-1">
-          {Object.values(info).map((item: any) => (
-            <button
-              key={item[0].color.id}
-              className={cn(
-                "shrink-0 border-2 border-solid border-white h-[37px] w-[37px]",
-                {
-                  "border-[2px] border-[#186718]":
-                    productControler.color?.id === item[0].color.id,
-                }
-              )}
-              style={{ background: item[0].color.hexCode }}
-              onClick={() => {
-                setProductControler({
-                  color: item[0].color,
-                  size: item[0].size,
-                  qty: 1,
-                });
-                setVariant(info[item[0].color.id]);
-                setStock(info[item[0].color.id][0].stock);
-              }}
-            ></button>
-          ))}
-        </div>
+            {/* Product Pieces */}
+            <h1 className="mt-2.5 text-lg text-zinc-800 max-md:max-w-full">
+              {t("pieces")}
+            </h1>
 
-        {/* Product Pieces */}
-        <h1 className="mt-2.5 text-lg text-zinc-800 max-md:max-w-full">
-          {t("pieces")}
-        </h1>
+            <div className="flex justify-start">
+              <ChangeProductCount
+                qty={productControler.qty}
+                onDecrease={() => onChangeProductQty("dec")}
+                onIncrease={() => onChangeProductQty("inc")}
+              />
+            </div>
 
-        <div className="flex justify-start">
-          <ChangeProductCount
-            qty={productControler.qty}
-            onDecrease={() => onChangeProductQty("dec")}
-            onIncrease={() => onChangeProductQty("inc")}
-          />
-        </div>
-
-        {/* Product Actions */}
-        <div className="flex gap-3.5 mt-3">
-          <EsraButton
-            name={t("add_to_cart")}
-            disabled={stock === 0}
-            className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
-            onClick={() => onAddToCart(product)}
-          />
-        </div>
+            {/* Product Actions */}
+            <div className="flex gap-3.5 mt-3">
+              <EsraButton
+                name={t("add_to_cart")}
+                disabled={stock === 0}
+                className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
+                onClick={() => onAddToCart(product)}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
