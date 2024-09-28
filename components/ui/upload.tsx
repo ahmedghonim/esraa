@@ -42,7 +42,7 @@ const FileUpload = ({
               href={value}
               target="_blank"
               rel="noopener_noreferrer"
-              className="ml-2 text-sm text-primary dark:text-primary-hover hover:underline"
+              className="ms-2 text-sm text-primary dark:text-primary-hover hover:underline"
             >
               {t("view_PDF")}
             </a>
@@ -75,7 +75,7 @@ const FileUpload = ({
         className="flex items-center justify-center w-full h-40 cursor-pointer"
       >
         <FileIcon className="w-8 h-8" />
-        <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+        <span className="ms-2 text-sm text-gray-500 dark:text-gray-400">
           {t("upload")} {label || t("image")}
         </span>
       </label>

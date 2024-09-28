@@ -17,7 +17,7 @@ export default function NewsSubscribe({}: Props) {
   const onSubscribe = () => {};
 
   return (
-    <div className="flex flex-col w-[37%] max-md:ml-0 max-md:w-full">
+    <div className="flex flex-col w-[37%] max-md:ms-0 max-md:w-full">
       <div className="flex flex-col grow items-center justify-between py-10 mx-auto w-full bg-primary-100 h-[460px]">
         <div className="flex flex-col self-stretch px-6 text-3xl tracking-tight leading-10 text-neutral-50 max-md:pl-5">
           <h1>{t("subscribe_text")}</h1>

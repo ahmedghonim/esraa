@@ -40,7 +40,7 @@ export default function IntroSection({ data }: Props) {
   return (
     <section className="relative mt-[84px]">
       <div className="flex max-md:flex-col">
-        <div className="relative w-[41%] max-md:ml-0 max-md:w-full">
+        <div className="relative w-[41%] max-md:ms-0 max-md:w-full">
           <Image
             src={mainProduct?.thumbnail || "/intro-1.png"}
             width={1200}
@@ -56,7 +56,7 @@ export default function IntroSection({ data }: Props) {
           </Link>
         </div>
 
-        <div className="flex flex-col ml-5 w-[59%] max-md:ml-0 max-md:w-full">
+        <div className="flex flex-col ms-5 w-[59%] max-md:ms-0 max-md:w-full">
           <div className="flex flex-col max-md:mt-6 max-md:max-w-full">
             <div className="flex gap-5 justify-between w-full font-medium max-md:flex-wrap max-md:max-w-full">
               <div className="text-lg tracking-tight leading-7 text-zinc-800">

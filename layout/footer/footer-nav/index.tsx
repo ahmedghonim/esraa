@@ -18,7 +18,7 @@ export default function FooterNav() {
   return (
     <div className="px-5 mt-6 max-md:max-w-full">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-        <div className="flex flex-col w-[43%] max-md:ml-0 max-md:w-full">
+        <div className="flex flex-col w-[43%] max-md:ms-0 max-md:w-full">
           <span className="lg:hidden text-2xl leading-8 text-zinc-800 mt-10">
             {t("our_info")}
           </span>
@@ -34,7 +34,7 @@ export default function FooterNav() {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full">
+        <div className="flex flex-col ms-5 w-[45%] max-md:ms-0 max-md:w-full">
           <span className="lg:hidden text-2xl leading-8 text-zinc-800 mt-10">
             {t("categories")}
           </span>
