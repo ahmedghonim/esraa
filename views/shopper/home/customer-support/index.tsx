@@ -33,17 +33,6 @@ export default function CustomerSupport({}: Props) {
                   </span>
                 </div>
               </div>
-              <div className="flex gap-5 items-center mt-14 max-md:mt-10">
-                <MoneyBack />
-                <div className="flex flex-col justify-center my-auto">
-                  <h1 className="md:text-2xl text-base font-bold leading-7 text-white">
-                    {t("MONEY BACK GUARANTEE")}
-                  </h1>
-                  <span className="mt-2 md:text-base text-sm leading-5 text-center text-neutral-200 font-Heebo">
-                    {t("We Return your Money Within 7 Days")}
-                  </span>
-                </div>
-              </div>
 
               <div className="flex gap-5 items-center mt-14 max-md:mt-10">
                 <FreeShipping />

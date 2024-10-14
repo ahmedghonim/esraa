@@ -46,6 +46,7 @@ const useFilterActions = (
     if (searchValue !== "") {
       setProducts(data.filter((product) => product.name.includes(searchValue)));
     } else setProducts(data);
+
     if (categories) {
       setProducts(
         // @ts-ignore
@@ -65,32 +66,45 @@ const useFilterActions = (
   /* ------------------------ */
 
   const onApplyFilter = () => {
-    const filteredProducts = data.filter((product) => {
-      return (
-        (filterControler.category
-          ? // @ts-ignore
-            product?.categories?.some(
-              (category: any) => category.id === filterControler.category
+    const filteredProducts = [];
+
+    // filter by category
+    if (filterControler.category) {
+      // @ts-ignore
+      filteredProducts.push(
+        // @ts-ignore
+        ...data
+          .filter((product) =>
+            // @ts-ignore
+            product.categories.some(
+              // @ts-ignore
+              (category) => category.id === filterControler.category
             )
-          : true) &&
-        // min price check
-        product.price >= filterControler.min_price &&
-        // max price check
-        product.price <= filterControler.max_price &&
-        // // size check
-        (filterControler.size.length > 0
-          ? product.sizes.some((size) =>
-              filterControler.size.includes(size.id as never)
-            )
-          : true) &&
-        // // color check
-        (filterControler.color.length > 0
-          ? product.colors.some((color) =>
-              filterControler.color.includes(color.id as never)
-            )
-          : true)
+          )
+          .filter((product) => {
+            if (product.newPrice) {
+              return (
+                product.newPrice >= filterControler.min_price &&
+                product.newPrice <= filterControler.max_price
+              );
+            } else {
+              return (
+                product.price >= filterControler.min_price &&
+                product.price <= filterControler.max_price
+              );
+            }
+          })
+          .filter((product) => {
+            // @ts-ignore
+            return product.ProductVariant.some((variant: any) => {
+              return (
+                filterControler.size.includes(variant.size.name as never) &&
+                filterControler.color.includes(variant.color.id as never)
+              );
+            });
+          })
       );
-    });
+    }
 
     setProducts(filteredProducts);
   };

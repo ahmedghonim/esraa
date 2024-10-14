@@ -34,7 +34,7 @@ export default function ProductGallery({ images }: Props) {
                 width={110}
                 height={110}
                 alt="product image"
-                className="!h-[110px] !w-[110px] cursor-pointer"
+                className="!h-[110px] !w-[110px] cursor-pointer object-contain"
               />
             </SwiperSlide>
           ))}
@@ -46,7 +46,7 @@ export default function ProductGallery({ images }: Props) {
           src={activeImage}
           width={1200}
           height={1200}
-          className="w-full h-full"
+          className="w-full h-full object-contain"
           alt="product image"
         />
       </div>
