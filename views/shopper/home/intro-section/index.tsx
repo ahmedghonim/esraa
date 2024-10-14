@@ -46,14 +46,16 @@ export default function IntroSection({ data }: Props) {
             width={1200}
             height={555}
             alt="image"
-            className="!max-h-[650px]"
+            className="!max-h-[650px] object-cover object-center"
           />
-        {mainProduct?.thumbnail && <Link
-            href={`/products/${mainProduct?.id}`}
-            className="absolute top-[17%] translate-y-1/2 right-3 duration-300 hover:scale-90 border border-white p-2 rounded-full bg-white/40"
-          >
-            <Eye className="text-white" />
-          </Link>}
+          {mainProduct?.thumbnail && (
+            <Link
+              href={`/products/${mainProduct?.id}`}
+              className="absolute top-[17%] translate-y-1/2 right-3 duration-300 hover:scale-90 border border-white p-2 rounded-full bg-white/40"
+            >
+              <Eye className="text-white" />
+            </Link>
+          )}
         </div>
 
         <div className="flex flex-col ms-5 w-[59%] max-md:ms-0 max-md:w-full">
@@ -103,13 +105,13 @@ export default function IntroSection({ data }: Props) {
                 {/* @ts-ignore */}
                 {data?.products?.map((product: Product, index: number): any => (
                   <SwiperSlide key={index}>
-                    <div className="relative w-[184px] h-[130px]">
+                    <div className="relative w-[184px] h-[130px] bg-primary-100">
                       <Image
                         src={product.thumbnail}
                         width={184}
                         height={130}
                         alt="image"
-                        className="!w-full !h-full"
+                        className="!w-full !h-full object-contain object-top"
                       />
 
                       <Link

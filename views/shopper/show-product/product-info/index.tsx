@@ -66,7 +66,7 @@ export default function ProductInfo({ product }: Props) {
               {t("home")} / {t("products")} /{" "}
             </span>
             <span className="text-3xl text-primary-100">
-              {product.categories[0].name}
+              {product.categories[0]?.name}
             </span>
           </div>
           <div className="flex gap-2 justify-between text-3xl text-right whitespace-nowrap">
