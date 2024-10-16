@@ -26,7 +26,7 @@ export default function NewsSubscribe({}: Props) {
           <Logo />
         </div>
 
-        <div>
+        {/* <div>
           <div className="flex gap-5 justify-between items-center pr-1 mt-28 w-72 max-w-full text-sm leading-5 text-gray-200 whitespace-nowrap max-md:mt-10">
             <EsraInput
               type="email"
@@ -40,7 +40,7 @@ export default function NewsSubscribe({}: Props) {
             </button>
           </div>
           <div className="shrink-0 h-[1px] w-72 max-w-full bg-zinc-400" />
-        </div>
+        </div> */}
       </div>
     </div>
   );
