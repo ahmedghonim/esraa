@@ -34,13 +34,13 @@ export default function Products({
     setFilterControler,
     onApplyFilter,
   } = useFilterActions(data);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <section className="mt-[55px] grid grid-cols-12 gap-5">
-      <button onClick={() => setOpen(!open)}>
+      <button onClick={() => setOpen(!open)} className="lg:hidden">
         <FilterIcon />
       </button>
-      {!open && (
+      {open && (
         <Filter
           color={color}
           category={category}
@@ -52,7 +52,18 @@ export default function Products({
           onApplyFilter={onApplyFilter}
         />
       )}
-
+      <div className="lg:col-span-3 col-span-12 flex flex-col gap-4 max-lg:hidden">
+        <Filter
+          color={color}
+          category={category}
+          collection={collection}
+          sizes={sizes}
+          filterControler={filterControler}
+          onResetFilter={onResetFilter}
+          setFilterControler={setFilterControler as any}
+          onApplyFilter={onApplyFilter}
+        />
+      </div>
       <ProductsList data={products} setSearchValue={setSearchValue} />
     </section>
   );
