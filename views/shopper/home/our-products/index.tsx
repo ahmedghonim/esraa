@@ -20,7 +20,7 @@ export default function OurProducts({ data }: Props) {
 
   return (
     <section className="flex flex-col font-bold leading-[150%] mt-[45px]">
-      <EsraSectionTitle title={t("our_products")} href="" />
+      <EsraSectionTitle title={t("our_products")} href="/products" />
       <div className="grid md:grid-cols-3 lg:grid-cols-4  gap-5 mt-[14px]">
         {data.map((item, index) => (
           <ProductCard key={index} {...item} />

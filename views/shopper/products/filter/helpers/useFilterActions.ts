@@ -28,6 +28,7 @@ const useFilterActions = (
 ) => {
   const param = useSearchParams();
   const categories = param.get("categories");
+  const newarrival = param.get("newarrival");
 
   const [filterControler, setFilterControler] = useState(initialFiterState);
 
@@ -42,6 +43,9 @@ const useFilterActions = (
 
   const [searchValue, setSearchValue] = useState<string>("");
 
+  /* ------------------------ */
+  /*      On Apply Filter     */
+  /* ------------------------ */
   useEffect(() => {
     if (searchValue !== "") {
       setProducts(data.filter((product) => product.name.includes(searchValue)));
@@ -54,16 +58,18 @@ const useFilterActions = (
           // @ts-ignore
           product.categories.some(
             // @ts-ignore
-            (category) => category.id === Number(categories)
+            (category) => category.name === categories
           )
         )
       );
     }
-  }, [searchValue, categories]);
-
-  /* ------------------------ */
-  /*      On Apply Filter     */
-  /* ------------------------ */
+    if (newarrival) {
+      setProducts(
+        // @ts-ignore
+        data.filter((product) => product.newArrival === true)
+      );
+    }
+  }, [searchValue, categories, newarrival]);
 
   const onApplyFilter = () => {
     const filteredProducts = [];

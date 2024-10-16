@@ -50,7 +50,7 @@ export default function SimilarProducts({ data }: { data: Product[] }) {
 
   return (
     <section className="mt-[106px] mb-[56px]">
-      <EsraSectionTitle title={t("similar_products")} href="" />
+      <EsraSectionTitle title={t("similar_products")} href="/products" />
 
       <div className="grid md:grid-cols-3 lg:grid-cols-4  gap-5 mt-[14px]">
         {data.map((item: any) => (

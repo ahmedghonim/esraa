@@ -13,7 +13,10 @@ export default function NewArrivals({ data }: Props) {
   const t = useTranslations("common");
   return (
     <section className="flex flex-col font-bold leading-[150%] md:mt-[45px] mt-7">
-      <EsraSectionTitle title={t("new_arrival")} href="" />
+      <EsraSectionTitle
+        title={t("new_arrival")}
+        href="/products?newarrival=true"
+      />
       <div className="grid md:grid-cols-3 lg:grid-cols-4  gap-5 mt-[14px]">
         {data.map((item) => (
           <ProductCard {...item} key={item.id} />
