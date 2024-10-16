@@ -53,7 +53,7 @@ export default function LocalCart({ children }: Props) {
   useEffect(() => {
     if (isCartSynced) {
       const subTotal = cart.items.reduce(
-        (total, item) => total + item.qty * item.price,
+        (total, item) => total + item.qty * item.newPrice || item.price,
         0
       );
 

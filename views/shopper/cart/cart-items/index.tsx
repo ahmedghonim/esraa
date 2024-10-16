@@ -44,6 +44,7 @@ export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
             <TableRow key={index} className="border-y-[1px] border-[#8C8C8C]">
               <SingleCartItem
                 {...product}
+                price={product.newPrice || product.price}
                 onDeleteItem={() => onDeleteItem(index)}
                 onDecrease={() =>
                   onChangeQty(
