@@ -1,12 +1,12 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { ChangeProductCount, EsraButton } from "@/components/ui";
 import { useTranslations } from "next-intl";
 import { useShowProductActions } from "../helpers/useShowProductActions";
-import { TProduct } from "@/types";
+import { TColor, TProduct, TSize } from "@/types";
 import { cn } from "@/lib/utils";
 import { ProductVariant } from "@prisma/client";
-import { object } from "zod";
+import { CartContext, TCart } from "../../local-cart";
 
 interface Props {
   product: TProduct & {
@@ -30,8 +30,7 @@ export default function ProductInfo({ product }: Props) {
   const [stock, setStock] = React.useState(info[pro[0]?.color?.id]?.[0]?.stock);
   const t = useTranslations("common");
 
-  const { onAddToCart, setProductControler, productControler } =
-    useShowProductActions();
+  const { setProductControler, productControler } = useShowProductActions();
 
   const onChangeProductQty = (type: "inc" | "dec") => {
     if (type === "dec") {
@@ -47,6 +46,10 @@ export default function ProductInfo({ product }: Props) {
           qty: productControler.qty + 1,
         });
   };
+
+  const cart = useContext<TCart | null>(CartContext);
+
+  const { items, addCartItem } = cart as TCart;
 
   return (
     <div className="col-span-12 lg:col-span-6 flex flex-col max-md:ms-0">
@@ -164,7 +167,14 @@ export default function ProductInfo({ product }: Props) {
                 name={t("add_to_cart")}
                 disabled={stock === 0}
                 className="flex-1 p-2 text-base font-bold leading-6 text-white max-md:px-5"
-                onClick={() => onAddToCart(product)}
+                onClick={() =>
+                  addCartItem(
+                    product,
+                    productControler.qty,
+                    productControler.color as TColor,
+                    productControler.size as TSize
+                  )
+                }
               />
             </div>
           </>

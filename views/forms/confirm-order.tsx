@@ -6,8 +6,7 @@ import { Form } from "@/components/ui/form";
 import FormInput from "@/components/ui/form-input";
 import FormTextArea from "@/components/ui/form-textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { CustomerSchema, CustomerType, Order, OrderProduct } from "@/schema";
-
+import { CustomerSchema, CustomerType, OrderProduct } from "@/schema";
 import { useRouter } from "@/utils/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Customer } from "@prisma/client";
@@ -20,7 +19,8 @@ import { onMailer } from "@/actions/mailer";
 type Props = {};
 
 export default function ConfirmOrder({}: Props) {
-  const { cart, setCart } = useCartActions();
+  const { cart, clearCart } = useCartActions();
+
   const { toast } = useToast();
 
   const t = useTranslations("common");
@@ -37,7 +37,7 @@ export default function ConfirmOrder({}: Props) {
     startTransaction(() => {
       upsertCustomer(values)
         .then((customer: Customer) => {
-          const products: OrderProduct[] = cart.items.map((item) => ({
+          const products: OrderProduct[] = cart?.items.map((item) => ({
             productId: +item.id,
             quantity: +item.qty,
             size: item.selected_size.name,
@@ -75,7 +75,7 @@ export default function ConfirmOrder({}: Props) {
                 title: t("success"),
                 description: t("order_placed_successfully"),
               });
-              setCart({ items: [], total: 0, subTotal: 0, shipping: 0 });
+              clearCart();
               router.push("/");
             })
             .catch((error) => {

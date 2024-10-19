@@ -1,9 +1,7 @@
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
+
   SheetTrigger,
 } from "@/ui/sheet";
 import BurgerIcon from "@/svg/burger-icon.svg";
@@ -22,10 +20,10 @@ import { useTranslations } from "next-intl";
 
 export function MobileHeader() {
   const t = useTranslations("common");
-  const { cart } = useContext<{
-    cart: TCart;
-    setCart: React.Dispatch<React.SetStateAction<TCart>>;
-  }>(CartContext as any);
+
+  const cart = useContext<TCart | null>(CartContext);
+
+  const { items } = cart as TCart;
 
   const asPath = usePathname();
 
@@ -62,7 +60,7 @@ export function MobileHeader() {
               </Link>
 
               <div className="absolute -top-3 ltr:-right-3 rtl:-left-3 w-6 h-6 rounded-full bg-white grid place-items-center">
-                {cart.items?.length}
+                {items?.length}
               </div>
             </div>
           </div>

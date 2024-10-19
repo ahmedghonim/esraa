@@ -2,7 +2,7 @@ import { Link } from "@/utils/navigation";
 import React from "react";
 import Image from "next/image";
 import { Product } from "@prisma/client";
-import { Color, Size } from "@/schema";
+import { Color } from "@/schema";
 import { EsraLink } from "../link";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";

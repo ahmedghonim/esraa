@@ -1,12 +1,8 @@
 "use client";
 
 import { EsraButton, EsraInput, ProductCard } from "@/components/ui";
-import React, { useContext } from "react";
+import React from "react";
 import Search from "@/svg/search.svg";
-import { CartContext, TCart } from "@/views/shopper/local-cart";
-import { TProduct } from "@/types";
-import { Product } from "@prisma/client";
-import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "next-intl";
 
 type Props = {
@@ -15,17 +11,7 @@ type Props = {
 };
 
 export default function ProductsList({ data, setSearchValue }: Props) {
-  const { toast } = useToast();
   const t = useTranslations("common");
-  const { cart, setCart } = useContext<{
-    cart: TCart;
-    setCart: React.Dispatch<React.SetStateAction<TCart>>;
-  }>(CartContext as any);
-
-  const isItemSelected = (id: number) => {
-    return cart.items.some((item) => item.id === id);
-  };
-
 
   return (
     <section className="lg:col-span-9 col-span-12">

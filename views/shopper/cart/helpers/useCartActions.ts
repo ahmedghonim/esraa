@@ -4,41 +4,21 @@ import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { useContext } from "react";
 
 const useCartActions = () => {
-  const { cart, setCart } = useContext<{
-    cart: TCart;
-    setCart: React.Dispatch<React.SetStateAction<TCart>>;
-  }>(CartContext as any);
-  /* ------------------------ */
-  /*      On Delete Item     */
-  /* ------------------------ */
-  const onDeleteItem = (index: number) => {
-    cart.items.splice(index, 1);
-  };
+  const cart = useContext<TCart | null>(CartContext);
 
-  /* ------------------------ */
-  /*      On Change Item QTY    */
-  /* -------------------------- */
+  const { clearCart, setCart, getCartItem } = cart as TCart;
+
   const onChangeQty = (
     id: number,
     selected_size: TSize,
     selected_color: TColor,
     type: "inc" | "dec"
   ) => {
-    const getProduct = cart.items.find(
-      (product) =>
-        product.id === id &&
-        product.ProductVariant.find(
-          (variant) =>
-            variant.sizeId === selected_size.id &&
-            variant.colorId === selected_color.id
-        )
-    );
+    const product = getCartItem(id);
 
-    if (!getProduct) {
-      return;
-    }
+    if (!product) return;
 
-    const updatedProduct = { ...getProduct };
+    const updatedProduct = { ...product };
 
     if (type === "dec") {
       if (updatedProduct.qty > 1) {
@@ -50,7 +30,7 @@ const useCartActions = () => {
       updatedProduct.qty += 1;
     }
 
-    const updatedItems = cart.items.map((product) =>
+    const updatedItems = cart?.items.map((product) =>
       product.id === id &&
       product.ProductVariant.find(
         (variant) =>
@@ -61,10 +41,10 @@ const useCartActions = () => {
         : product
     );
 
-    setCart({ ...cart, items: updatedItems });
+    setCart([...(cart?.items as any), updatedItems]);
   };
 
-  return { onDeleteItem, onChangeQty, cart, setCart };
+  return { clearCart, onChangeQty, cart };
 };
 
 export { useCartActions };

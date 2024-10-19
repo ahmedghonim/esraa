@@ -31,20 +31,21 @@ type Props = {};
 export default function Header({}: Props) {
   const t = useTranslations("common");
 
-  const { cart } = useContext<{
-    cart: TCart;
-    setCart: React.Dispatch<React.SetStateAction<TCart>>;
-  }>(CartContext as any);
+  const cart = useContext<TCart | null>(CartContext);
+
+  const { items } = cart as TCart;
 
   const asPath = usePathname();
 
   const isActive = (href: string) => asPath === href;
+
   const [category, setCategory] = React.useState<Category[]>();
   useEffect(() => {
     getAllCategories({}).then((data) => {
       setCategory(data);
     });
   }, []);
+
   return (
     <header className="flex gap-5 justify-between items-center max-md:flex-wrap max-lg:mt-6">
       <Link href="/">
@@ -93,7 +94,7 @@ export default function Header({}: Props) {
         </Link>
 
         <div className="absolute -top-3 ltr:-right-3 rtl:-left-3 w-6 h-6 rounded-full bg-white grid place-items-center">
-          {cart.items?.length}
+          {items?.length}
         </div>
       </div>
 
