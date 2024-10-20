@@ -86,10 +86,22 @@ export default function ProductRow({
             {ProductVariant?.map(({ size, color, stock }, index) => (
               <tr key={index}>
                 <td className="text-center">
-                  <div
-                    className="shrink-0 h-5 w-5 mx-auto"
-                    style={{ background: color.hexCode }}
-                  />
+                  {color.hexCode === "multi_color" ? (
+                    <Image
+                      className="shrink-0 h-5 w-5 mx-auto my-0"
+                      alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                      width={10}
+                      height={10}
+                      src="/WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                    />
+                  ) : (
+                    <span
+                      style={{
+                        backgroundColor: color.hexCode,
+                      }}
+                      className="shrink-0 h-5 w-5 mx-auto"
+                    />
+                  )}
                 </td>
                 <td className="text-center">{size.name}</td>
                 <td

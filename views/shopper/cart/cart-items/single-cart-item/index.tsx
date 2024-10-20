@@ -41,10 +41,23 @@ export default function SingleCartItem({
               <span className="grid place-items-center border border-solid border-stone-300 px-5">
                 {selected_size?.name}
               </span>
-              <div
-                className="shrink-0  h-[37px] w-[37px]"
-                style={{ background: selected_color?.hexCode || "" }}
-              />
+
+              {selected_color.hexCode === "multi_color" ? (
+                <Image
+                  className="shrink-0  h-[37px] w-[37px] m-0"
+                  alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                  width={10}
+                  height={10}
+                  src="/WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                />
+              ) : (
+                <span
+                  style={{
+                    backgroundColor: selected_color.hexCode,
+                  }}
+                  className="shrink-0  h-[37px] w-[37px]"
+                />
+              )}
             </div>
           </div>
         </div>
