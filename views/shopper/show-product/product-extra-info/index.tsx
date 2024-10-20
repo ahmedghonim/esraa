@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import React from "react";
-
+import parser from "html-react-parser";
 interface Props {
   description: string;
   // benifits: { image: string; name: string }[];
@@ -16,7 +16,7 @@ export default function ProductExtraInfo({ description }: Props) {
       <div className="shrink-0 mix-blend-multiply bg-primary-100 h-[10px] w-[150px] mb-4" />
 
       <p className="text-lg leading-7 text-neutral-600 max-md:max-w-full">
-        {description}
+        {parser(description)}
       </p>
 
       {/* <h1 className="mt-10 text-3xl font-medium text-zinc-800 max-md:max-w-full">

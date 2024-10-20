@@ -3,6 +3,7 @@ import React, { useTransition } from "react";
 import Delete from "@/svg/delete.svg";
 import Edit from "@/svg/edit.svg";
 import { EsraButton } from "@/components/ui";
+import parser from "html-react-parser";
 import Image from "next/image";
 import { Color, Product, Size, ProductVariant } from "@prisma/client";
 import { Link, useRouter } from "@/utils/navigation";
@@ -105,9 +106,7 @@ export default function ProductRow({
         </table>
       </td>
 
-      <td className="py-4 text-center text-wrap !w-[400px] overflow-hidden">
-        {description}
-      </td>
+      <td className="py-4 !w-[400px] overflow-hidden">{parser(description)}</td>
 
       <td className="py-4 text-center ">
         <span

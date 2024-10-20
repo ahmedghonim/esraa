@@ -22,6 +22,7 @@ import FormInput from "@/components/ui/form-input";
 import FormTextArea from "@/components/ui/form-textarea";
 import FormSelect from "@/components/ui/form-select";
 import { useToast } from "@/components/ui/use-toast";
+import FormEditor from "@/components/ui/form-editor";
 const ProductForm = ({
   values,
   color,
@@ -280,7 +281,7 @@ const ProductForm = ({
           name="relatedProducts"
         />
 
-        <FormTextArea form={form} label={t("description")} name="description" />
+        <FormEditor form={form} label={t("description")} name="description" />
 
         <EsraButton
           isLoading={isPending}

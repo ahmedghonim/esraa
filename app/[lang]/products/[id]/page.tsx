@@ -4,6 +4,7 @@ import ProductGallery from "@/views/shopper/show-product/product-gallery";
 import ProductInfo from "@/views/shopper/show-product/product-info";
 import SimilarProducts from "@/views/shopper/show-product/similar-products";
 import React from "react";
+
 export async function generateMetadata({
   params: { lang, id },
 }: {
