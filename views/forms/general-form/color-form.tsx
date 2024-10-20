@@ -14,6 +14,7 @@ import { deleteColor, upsertColor } from "@/actions/color";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const ColorForm = ({ colors }: { colors: Color[] }) => {
   const { toast } = useToast();
@@ -97,7 +98,7 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
               key={color.id}
               className="flex gap-3 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm"
             >
-              {color.hexCode === "multi_color" ? (
+              {color.hexCode == "multi_color" ? (
                 <Image
                   className="size-6 m-0"
                   alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
@@ -159,7 +160,10 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
             {t("multi_color")}
             <Image
               onClick={() => form.setValue("hexCode", "multi_color")}
-              className="cursor-pointer size-14 m-3"
+              className={cn("cursor-pointer size-14 m-3", {
+                " border-2 border-dashed border-primary-100":
+                  form.watch("hexCode") === "multi_color",
+              })}
               alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
               width={16}
               height={10}
