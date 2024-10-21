@@ -28,6 +28,7 @@ export default function ProductInfo({ product }: Props) {
   const [variant, setVariant] = React.useState<any>(Object.values(info).flat());
 
   const [stock, setStock] = React.useState(info[pro[0]?.color?.id]?.[0]?.stock);
+
   const t = useTranslations("common");
 
   const { setProductControler, productControler } = useShowProductActions();
@@ -49,7 +50,7 @@ export default function ProductInfo({ product }: Props) {
 
   const cart = useContext<TCart | null>(CartContext);
 
-  const { items, addCartItem } = cart as TCart;
+  const { addCartItem } = cart as TCart;
 
   return (
     <div className="col-span-12 lg:col-span-6 flex flex-col max-md:ms-0">

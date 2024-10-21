@@ -1,12 +1,11 @@
 import React from "react";
 import SingleCartItem from "./single-cart-item";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/ui/table";
-import { TCart } from "../../local-cart";
 import { useTranslations } from "next-intl";
-import { TColor, TSize } from "@/types";
+import { TColor, TProduct, TSize } from "@/types";
 
 interface Props {
-  cart: TCart;
+  items: TProduct[];
   onDeleteItem: (index: number) => void;
   onChangeQty: (
     id: number,
@@ -16,7 +15,7 @@ interface Props {
   ) => void;
 }
 
-export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
+export default function CartItems({ items, onDeleteItem, onChangeQty }: Props) {
   const t = useTranslations("common");
 
   return (
@@ -40,12 +39,12 @@ export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {cart.items?.map((product, index) => (
+          {items?.map((product, index) => (
             <TableRow key={index} className="border-y-[1px] border-[#8C8C8C]">
               <SingleCartItem
                 {...product}
                 price={product.newPrice || product.price}
-                onDeleteItem={() => onDeleteItem(index)}
+                onDeleteItem={() => onDeleteItem(product.id)}
                 onDecrease={() =>
                   onChangeQty(
                     product.id,
@@ -58,7 +57,7 @@ export default function CartItems({ cart, onDeleteItem, onChangeQty }: Props) {
                   const variant = product?.ProductVariant?.find(
                     (variant) =>
                       variant.sizeId === product.selected_size.id &&
-                      variant.colorId === product.selected_color.id
+                      variant.colorId === product.selected_color?.id
                   );
 
                   if (variant && variant.stock > product.qty) {

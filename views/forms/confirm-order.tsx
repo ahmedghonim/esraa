@@ -19,7 +19,7 @@ import { onMailer } from "@/actions/mailer";
 type Props = {};
 
 export default function ConfirmOrder({}: Props) {
-  const { cart, clearCart } = useCartActions();
+  const { items, clearCart } = useCartActions();
 
   const { toast } = useToast();
 
@@ -37,7 +37,7 @@ export default function ConfirmOrder({}: Props) {
     startTransaction(() => {
       upsertCustomer(values)
         .then((customer: Customer) => {
-          const products: OrderProduct[] = cart?.items.map((item) => ({
+          const products: OrderProduct[] = items.map((item) => ({
             productId: +item.id,
             quantity: +item.qty,
             size: item.selected_size.name,

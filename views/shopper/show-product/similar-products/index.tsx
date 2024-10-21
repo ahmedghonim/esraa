@@ -21,19 +21,7 @@ export default function SimilarProducts({ data }: { data: Product[] }) {
 
       <div className="grid md:grid-cols-3 lg:grid-cols-4  gap-5 mt-[14px]">
         {data.map((item: any) => (
-          <ProductCard
-            key={item.id}
-            {...item}
-            isSelected={getCartItem(item.id)}
-            onAddToCart={() =>
-              addCartItem(
-                item as any,
-                1,
-                { id: 1, hexcode: "#000", name: "Black" },
-                { id: 1, name: "LG" }
-              )
-            }
-          />
+          <ProductCard key={item.id} {...item} />
         ))}
       </div>
     </section>

@@ -1,6 +1,8 @@
 "use client";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { TColor, TProduct, TSize } from "@/types";
+import { useToast } from "@/components/ui/use-toast";
+import { useTranslations } from "next-intl";
 
 interface Props {
   children: React.ReactNode;
@@ -8,6 +10,8 @@ interface Props {
 
 export interface TCart {
   items: TProduct[];
+  shipping: number;
+  setShipping: React.Dispatch<React.SetStateAction<number>>;
   addCartItem: (
     item: TProduct,
     qty: number,
@@ -15,7 +19,7 @@ export interface TCart {
     size: TSize
   ) => void;
   removeCartItem: (id: number) => void;
-  getCartItem: (id: number) => TProduct | undefined;
+  getCartItem: (id: number, color: TColor, size: TSize) => TProduct | undefined;
   clearCart: () => void;
   getTotalItems: () => void;
   getTotalPrice: () => { subTotal: number; total: number };
@@ -27,11 +31,17 @@ export const CartContext = createContext<TCart | null>(null);
 export default function LocalCart({ children }: Props) {
   const CART_LOCALE_NAME = "esra_cart_items";
 
+  const { toast } = useToast();
+
+  const t = useTranslations("common");
+
   const [cart, setCart] = useState<TProduct[]>(() => {
     const storedCart = localStorage.getItem(CART_LOCALE_NAME);
 
     return storedCart ? JSON.parse(storedCart) : [];
   });
+
+  const [shipping, setShipping] = useState<number>(0);
 
   const addCartItem = (
     item: TProduct,
@@ -39,30 +49,53 @@ export default function LocalCart({ children }: Props) {
     color: TColor,
     size: TSize
   ) => {
+    if (!size) {
+      return toast({
+        title: t("select_size"),
+        description: t("please_select_size"),
+      });
+    }
+
+    if (!color) {
+      return toast({
+        title: t("select_color"),
+        description: t("please_select_color"),
+      });
+    }
+
     setCart((prevCart) => {
       const existingItemIndex = prevCart.findIndex((i) => i.id === item.id);
 
       if (existingItemIndex !== -1) {
-        // Item already in cart, update quantity
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex] = {
           ...updatedCart[existingItemIndex],
           qty: qty,
           selected_color: color,
+          selected_size: size,
         };
 
         return updatedCart;
       }
-      // Item not in cart, add it
       return [
         ...prevCart,
         { ...item, selected_color: color, selected_size: size, qty },
       ];
     });
+
+    toast({
+      title: "Added",
+      description: "Product added successfully",
+    });
   };
 
   const removeCartItem = (itemId: number) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+
+    toast({
+      title: "Removed",
+      description: "Product removed successfully",
+    });
   };
 
   const getCartItem = (
@@ -70,7 +103,7 @@ export default function LocalCart({ children }: Props) {
     color: { id: number },
     size: { id: number }
   ) => {
-    return cart.find(
+    return cart?.find(
       (item) =>
         item.id === itemId &&
         item.selected_size.id === size?.id &&
@@ -89,14 +122,12 @@ export default function LocalCart({ children }: Props) {
   };
 
   const getTotalPrice = () => {
-    const total = cart
-      .reduce(
-        (total, item) => total + item.newPrice || item.price * item.qty,
-        0
-      )
-      .toFixed(2);
+    const subTotal = cart.reduce(
+      (total, item) => total + item.qty * item.newPrice,
+      0
+    );
 
-    return { subTotal: total, total };
+    return { subTotal, total: +subTotal + shipping };
   };
 
   useEffect(() => {
@@ -109,6 +140,8 @@ export default function LocalCart({ children }: Props) {
         value={
           {
             items: cart,
+            shipping,
+            setShipping,
             addCartItem,
             removeCartItem,
             getCartItem,
