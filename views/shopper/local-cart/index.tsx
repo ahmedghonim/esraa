@@ -19,7 +19,7 @@ export interface TCart {
     size: TSize
   ) => void;
   removeCartItem: (id: number) => void;
-  getCartItem: (id: number, color: TColor, size: TSize) => TProduct | undefined;
+  getCartItem: (id: number, color: TColor, size: TSize) => number;
   clearCart: () => void;
   getTotalItems: () => void;
   getTotalPrice: () => { subTotal: number; total: number };
@@ -64,15 +64,20 @@ export default function LocalCart({ children }: Props) {
     }
 
     setCart((prevCart) => {
-      const existingItemIndex = prevCart.findIndex((i) => i.id === item.id);
+      const existingItemIndex = prevCart.findIndex(
+        (product) =>
+          product.id === item.id &&
+          product.selected_color?.id === color?.id &&
+          product.selected_size?.id === size?.id
+      );
 
       if (existingItemIndex !== -1) {
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex] = {
           ...updatedCart[existingItemIndex],
-          qty: qty,
           selected_color: color,
           selected_size: size,
+          qty,
         };
 
         return updatedCart;
@@ -89,8 +94,8 @@ export default function LocalCart({ children }: Props) {
     });
   };
 
-  const removeCartItem = (itemId: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+  const removeCartItem = (index: number) => {
+    cart.splice(index, 1);
 
     toast({
       title: "Removed",
@@ -103,12 +108,14 @@ export default function LocalCart({ children }: Props) {
     color: { id: number },
     size: { id: number }
   ) => {
-    return cart?.find(
-      (item) =>
-        item.id === itemId &&
-        item.selected_size.id === size?.id &&
-        item.selected_color.id === color?.id
+    const existingItemIndex = cart.findIndex(
+      (product) =>
+        product.id === itemId &&
+        product.selected_color?.id === color?.id &&
+        product.selected_size?.id === size?.id
     );
+
+    return existingItemIndex;
   };
 
   const clearCart = () => {
@@ -123,7 +130,7 @@ export default function LocalCart({ children }: Props) {
 
   const getTotalPrice = () => {
     const subTotal = cart.reduce(
-      (total, item) => total + item.qty * item.newPrice,
+      (total, item) => total + item.qty * item.newPrice || item.price,
       0
     );
 

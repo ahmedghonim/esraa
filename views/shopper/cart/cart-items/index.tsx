@@ -44,7 +44,7 @@ export default function CartItems({ items, onDeleteItem, onChangeQty }: Props) {
               <SingleCartItem
                 {...product}
                 price={product.newPrice || product.price}
-                onDeleteItem={() => onDeleteItem(product.id)}
+                onDeleteItem={() => onDeleteItem(index)}
                 onDecrease={() =>
                   onChangeQty(
                     product.id,
@@ -54,20 +54,12 @@ export default function CartItems({ items, onDeleteItem, onChangeQty }: Props) {
                   )
                 }
                 onIncrease={() => {
-                  const variant = product?.ProductVariant?.find(
-                    (variant) =>
-                      variant.sizeId === product.selected_size.id &&
-                      variant.colorId === product.selected_color?.id
+                  onChangeQty(
+                    product.id,
+                    product.selected_size,
+                    product.selected_color,
+                    "inc"
                   );
-
-                  if (variant && variant.stock > product.qty) {
-                    onChangeQty(
-                      product.id,
-                      product.selected_size,
-                      product.selected_color,
-                      "inc"
-                    );
-                  }
                 }}
               />
             </TableRow>

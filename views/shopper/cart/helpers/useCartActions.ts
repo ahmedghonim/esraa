@@ -23,36 +23,34 @@ const useCartActions = () => {
     selected_color: TColor,
     type: "inc" | "dec"
   ) => {
-    const product = getCartItem(id, selected_color, selected_size);
+    const productIndex = getCartItem(id, selected_color, selected_size);
 
-    // if (!product) return;
+    if (productIndex === -1) return;
 
-    // const updatedProduct = { ...product };
+    const product = { ...items[productIndex] };
 
-    // if (type === "dec") {
-    //   if (updatedProduct.qty > 1) {
-    //     updatedProduct.qty -= 1;
-    //   }
-    // }
+    const isProductHasStock = product.ProductVariant?.find(
+      (item) =>
+        item.colorId === selected_color.id && item.sizeId === selected_size.id
+    );
 
-    // if (type === "inc") {
-    //   if (product.stock > product.qty) {
-    //     updatedProduct.qty += 1;
-    //   }
-    // }
+    if (type === "dec") {
+      if (product.qty > 1) {
+        product.qty -= 1;
+      }
+    }
 
-    // const updatedItems = items.map((product) =>
-    //   product.id === id &&
-    //   product.ProductVariant.find(
-    //     (variant) =>
-    //       variant.sizeId === selected_size.id &&
-    //       variant.colorId === selected_color.id
-    //   )
-    //     ? updatedProduct
-    //     : product
-    // );
+    if (type === "inc") {
+      if (Number(isProductHasStock?.stock) > product.qty) {
+        product.qty += 1;
+      }
+    }
 
-    // setCart([...(cart?.items as any), updatedItems]);
+    const updatedCart = [...items];
+
+    updatedCart[productIndex] = product;
+
+    setCart(updatedCart);
   };
 
   return {
