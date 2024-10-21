@@ -1,7 +1,6 @@
 import { EsraButton, EsraModal } from "@/components/ui";
 import ConfirmOrder from "@/views/forms/confirm-order";
 import React, { useState } from "react";
-import { TCart } from "../../local-cart";
 import { useTranslations } from "next-intl";
 
 interface Props {

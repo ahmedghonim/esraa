@@ -3,6 +3,7 @@ import React, { useTransition } from "react";
 import Delete from "@/svg/delete.svg";
 import Edit from "@/svg/edit.svg";
 import { EsraButton } from "@/components/ui";
+import parser from "html-react-parser";
 import Image from "next/image";
 import { Color, Product, Size, ProductVariant } from "@prisma/client";
 import { Link, useRouter } from "@/utils/navigation";
@@ -85,10 +86,22 @@ export default function ProductRow({
             {ProductVariant?.map(({ size, color, stock }, index) => (
               <tr key={index}>
                 <td className="text-center">
-                  <div
-                    className="shrink-0 h-5 w-5 mx-auto"
-                    style={{ background: color.hexCode }}
-                  />
+                  {color.hexCode === "multi_color" ? (
+                    <Image
+                      className="shrink-0 h-5 w-5 mx-auto my-0"
+                      alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                      width={10}
+                      height={10}
+                      src="/WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                    />
+                  ) : (
+                    <span
+                      style={{
+                        backgroundColor: color.hexCode,
+                      }}
+                      className="shrink-0 h-5 w-5 mx-auto"
+                    />
+                  )}
                 </td>
                 <td className="text-center">{size.name}</td>
                 <td
@@ -105,9 +118,7 @@ export default function ProductRow({
         </table>
       </td>
 
-      <td className="py-4 text-center text-wrap !w-[400px] overflow-hidden">
-        {description}
-      </td>
+      <td className="py-4 !w-[400px] overflow-hidden">{parser(description)}</td>
 
       <td className="py-4 text-center ">
         <span

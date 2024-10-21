@@ -7,6 +7,7 @@ import { FilterContext } from "..";
 import clsx from "clsx";
 import { Color } from "@prisma/client";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface Props {
   color: Color[];
@@ -49,11 +50,23 @@ export default function Colors({ color }: Props) {
       <div className="grid grid-cols-4 gap-4">
         {color?.map((color, index) => (
           <button key={index}>
-            <span
-              className="block h-9 w-9 mb-3 mx-auto"
-              style={{ background: color.hexCode }}
-              onClick={() => onSelectColor(color.id)}
-            />
+            {color.hexCode === "multi_color" ? (
+              <Image
+                className="block h-9 w-9 mb-3 mx-auto my-0"
+                style={{ background: color.hexCode }}
+                onClick={() => onSelectColor(color.id)}
+                alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                width={10}
+                height={10}
+                src="/WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+              />
+            ) : (
+              <span
+                className="block h-9 w-9 mb-3 mx-auto"
+                style={{ background: color.hexCode }}
+                onClick={() => onSelectColor(color.id)}
+              />
+            )}
             <span
               className={clsx("text-[#8A8989] font-Heebo block duration-300", {
                 "!text-primary-100 font-bold": filterControler.color.includes(

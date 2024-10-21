@@ -13,6 +13,8 @@ import FormInput from "@/components/ui/form-input";
 import { deleteColor, upsertColor } from "@/actions/color";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const ColorForm = ({ colors }: { colors: Color[] }) => {
   const { toast } = useToast();
@@ -96,12 +98,22 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
               key={color.id}
               className="flex gap-3 items-center justify-center py-2 px-3  border border-primary-100 rounded-sm"
             >
-              <span
-                style={{
-                  backgroundColor: color.hexCode,
-                }}
-                className="size-6"
-              />
+              {color.hexCode == "multi_color" ? (
+                <Image
+                  className="size-6 m-0"
+                  alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                  width={10}
+                  height={10}
+                  src="/WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+                />
+              ) : (
+                <span
+                  style={{
+                    backgroundColor: color.hexCode,
+                  }}
+                  className="size-6"
+                />
+              )}
 
               <Text>{color.name}</Text>
               <Edit
@@ -134,16 +146,31 @@ const ColorForm = ({ colors }: { colors: Color[] }) => {
         </div>
 
         <FormInput form={form} label={t("name")} name="name" />
-        <label className="flex flex-col gap-2">
-          {t("color")}
-          <input
-            type="color"
-            {...form.register("hexCode")}
-            value={form.getValues("hexCode") || "#000000"}
-            className="size-16"
-          />
-        </label>
-
+        <div className="flex items-start gap-2">
+          <label className="flex flex-col gap-2">
+            {t("color")}
+            <input
+              type="color"
+              {...form.register("hexCode")}
+              value={form.getValues("hexCode") || "#000000"}
+              className="size-16"
+            />
+          </label>
+          <label>
+            {t("multi_color")}
+            <Image
+              onClick={() => form.setValue("hexCode", "multi_color")}
+              className={cn("cursor-pointer size-14 m-3", {
+                " border-2 border-dashed border-primary-100":
+                  form.watch("hexCode") === "multi_color",
+              })}
+              alt="WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+              width={16}
+              height={10}
+              src="/WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
+            />
+          </label>
+        </div>
         <EsraButton
           isLoading={isPending}
           onClick={form.handleSubmit(onSubmit)}
