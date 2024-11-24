@@ -7,6 +7,7 @@ import FormInput from "@/components/ui/form-input";
 import FormSelect from "@/components/ui/form-select";
 import { useToast } from "@/components/ui/use-toast";
 import { HeroSection, HeroSectionSchema, Product } from "@/schema";
+import { UploadButton, UploadDropzone } from "@/utils/uploadthing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import React, { useTransition } from "react";
@@ -54,35 +55,27 @@ function HeroSectionForm({
   return (
     <Form {...form}>
       <div className="flex flex-col gap-6">
-        <FormInput form={form} name="title" label={t("title")} />
-        <FormEditor form={form} name="description" label={t("description")} />
-
-        <FormSelect
-          isMulti
-          options={products.map((item) => ({
-            value: item.id,
-            label: item?.name,
-          }))}
-          form={form}
-          label={t("products")}
-          name={"products"}
+        <label>{t("video")}</label>
+        <UploadDropzone
+          endpoint="videoUploader"
+          onClientUploadComplete={(res) => {
+            form.setValue("title", res[0].url);
+            form.trigger("title");
+          }}
+          onUploadError={(error: Error) => {
+            alert(`ERROR! ${error.message}`);
+          }}
         />
-
-        <FormSelect
-          // @ts-ignore
-          options={form?.getValues("products")?.map(
-            (val: any) =>
-              products
-                .map((item) => ({
-                  value: item.id,
-                  label: item?.name,
-                }))
-                ?.find((option) => option.value == val) || []
-          )}
-          form={form}
-          label={t("main_product")}
-          name="mainProduct"
-        />
+        {form.getValues("title") && (
+          <video
+            src={form.getValues("title")}
+            controls
+            muted
+            autoPlay
+            className="h-[400px] w-[200px]"
+          />
+        )}
+        <FormEditor form={form} label={t("description")} name="description" />
 
         <EsraButton
           isLoading={isPending}

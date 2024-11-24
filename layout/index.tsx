@@ -3,7 +3,6 @@ import React from "react";
 import Header from "./header";
 import Footer from "./footer";
 import SideMenu from "./side-menu";
-
 import AuthLayout from "./auth-layout";
 import AdminLayout from "./admin-layout";
 import { usePathname } from "@/utils/navigation";
@@ -31,8 +30,8 @@ export default function Layout({ children }: Props) {
 
       {/* public layout */}
       {!isAdminRoute && !isAuthRoute && (
-        <main>
-          <div className="lg:px-[118px] px-6 lg:py-[56px]">
+        <main className="">
+          <div className="lg:px-[118px] relative px-6 lg:py-[56px]">
             <Header />
 
             {isHomePage && <SideMenu />}

@@ -20,6 +20,14 @@ export const ourFileRouter = {
   }).onUploadComplete(async ({ file }) => {
     return { url: file.url };
   }),
+  videoUploader: f({
+    video: {
+      maxFileSize: "1024MB",
+      maxFileCount: 1,
+    },
+  }).onUploadComplete(async ({ file }) => {
+    return { url: file.url };
+  }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
