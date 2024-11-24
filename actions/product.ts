@@ -1,32 +1,12 @@
 "use server";
 import prisma from "@/lib/prisma";
-import uploadFile from "@/lib/upload-file";
+
 import { Product } from "@/schema";
 
 import slugify from "slugify";
 
 const productUpsert = async (value: Product) => {
   const db = prisma.product;
-
-  const imageUrl = value?.images
-    ? await Promise.all(
-        value.images
-          .filter((image) => image)
-          .map((image) =>
-            image?.startsWith("https") ? image : uploadFile(image)
-          )
-      )
-    : [];
-
-  if (imageUrl.length > 0) {
-    value.images = imageUrl as string[];
-  }
-
-  const thumbnail = await uploadFile(value?.thumbnail);
-
-  if (thumbnail) {
-    value.thumbnail = thumbnail;
-  }
 
   if (value.id) {
     return db.update({

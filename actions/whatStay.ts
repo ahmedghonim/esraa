@@ -1,17 +1,11 @@
 "use server";
 import prisma from "@/lib/prisma";
-import uploadFile from "@/lib/upload-file";
 import { WhatTheSay, WhatTheSaySchema } from "@/schema";
 import { ZodError } from "zod";
 
 const upsertWhatTheSay = async (data: WhatTheSay) => {
   const id = data.id;
 
-  const image = await uploadFile(data?.image);
-
-  if (image) {
-    data.image = image;
-  }
   try {
     if (id) {
       const validatedData = WhatTheSaySchema.parse(data);

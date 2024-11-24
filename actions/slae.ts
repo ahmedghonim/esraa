@@ -1,17 +1,11 @@
 "use server";
 import prisma from "@/lib/prisma";
-import uploadFile from "@/lib/upload-file";
 import { SaleSlider, SaleSliderSchema } from "@/schema";
 import { ZodError } from "zod";
 
 const upsertSaleSlider = async (data: SaleSlider) => {
   const id = data.id;
 
-  const image = await uploadFile(data?.image);
-
-  if (image) {
-    data.image = image;
-  }
   try {
     if (id) {
       const validatedData = SaleSliderSchema.parse(data);

@@ -18,7 +18,6 @@ import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
 import FormInput from "@/components/ui/form-input";
-import FormTextArea from "@/components/ui/form-textarea";
 import FormSelect from "@/components/ui/form-select";
 import { useToast } from "@/components/ui/use-toast";
 import FormEditor from "@/components/ui/form-editor";

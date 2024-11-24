@@ -1,13 +1,12 @@
 "use server";
 import prisma from "@/lib/prisma";
-import uploadFile from "@/lib/upload-file";
 import { Shipping, ShippingSchema } from "@/schema";
 
 import { ZodError } from "zod";
 
 const upsertShipping = async (data: Shipping) => {
   const id = data.id;
-  
+
   try {
     if (id) {
       const validatedData = ShippingSchema.parse(data);
@@ -70,4 +69,4 @@ const getAllShipping = async () => {
   }
 };
 
-export { upsertShipping, deleteShipping , getShippingById , getAllShipping  };
+export { upsertShipping, deleteShipping, getShippingById, getAllShipping };

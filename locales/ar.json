@@ -152,6 +152,7 @@
     "select_color": "لم يتم تحديد اللون",
     "please_select_color": "من فضلك قم بتحديد لون المنتج أولا",
     "item_added": "تم إضافة المنتج",
-    "item_added_succesfully": "تم إضافة المنتج بنجاح إلي عربة التسوق"
+    "item_added_succesfully": "تم إضافة المنتج بنجاح إلي عربة التسوق",
+    "date": "تاريخ"
   }
 }

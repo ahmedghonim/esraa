@@ -63,7 +63,7 @@ export default function SaleRow({
         });
     });
   };
-
+  console.log("image >>>> ", image);
   return (
     <>
       <td className="py-4">

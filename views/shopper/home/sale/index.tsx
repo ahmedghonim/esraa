@@ -26,15 +26,14 @@ export default function Sale({ data }: Props) {
                 {parser(slide.description)}
               </div>
             </div>
-
             <div className="flex flex-col w-[66%] max-md:w-full">
               <div className="flex overflow-hidden relative flex-col grow justify-center items-end w-full ms-auto  max-h-[487px]">
                 <Image
-                  src={slide.image || "/sale-poster.png"}
+                  src={slide.image}
                   width={1200}
                   height={1200}
                   alt="sale poster"
-                  className="w-full h-full object-fill object-top"
+                  className="w-full h-full object-cover object-bottom max-h-[487px]"
                 />
               </div>
             </div>

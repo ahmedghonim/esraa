@@ -54,10 +54,10 @@ export default function OrdersList({ data }: Props) {
             </TableHead>
 
             <TableHead className="!text-white text-center !w-[250px]">
-              {t("date")}
+              {t("address")}
             </TableHead>
             <TableHead className="!text-white text-center !w-[250px]">
-              {t("address")}
+              {t("date")}
             </TableHead>
             <TableHead className="!text-white text-center !w-[250px]">
               {t("products")}

@@ -68,9 +68,9 @@ export default function Testimonials({ data }: Props) {
       </div>
 
       <div className="lg:col-span-5 col-span-12 flex justify-end">
-        <div className="relative h-[89px] w-[289px] bg-primary-100 rotate-90 px-8">
-          <span className="text-2xl absolute top-[70%]">
-            {t("what-they-say")}
+        <div className="relative h-[89px] w-[289px] bg-primary-100  px-8">
+          <span className="text-2xl absolute top-[70%] flex flex-col ">
+            <span className="text-white">{t("what-they-say")}</span>
             <br /> {t("about-us")} ?
           </span>
         </div>

@@ -152,6 +152,7 @@
     "select_color": "Color not selected",
     "please_select_color": "Please select the product color first",
     "item_added": "Item Added",
-    "item_added_succesfully": "Item has been added successfully"
+    "item_added_succesfully": "Item has been added successfully",
+    "date": "Date"
   }
 }

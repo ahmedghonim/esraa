@@ -1,13 +1,6 @@
 "use client";
 import { Trash2 } from "lucide-react";
-import {
-  Product,
-  Color,
-  Category,
-  Size,
-  ProductSchema,
-  Collection,
-} from "@/schema";
+import { Product, ProductSchema } from "@/schema";
 import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
