@@ -35,11 +35,12 @@ export default function LocalCart({ children }: Props) {
 
   const t = useTranslations("common");
 
-  const [cart, setCart] = useState<TProduct[]>(() => {
+  const [cart, setCart] = useState<TProduct[]>([]);
+  useEffect(() => {
     const storedCart = localStorage.getItem(CART_LOCALE_NAME);
 
-    return storedCart ? JSON.parse(storedCart) : [];
-  });
+    setCart(storedCart ? JSON.parse(storedCart) : []);
+  }, []);
 
   const [shipping, setShipping] = useState<number>(0);
 

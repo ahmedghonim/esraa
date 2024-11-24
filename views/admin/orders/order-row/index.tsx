@@ -10,6 +10,7 @@ interface Props {
 }
 
 export default function OrderRow({ data }: Props) {
+  console.log("🚀 ~ file: index.tsx:13 ~ OrderRow ~ data:", data);
   const router = useRouter();
   const [isPending, startTransaction] = useTransition();
 
@@ -24,6 +25,9 @@ export default function OrderRow({ data }: Props) {
 
       <td className="text-primary-100 font-medium py-4 text-center ">
         <address>{data.customer.address}</address>
+      </td>
+      <td className="text-primary-100 font-medium py-4 text-center ">
+        <address>{new Date(data.orderDate).toLocaleString()}</address>
       </td>
 
       <td className="text-primary-100 font-medium py-4 ">

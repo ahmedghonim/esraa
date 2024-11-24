@@ -95,11 +95,11 @@ export default function ProductRow({
                       src="/WhatsApp Image 2024-10-20 at 12.39.39 PM.jpeg"
                     />
                   ) : (
-                    <span
+                    <div
                       style={{
                         backgroundColor: color.hexCode,
                       }}
-                      className="shrink-0 h-5 w-5 mx-auto"
+                      className=" h-5 w-5 mx-auto"
                     />
                   )}
                 </td>

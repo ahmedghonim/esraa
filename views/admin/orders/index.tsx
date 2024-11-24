@@ -19,6 +19,7 @@ export default function OrdersList({ data }: Props) {
         name: order.customer.name,
         phone: order.customer.phone,
         address: order.customer.address,
+        data: order.createdAt,
         products: order.products
           .map(
             ({ product, size, quantity, color }: any, index: any) =>
@@ -52,6 +53,9 @@ export default function OrdersList({ data }: Props) {
               {t("phone")}
             </TableHead>
 
+            <TableHead className="!text-white text-center !w-[250px]">
+              {t("date")}
+            </TableHead>
             <TableHead className="!text-white text-center !w-[250px]">
               {t("address")}
             </TableHead>
