@@ -26,7 +26,7 @@ export default function WhatsAppAndSocialMedia() {
           <div className="px-5 py-4 max-w-full text-sm leading-5 whitespace-nowrap bg-primary-100 text-neutral-50 w-[243px]">
             <Whatsapp />
             <Link
-              href={info?.whatsApp || "/"}
+              href={"https://wa.me/" + info?.whatsApp || "/"}
               target="_blank"
               className="flex gap-2 justify-end mt-7"
             >

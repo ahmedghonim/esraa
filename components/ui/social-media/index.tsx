@@ -14,11 +14,6 @@ interface Props {
 export function SocialMedia({ fill = "white", info }: Props) {
   return (
     <>
-      {info?.whatsApp && (
-        <Link href={"https://wa.me/" + info?.whatsApp || "/"}>
-          <WhatsApp className={fill === "primary" ? "fill-primary-100" : ""} />
-        </Link>
-      )}
       {info?.tiktok && (
         <Link href={info?.tiktok || "/"}>
           <Tiktok className={fill === "primary" ? "fill-primary-100" : ""} />
