@@ -13,7 +13,7 @@ export default async function IntroSection() {
         autoPlay
         muted
         loop
-        className="w-full h-screen absolute end-[0px] start-[0px] md:top-0 -top-8 -z-10 object-cover"
+        className="w-full h-screen absolute end-[0px] start-[0px] md:top-0 -top-7 -z-10 object-cover"
         src={data?.title}
       />
       <div className="flex flex-col items-center mt-[20%] h-full w-full relative z-10">
