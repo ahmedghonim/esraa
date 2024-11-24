@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function OrderRow({ data }: Props) {
-  console.log("🚀 ~ file: index.tsx:13 ~ OrderRow ~ data:", data);
   const router = useRouter();
   const [isPending, startTransaction] = useTransition();
 

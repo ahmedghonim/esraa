@@ -34,7 +34,7 @@ export default function Sale({ data }: Props) {
                   width={1200}
                   height={1200}
                   alt="sale poster"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-fill object-top"
                 />
               </div>
             </div>

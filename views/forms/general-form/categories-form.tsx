@@ -10,11 +10,10 @@ import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
 import FormInput from "@/components/ui/form-input";
-
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { deleteCategory, upsertCategory } from "@/actions/category";
-import FormUpload from "@/components/ui/form-upload";
+import UploadImage from "@/components/ui/upload-image";
 
 const CategoryForm = ({ category }: { category: Category[] }) => {
   const { toast } = useToast();
@@ -134,9 +133,8 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
           ))}
         </div>
 
-        <FormUpload
+        <UploadImage
           className="w-full min-h-[350px]"
-          form={form}
           label={t("image")}
           name="image"
         />

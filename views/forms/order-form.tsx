@@ -17,11 +17,11 @@ import { useRouter } from "@/utils/navigation";
 import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
-import FormUpload from "@/components/ui/form-upload";
 import FormInput from "@/components/ui/form-input";
 import FormTextArea from "@/components/ui/form-textarea";
 import FormSelect from "@/components/ui/form-select";
 import { useToast } from "@/components/ui/use-toast";
+import UploadImage from "@/components/ui/upload-image";
 
 const ProductForm = ({
   values,
@@ -81,9 +81,8 @@ const ProductForm = ({
             })}
         </Text>
 
-        <FormUpload
+        <UploadImage
           className="w-full min-h-[350px]"
-          form={form}
           label={t("thumbnail")}
           name="thumbnail"
         />
@@ -91,9 +90,8 @@ const ProductForm = ({
         <div className="grid  grid-cols-1 lg:grid-cols-3 gap-4 w-full items-center">
           {form.getValues("images")?.map((_phone, index) => (
             <div className="flex-1 w-full flex flex-col gap-2" key={index}>
-              <FormUpload
+              <UploadImage
                 className="w-full min-h-[350px]"
-                form={form}
                 label={t("images") + " " + (+index + 1)}
                 name={`images[${index}]`}
                 hideDelete

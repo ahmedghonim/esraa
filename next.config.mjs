@@ -13,6 +13,7 @@ const nextConfig = {
     domains: [
       "cdn.builder.io",
       "qgmidrhrzeyarvna.public.blob.vercel-storage.com",
+      "utfs.io",
     ],
   },
   webpack(config) {

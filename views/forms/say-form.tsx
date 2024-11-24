@@ -8,12 +8,12 @@ import { useRouter } from "@/utils/navigation";
 import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
-import FormUpload from "@/components/ui/form-upload";
 import { useToast } from "@/components/ui/use-toast";
 import FormEditor from "@/components/ui/form-editor";
 import { WhatTheSay, WhatTheSaySchema } from "@/schema";
 import { upsertWhatTheSay } from "@/actions/whatStay";
 import FormInput from "@/components/ui/form-input";
+import UploadImage from "@/components/ui/upload-image";
 
 const SayForm = ({ values }: { values: any }) => {
   const t = useTranslations("common");
@@ -59,9 +59,8 @@ const SayForm = ({ values }: { values: any }) => {
             })}
         </Text>
 
-        <FormUpload
+        <UploadImage
           className="w-full min-h-[350px]"
-          form={form}
           label={t("image")}
           name="image"
         />

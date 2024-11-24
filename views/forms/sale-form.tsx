@@ -8,10 +8,10 @@ import { useRouter } from "@/utils/navigation";
 import { Form } from "@/components/ui/form";
 import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
-import FormUpload from "@/components/ui/form-upload";
 import { useToast } from "@/components/ui/use-toast";
 import { upsertSaleSlider } from "@/actions/slae";
 import FormEditor from "@/components/ui/form-editor";
+import UploadImage from "@/components/ui/upload-image";
 
 const SaleForm = ({ values }: { values: any }) => {
   const t = useTranslations("common");
@@ -57,9 +57,8 @@ const SaleForm = ({ values }: { values: any }) => {
             })}
         </Text>
 
-        <FormUpload
+        <UploadImage
           className="w-full min-h-[350px]"
-          form={form}
           label={t("image")}
           name="image"
         />
