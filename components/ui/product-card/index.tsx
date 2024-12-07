@@ -48,7 +48,7 @@ export function ProductCard({
       <div className="flex gap-2 justify-between mt-5 text-lg font-bold leading-6 capitalize">
         <div className="text-zinc-800">{name}</div>
         <div className="flex flex-col items-center">
-          {newPrice && <div className="font-bold">{newPrice}</div>}
+          {!!newPrice && <div className="font-bold">{newPrice}</div>}
           <div
             className={cn("", {
               "line-through text-primary-100/50": newPrice,

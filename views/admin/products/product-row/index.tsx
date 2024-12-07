@@ -129,7 +129,7 @@ export default function ProductRow({
         >
           {Number(price).toLocaleString()} {t("LE")} <br />
         </span>
-        {newPrice && Number(newPrice).toLocaleString()} {t("LE")}
+        {!!newPrice && Number(newPrice).toLocaleString()} {t("LE")}
       </td>
 
       <td className="py-4">
