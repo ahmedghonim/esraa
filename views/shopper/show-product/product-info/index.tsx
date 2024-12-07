@@ -27,7 +27,9 @@ export default function ProductInfo({ product }: Props) {
 
   const [variant, setVariant] = React.useState<any>(Object.values(info).flat());
 
-  const [stock, setStock] = React.useState(info[pro[0]?.color?.id]?.[0]?.stock);
+  const [stock, setStock] = React.useState(
+    info[pro[0]?.color?.id]?.[0]?.stock || 0
+  );
 
   const t = useTranslations("common");
 
@@ -58,11 +60,11 @@ export default function ProductInfo({ product }: Props) {
         {/* Main Information */}
         <h1
           className={cn("text-lg font-medium max-md:max-w-full", {
-            "text-red-500": product.stock === 0,
-            "text-green-500": product.stock > 0,
+            "text-red-500": stock === 0,
+            "text-green-500": stock > 0,
           })}
         >
-          {t("stock")} {stock}
+          {stock === 0 ? t("sold_out") : `${t("stock")} ${stock}`}
         </h1>
         <div className="flex gap-5 justify-between mt-2 w-full font-medium text-primary-100 max-md:flex-wrap max-md:max-w-full">
           <div className="my-auto text-lg">
