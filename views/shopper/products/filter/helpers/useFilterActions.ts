@@ -1,13 +1,13 @@
 import { Color, Product, Size } from "@prisma/client";
-import { useParams, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export interface TFilterState {
-  category: number | null;
   min_price: number;
   max_price: number;
   color: number[] | [];
   size: number[] | [];
+  categories: any;
 }
 
 export const initialFiterState = {
@@ -47,76 +47,77 @@ const useFilterActions = (
   /*      On Apply Filter     */
   /* ------------------------ */
   useEffect(() => {
+    let filteredProducts = data;
+
     if (searchValue !== "") {
-      setProducts(data.filter((product) => product.name.includes(searchValue)));
-    } else setProducts(data);
+      filteredProducts = filteredProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }
 
     if (categories) {
-      setProducts(
-        // @ts-ignore
-        data.filter((product) =>
-          // @ts-ignore
-          product.categories.some(
-            // @ts-ignore
-            (category) => category.name === categories
-          )
-        )
+      filteredProducts = filteredProducts.filter(
+        (product) => product.category.name === categories
       );
     }
+
     if (newarrival) {
-      setProducts(
-        // @ts-ignore
-        data.filter((product) => product.newArrival === true)
-      );
-    }
-  }, [searchValue, categories, newarrival]);
-
-  const onApplyFilter = () => {
-    const filteredProducts = [];
-
-    // filter by category
-    if (filterControler.category) {
-      // @ts-ignore
-      filteredProducts.push(
-        // @ts-ignore
-        ...data
-          .filter((product) =>
-            // @ts-ignore
-            product.categories.some(
-              // @ts-ignore
-              (category) => category.id === filterControler.category
-            )
-          )
-          .filter((product) => {
-            if (product.newPrice) {
-              return (
-                product.newPrice >= filterControler.min_price &&
-                product.newPrice <= filterControler.max_price
-              );
-            } else {
-              return (
-                product.price >= filterControler.min_price &&
-                product.price <= filterControler.max_price
-              );
-            }
-          })
-          .filter((product) => {
-            // @ts-ignore
-            return product.ProductVariant.some((variant: any) => {
-              return (
-                filterControler.size.includes(variant.size.name as never) &&
-                filterControler.color.includes(variant.color.id as never)
-              );
-            });
-          })
+      filteredProducts = filteredProducts.filter(
+        (product) => product.newArrival
       );
     }
 
     setProducts(filteredProducts);
+  }, [searchValue, categories, newarrival, data]);
+
+  const onApplyFilter = () => {
+    let filteredProducts = [...data]; // Start with all products
+
+    // Filter by category
+    if (filterControler.category) {
+      filteredProducts = filteredProducts.filter((product: any) =>
+        product.categories.some(
+          (category: any) => category.id === filterControler.category
+        )
+      );
+    }
+
+    // Filter by price range
+    if (filterControler.min_price || filterControler.max_price) {
+      filteredProducts = filteredProducts.filter((product) => {
+        const price = product.newPrice || product.price; // Use newPrice if available
+        return (
+          price >= filterControler.min_price &&
+          price <= filterControler.max_price
+        );
+      });
+    }
+
+    filteredProducts = filteredProducts.filter((product) =>
+      product.ProductVariant.some((variant) => {
+        const sizeMatch = filterControler.size.some(
+          (filter) => filter === variant.size.name
+        );
+
+        return sizeMatch;
+      })
+    );
+    filteredProducts = filteredProducts.filter((product) =>
+      product.ProductVariant.some((variant) => {
+        const colorMatch = filterControler.color?.some(
+          (filter) => filter === variant.colorId
+        );
+
+        return colorMatch;
+      })
+    );
+
+    // Set the filtered products (can be an empty array if no matches)
+    setProducts(filteredProducts);
   };
 
   /* ------------------------ */
-  /*      On Apply Filter     */
+  /*      On Reset Filter     */
   /* ------------------------ */
   const onResetFilter = () => {
     setFilterControler(initialFiterState);

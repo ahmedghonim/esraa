@@ -35,7 +35,7 @@ export function ProductCard({
           src={thumbnail || "/product.png"}
           className="w-full  h-full object-cover object-center"
         />
-        {ProductVariant.every((item: any) => item.stock === 0) && (
+        {ProductVariant?.every((item: any) => item.stock === 0) && (
           <h2
             className={cn(
               "absolute text-lg top-1/3 -translate-y-1/3 left-1/2 -translate-x-1/2 bg-white text-red-500 p-1 rounded-sm"
