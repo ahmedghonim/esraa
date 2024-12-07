@@ -6,7 +6,9 @@ import { useTranslations } from "next-intl";
 import React from "react";
 
 type Props = {
-  data: Array<Product & { sizes: Size[] } & { colors: Color[] }>;
+  data: Array<
+    Product & { sizes: Size[] } & { colors: Color[]; ProductVariant: any }
+  >;
 };
 
 export default function NewArrivals({ data }: Props) {

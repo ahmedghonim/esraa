@@ -65,6 +65,7 @@ export default function ProductRow({
               height={100}
               alt="product image"
             />
+
             <span className="text-lg font-bold leading-6 capitalize text-zinc-800">
               {name}
             </span>

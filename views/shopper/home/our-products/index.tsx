@@ -7,7 +7,9 @@ import { Color, Product, Size } from "@prisma/client";
 import { useTranslations } from "next-intl";
 
 type Props = {
-  data: Array<Product & { sizes: Size[] } & { colors: Color[] }>;
+  data: Array<
+    Product & { sizes: Size[] } & { colors: Color[]; ProductVariant: any }
+  >;
 };
 
 export default function OurProducts({ data }: Props) {
