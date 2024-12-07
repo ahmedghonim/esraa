@@ -25,12 +25,12 @@ export default async function Home({}: Props) {
     <>
       <IntroSection />
       <Sale data={sale} />
-      {/* {category.length > 0 && <Categories data={category} />} */}
-      {/* {newArrivals.length > 0 && <NewArrivals data={newArrivals} />}
+      {category.length > 0 && <Categories data={category} />}
+      {newArrivals.length > 0 && <NewArrivals data={newArrivals} />}
       {ourProducts.length > 0 && <OurProducts data={ourProducts} />}
       <CustomerSupport />
 
-      {whatTheySay.length > 0 && <Testimonials data={whatTheySay} />} */}
+      {whatTheySay.length > 0 && <Testimonials data={whatTheySay} />}
     </>
   );
 }
