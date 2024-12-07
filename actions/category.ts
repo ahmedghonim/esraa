@@ -70,6 +70,7 @@ const getAllCategories = async ({ top = false }: { top?: boolean }) => {
           id: true,
           name: true,
           image: true,
+          topCategory: true,
           products: {
             select: {
               name: true,

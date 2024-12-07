@@ -103,10 +103,12 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
               <Edit
                 className="cursor-pointer text-blue-500"
                 onClick={() => {
+                  console.log("category.topCategory >>>> ", category);
                   form.setValue("id", category.id);
                   form.setValue("name", category.name);
                   form.setValue("image", category.image);
                   form.setValue("topCategory", category.topCategory);
+                  form.trigger();
                 }}
               />
 
