@@ -12,6 +12,7 @@ const createContact = async (data: Contact) => {
     await prisma.contact.create({
       data: validatedData,
     });
+
     onMailer({
       email: process.env.NODE_MAILER_EMAIL!,
       subject: "New Contact Message Form Your Website",

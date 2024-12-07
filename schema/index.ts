@@ -141,7 +141,12 @@ const HeroSectionSchema = z.object({
 const ContactSchema = z.object({
   id: z.number().optional(),
   name: z.string(),
-  phone: z.string(),
+  phone: z
+    .string()
+    .regex(
+      /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
+      "Invalid Number!"
+    ),
   message: z.string(),
   isRead: z.boolean().optional(),
   createdAt: z.date().optional(),
