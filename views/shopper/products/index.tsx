@@ -35,6 +35,7 @@ export default function Products({
     onApplyFilter,
   } = useFilterActions(data);
   const [open, setOpen] = useState(false);
+
   return (
     <section className="mt-[55px] grid grid-cols-12 gap-5">
       <button onClick={() => setOpen(!open)} className="lg:hidden">

@@ -13,7 +13,7 @@ export interface TFilterState {
 export const initialFiterState = {
   category: null,
   min_price: 500,
-  max_price: 1500,
+  max_price: 2000,
   color: [],
   size: [],
 };
@@ -72,7 +72,6 @@ const useFilterActions = (
 
   const onApplyFilter = () => {
     let filteredProducts = [...data]; // Start with all products
-
     // Filter by category
     if (filterControler.category) {
       filteredProducts = filteredProducts.filter((product: any) =>

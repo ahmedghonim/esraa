@@ -59,20 +59,26 @@ const getCategoryById = async (id: number) => {
 };
 
 const getAllCategories = async ({ top = false }: { top?: boolean }) => {
-  const where = top ? { topCategory: true } : {};
-  try {
-    const categories = await prisma.category.findMany({
-      select: {
-        id: true,
-        name: true,
-        image: true,
-        products: {
-          select: {
-            _count: true, // Count the number of related products
+  const where = top
+    ? {
+        where: {
+          topCategory: true,
+        },
+      }
+    : {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          products: {
+            select: {
+              name: true,
+            },
           },
         },
-      },
-    });
+      };
+  try {
+    const categories = await prisma.category.findMany(where);
     return categories;
   } catch (error) {
     console.error("Error fetching categories:", error);
