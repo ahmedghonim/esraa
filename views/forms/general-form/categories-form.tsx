@@ -14,7 +14,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { deleteCategory, upsertCategory } from "@/actions/category";
 import UploadImage from "@/components/ui/upload-image";
-
+import { TrophyIcon } from "lucide-react";
 const CategoryForm = ({ category }: { category: Category[] }) => {
   const { toast } = useToast();
   const t = useTranslations("common");
@@ -129,7 +129,10 @@ const CategoryForm = ({ category }: { category: Category[] }) => {
                 }}
               />
               {category.topCategory && (
-                <Text className="text-primary-100">{t("top_category")}</Text>
+                <Text className="text-red-500 flex gap-1">
+                  <TrophyIcon />
+                  {t("top_category")}
+                </Text>
               )}
             </div>
           ))}
