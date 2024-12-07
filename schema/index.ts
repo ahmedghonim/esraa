@@ -78,8 +78,12 @@ const CustomerSchema = z.object({
     .string()
     .min(1)
     .regex(/^\+?[0-9]\d{1,14}$/), // Assuming E.164 phone format
-  address: z.string().min(1),
   email: z.string().email().optional(),
+  city: z.string().min(1),
+  country: z.string().min(1),
+  floor_no: z.string().min(1),
+  build_no: z.string().min(1),
+  details: z.string().optional(),
 });
 
 const SaleSliderSchema = z.object({

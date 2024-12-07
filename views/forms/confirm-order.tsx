@@ -68,7 +68,11 @@ export default function ConfirmOrder({}: Props) {
                    <p>Customer: ${customer.name}</p>
                    <p>Email: ${customer.email}</p>
                    <p>Phone: ${customer.phone}</p>
-                   <p>Address: ${customer.address}</p>
+                    <p>City: ${values.city}</p>
+                    <p>Country: ${values.country}</p>
+                    <p>Floor No: ${values.floor_no}</p>
+                    <p>Building No: ${values.build_no}</p>
+                    <p>Details: ${values.details}</p>
                  `,
               });
               toast({
@@ -103,7 +107,11 @@ export default function ConfirmOrder({}: Props) {
 
         <FormInput form={form} name="email" label={t("email")} type="email" />
       </div>
-      <FormTextArea form={form} name="address" label={t("address")} />
+      <FormInput form={form} name="city" label={t("city")} />
+      <FormInput form={form} name="country" label={t("country")} />
+      <FormInput form={form} name="build_no" label={t("build_no")} />
+      <FormInput form={form} name="floor_no" label={t("floor_no")} />
+      <FormTextArea form={form} name="details" label={t("details")} />
 
       <EsraButton
         name={t("order_now")}

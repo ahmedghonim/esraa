@@ -154,6 +154,10 @@
     "item_added": "Item Added",
     "item_added_succesfully": "Item has been added successfully",
     "date": "Date",
-    "sold_out": "Sold Out"
+    "sold_out": "Sold Out",
+    "country": "Country",
+    "build_no": "Build No",
+    "floor_no": "Floor No",
+    "details": "Details"
   }
 }

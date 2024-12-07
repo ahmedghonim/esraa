@@ -11,6 +11,7 @@ const upsertCustomer = async (data: CustomerType) => {
     const isCustomerExist = await prisma.customer.findUnique({
       where: { phone: validatedData.phone },
     });
+    const address = `city: ${data.city}, Country, ${data.country}, Build no: ${data.build_no}, Floor no: ${data.floor_no}, Details: ${data.details}`;
     if (isCustomerExist) {
       return await prisma.customer.update({
         where: { phone: validatedData.phone },
@@ -22,6 +23,7 @@ const upsertCustomer = async (data: CustomerType) => {
       return await prisma.customer.create({
         data: {
           ...validatedData,
+          address,
         },
       });
     }
