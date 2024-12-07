@@ -41,7 +41,7 @@ export function ProductCard({
               "absolute text-lg top-1/3 -translate-y-1/3 left-1/2 -translate-x-1/2 bg-white text-red-500 p-1 rounded-sm"
             )}
           >
-            {t("out_of_stock")}
+            {t("sold_out")}
           </h2>
         )}
       </Link>

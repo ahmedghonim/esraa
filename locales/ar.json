@@ -120,6 +120,7 @@
     "order_placed_successfully": "تم تقديم الطلب بنجاح",
     "general-info": "معلومات عامة",
     "stock": "المخزون",
+
     "out_of_stock": "إنتهى من المخزن",
     "close": "إغلاق",
     "whatsApp": "واتساب",
@@ -153,6 +154,7 @@
     "please_select_color": "من فضلك قم بتحديد لون المنتج أولا",
     "item_added": "تم إضافة المنتج",
     "item_added_succesfully": "تم إضافة المنتج بنجاح إلي عربة التسوق",
-    "date": "تاريخ"
+    "date": "تاريخ",
+    "sold_out": "نفذت الكمية"
   }
 }
