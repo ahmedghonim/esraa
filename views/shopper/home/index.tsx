@@ -11,9 +11,7 @@ import { getAllCategories } from "@/actions/category";
 import { getAllProducts } from "@/actions/product";
 import { getAllWhatTheSays } from "@/actions/whatStay";
 
-type Props = {};
-
-export default async function Home({}: Props) {
+export default async function Home() {
   const sale = (await getAllSaleSliders({ notHidden: true })) as any;
   const category = (await getAllCategories({ top: true })) as any;
   const ourProducts = (await getAllProducts()) as any;
