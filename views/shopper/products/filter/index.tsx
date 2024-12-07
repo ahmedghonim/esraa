@@ -25,13 +25,13 @@ export default function Filter({
   color,
   category,
   sizes,
-  collection,
   filterControler,
   setFilterControler,
   onResetFilter,
   onApplyFilter,
 }: Props) {
   const t = useTranslations("common");
+  console.log("category >>>> ", category);
   return (
     <section className="lg:col-span-3 col-span-12 flex flex-col gap-4">
       <FilterContext.Provider

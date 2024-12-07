@@ -31,7 +31,7 @@ export default function Categories({ category }: Props) {
             setFilterControler({ ...filterControler, category: category.id })
           }
         >
-          {category.name}
+          {category.name} ({category.products.length})
         </button>
       ))}
     </CollapseCard>

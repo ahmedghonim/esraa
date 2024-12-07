@@ -56,8 +56,8 @@ const useFilterActions = (
     }
 
     if (categories) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category.name === categories
+      filteredProducts = filteredProducts.filter((product: any) =>
+        product.categories.some((category: any) => category.id === categories)
       );
     }
 
@@ -92,26 +92,28 @@ const useFilterActions = (
         );
       });
     }
+    if (filterControler.size.length > 0) {
+      filteredProducts = filteredProducts.filter((product) =>
+        product.ProductVariant.some((variant) => {
+          const sizeMatch = filterControler.size.some(
+            (filter) => filter === variant.size.name
+          );
 
-    filteredProducts = filteredProducts.filter((product) =>
-      product.ProductVariant.some((variant) => {
-        const sizeMatch = filterControler.size.some(
-          (filter) => filter === variant.size.name
-        );
+          return sizeMatch;
+        })
+      );
+    }
+    if (filterControler.color.length > 0) {
+      filteredProducts = filteredProducts.filter((product) =>
+        product.ProductVariant.some((variant) => {
+          const colorMatch = filterControler.color?.some(
+            (filter) => filter === variant.colorId
+          );
 
-        return sizeMatch;
-      })
-    );
-    filteredProducts = filteredProducts.filter((product) =>
-      product.ProductVariant.some((variant) => {
-        const colorMatch = filterControler.color?.some(
-          (filter) => filter === variant.colorId
-        );
-
-        return colorMatch;
-      })
-    );
-
+          return colorMatch;
+        })
+      );
+    }
     // Set the filtered products (can be an empty array if no matches)
     setProducts(filteredProducts);
   };
