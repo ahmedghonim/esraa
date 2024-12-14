@@ -53,7 +53,7 @@ const ProductForm = ({
       ...values,
       categories: values?.categories?.map((item: any) => item.id),
       collectionId: values?.collectionId || null,
-      relatedProducts: values?.products?.map((item: any) => item.id),
+      relatedProducts: values?.relatedProducts?.map((item: any) => item.id),
       variants:
         values?.ProductVariant?.map((variant: any) => ({
           ...variant,

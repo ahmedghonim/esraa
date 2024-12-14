@@ -5,7 +5,7 @@ import Price from "./price";
 import Colors from "./colors";
 import Sizes from "./sizes";
 import { EsraButton } from "@/components/ui";
-import { TFilterState, initialFiterState } from "./helpers/useFilterActions";
+import { TFilterState } from "./helpers/useFilterActions";
 import { Category, Collection, Color, Size } from "@prisma/client";
 import { useTranslations } from "next-intl";
 
@@ -14,7 +14,7 @@ type Props = {
   category: Category[];
   sizes: Size[];
   collection: Collection[];
-  filterControler: TFilterState;
+  filterControler: any;
   setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
   onApplyFilter: () => void;
   onResetFilter: () => void;

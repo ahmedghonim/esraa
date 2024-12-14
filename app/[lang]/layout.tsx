@@ -3,8 +3,8 @@ import { El_Messiri } from "next/font/google";
 import Layout from "@/layout";
 import LocalCart from "@/views/shopper/local-cart";
 import { Toaster } from "@/components/ui/toaster";
-import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
+import NextTopLoader from "nextjs-toploader";
 
 const cairo_font = El_Messiri({
   subsets: ["arabic", "latin"],
@@ -97,6 +97,13 @@ export default function RootLayout({
         <NextIntlClientProvider messages={messages}>
           <LocalCart>
             <Layout>
+              <NextTopLoader
+                height={10}
+                color="#526458"
+                crawlSpeed={50}
+                crawl={true}
+                showSpinner={false}
+              />
               {children}
               <Toaster />
             </Layout>

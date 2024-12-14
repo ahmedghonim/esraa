@@ -79,7 +79,7 @@ const getAllCategories = async ({ top = false }: { top?: boolean }) => {
         },
       };
   try {
-    const categories = await prisma.category.findMany(where);
+    const categories = await prisma.category.findMany(where as any);
     return categories;
   } catch (error) {
     console.error("Error fetching categories:", error);

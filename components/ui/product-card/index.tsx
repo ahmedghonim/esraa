@@ -38,7 +38,7 @@ export function ProductCard({
         {ProductVariant?.every((item: any) => item.stock === 0) && (
           <h2
             className={cn(
-              "absolute text-lg top-1/3 -translate-y-1/3 left-1/2 -translate-x-1/2 bg-white text-red-500 p-1 rounded-sm"
+              "absolute text-[16px] top-[15px] -translate-y-1/3 left-[52px] -translate-x-1/2 bg-white text-red-500 p-1 rounded-sm"
             )}
           >
             {t("sold_out")}

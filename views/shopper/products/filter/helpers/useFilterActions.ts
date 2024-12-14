@@ -18,14 +18,7 @@ export const initialFiterState = {
   size: [],
 };
 
-const useFilterActions = (
-  data: Array<
-    Product & { sizes: Size[] } & { colors: Color[] } & {
-      price: number;
-      category: { id: number };
-    }
-  >
-) => {
+const useFilterActions = (data: any) => {
   const param = useSearchParams();
   const categories = param.get("categories");
   const newarrival = param.get("newarrival");
@@ -47,7 +40,7 @@ const useFilterActions = (
   /*      On Apply Filter     */
   /* ------------------------ */
   useEffect(() => {
-    let filteredProducts = data;
+    let filteredProducts = [...data];
 
     if (searchValue !== "") {
       filteredProducts = filteredProducts.filter((product) =>
@@ -55,9 +48,9 @@ const useFilterActions = (
       );
     }
 
-    if (categories) {
+    if (categories && filterControler.category === null) {
       filteredProducts = filteredProducts.filter((product: any) =>
-        product.categories.some((category: any) => category.id === categories)
+        product.categories.some((category: any) => +category.id === +categories)
       );
     }
 
@@ -68,7 +61,7 @@ const useFilterActions = (
     }
 
     setProducts(filteredProducts);
-  }, [searchValue, categories, newarrival, data]);
+  }, [searchValue, categories, newarrival, data, filterControler.category]);
 
   const onApplyFilter = () => {
     let filteredProducts = [...data]; // Start with all products
@@ -93,7 +86,7 @@ const useFilterActions = (
     }
     if (filterControler.size.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
-        product.ProductVariant.some((variant) => {
+        product?.ProductVariant?.some((variant: any) => {
           const sizeMatch = filterControler.size.some(
             (filter) => filter === variant.size.name
           );
@@ -104,7 +97,7 @@ const useFilterActions = (
     }
     if (filterControler.color.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
-        product.ProductVariant.some((variant) => {
+        product.ProductVariant.some((variant: any) => {
           const colorMatch = filterControler.color?.some(
             (filter) => filter === variant.colorId
           );
