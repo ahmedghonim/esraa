@@ -1,16 +1,15 @@
 "use client";
-import { Link } from "@/utils/navigation";
-import React, { useContext, useEffect } from "react";
-import Logo from "@/svg/logo.svg";
-import clsx from "clsx";
-import { MobileHeader } from "./mobile-header";
-import { useTranslations } from "next-intl";
-import { usePathname } from "@/utils/navigation";
-import { EsraLink } from "@/components/ui";
-import { ShoppingCart } from "lucide-react";
-import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { getAllCategories } from "@/actions/category";
+import { EsraLink } from "@/components/ui";
 import { Category } from "@/schema";
+import Logo from "@/svg/logo.svg";
+import { Link, usePathname } from "@/utils/navigation";
+import { CartContext, TCart } from "@/views/shopper/local-cart";
+import clsx from "clsx";
+import { ShoppingCart } from "lucide-react";
+import { useTranslations } from "next-intl";
+import React, { useContext, useEffect } from "react";
+import { MobileHeader } from "./mobile-header";
 export const links = [
   {
     name: "Home",

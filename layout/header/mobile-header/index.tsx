@@ -1,22 +1,17 @@
-import {
-  Sheet,
-  SheetContent,
-
-  SheetTrigger,
-} from "@/ui/sheet";
 import BurgerIcon from "@/svg/burger-icon.svg";
 import Logo from "@/svg/logo.svg";
-import { links } from "..";
-import clsx from "clsx";
+import { Sheet, SheetContent, SheetTrigger } from "@/ui/sheet";
 import { Link, usePathname } from "@/utils/navigation";
+import clsx from "clsx";
+import { links } from "..";
 
-import { EsraLink } from "@/components/ui";
-import React, { useContext, useEffect } from "react";
-import { CartContext, TCart } from "@/views/shopper/local-cart";
-import { Category } from "@/schema";
 import { getAllCategories } from "@/actions/category";
+import { EsraLink } from "@/components/ui";
+import { Category } from "@/schema";
+import { CartContext, TCart } from "@/views/shopper/local-cart";
 import { ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
+import React, { useContext, useEffect } from "react";
 
 export function MobileHeader() {
   const t = useTranslations("common");
@@ -43,7 +38,7 @@ export function MobileHeader() {
           </button>
         </SheetTrigger>
 
-        <SheetContent side="top" className="w-full h-1/4 flex flex-col">
+        <SheetContent side="top" className="w-full h-fit flex flex-col">
           <div className="flex justify-between">
             <Logo />
             <div className="relative  flex  my-auto text-base font-bold leading-6 capitalize whitespace-nowrap">
@@ -66,7 +61,7 @@ export function MobileHeader() {
           </div>
 
           {/* Desktop Header */}
-          <ul className=" flex flex-wrap  justify-between">
+          <ul className=" flex flex-col gap-4 justify-between">
             {links.map((link) => (
               <li
                 key={link.name}
@@ -77,11 +72,10 @@ export function MobileHeader() {
                 <Link href={link.href}>{t(link.name)}</Link>
               </li>
             ))}
-          </ul>
-          <ul>
+
             <li className="group relative">
               <Link href="/products">{t("categories")}</Link>
-              <ul className=" absolute flex-col top-2 -start-3 hidden bg-white z-50 shadow  duration-150 rounded-lg text-nowrap p-2 group-hover:flex gap-3 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
+              <ul className="flex-col -start-3 hidden bg-white z-50 shadow  duration-150 rounded-lg text-nowrap p-2 group-hover:flex gap-3 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
                 {category?.map((category) => (
                   <Link
                     className="hover:bg-primary-200 hover:text-white px-2 p-1  rounded-md"
