@@ -8,7 +8,7 @@ export default async function IntroSection() {
   const data = (await getHeroSection()) as any;
 
   return (
-    <section className="h-[80vh] w-screen relative">
+    <section className="h-[60vh] w-screen relative">
       <video
         autoPlay
         muted
