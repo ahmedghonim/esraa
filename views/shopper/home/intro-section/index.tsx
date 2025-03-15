@@ -17,7 +17,7 @@ export default async function IntroSection() {
         src={data?.title}
       />
 
-      <div className="flex flex-col items-center relative z-10">
+      <div className="flex flex-col items-center justify-center relative z-10 h-[60vh]">
         <h1 className="text-5xl text-white font-bold text-center">
           {parser(data?.description)}
         </h1>
