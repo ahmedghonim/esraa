@@ -1,5 +1,6 @@
 "use client";
 import { upsertCustomer } from "@/actions/customer";
+import { onMailer } from "@/actions/mailer";
 import { createOrder } from "@/actions/order";
 import { EsraButton } from "@/components/ui";
 import { Form } from "@/components/ui/form";
@@ -11,10 +12,9 @@ import { useRouter } from "@/utils/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Customer } from "@prisma/client";
 import { useTranslations } from "next-intl";
-import React, { useTransition } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useCartActions } from "../shopper/cart/helpers/useCartActions";
-import { onMailer } from "@/actions/mailer";
 
 type Props = {};
 
@@ -83,6 +83,7 @@ export default function ConfirmOrder({}: Props) {
               router.push("/");
             })
             .catch((error) => {
+              console.log("🚀 ~ .then ~ error:", error);
               toast({
                 title: t("error"),
                 description: error.message || t("something_went_wrong"),
@@ -90,6 +91,7 @@ export default function ConfirmOrder({}: Props) {
             });
         })
         .catch((error) => {
+          console.log("🚀 ~ startTransaction ~ error:", error);
           toast({
             title: t("error"),
             description: error.message || t("something_went_wrong"),

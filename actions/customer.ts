@@ -16,13 +16,18 @@ const upsertCustomer = async (data: CustomerType) => {
       return await prisma.customer.update({
         where: { phone: validatedData.phone },
         data: {
-          ...validatedData,
+          name: validatedData.name,
+          phone: validatedData.phone,
+          email: validatedData.email,
+          address,
         },
       });
     } else {
       return await prisma.customer.create({
         data: {
-          ...validatedData,
+          name: validatedData.name,
+          phone: validatedData.phone,
+          email: validatedData.email,
           address,
         },
       });
@@ -77,4 +82,4 @@ const getAllCustomers = async () => {
   }
 };
 
-export { upsertCustomer, deleteCustomer, getCustomerById, getAllCustomers };
+export { deleteCustomer, getAllCustomers, getCustomerById, upsertCustomer };
