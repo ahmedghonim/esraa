@@ -46,7 +46,7 @@ export default function Header({}: Props) {
   }, []);
 
   return (
-    <header className="flex gap-5 justify-between items-center max-md:flex-wrap max-lg:mt-6">
+    <header className="flex gap-5 justify-between items-center max-md:flex-wrap max-lg:mt-6 fixed top-0 left-0 right-0 z-50 w-[80%] mx-auto">
       <Link href="/">
         <Logo />
       </Link>
