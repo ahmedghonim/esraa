@@ -105,6 +105,14 @@ const productUpsert = async (value: Product) => {
 };
 
 const productDelete = async (id: number) => {
+  // First delete all related ProductVariant records
+  await prisma.productVariant.deleteMany({
+    where: {
+      productId: id,
+    },
+  });
+
+  // Then delete the product
   return prisma.product.delete({
     where: {
       id,
@@ -150,9 +158,9 @@ const getAllProducts = () => {
 };
 
 export {
-  productUpsert,
-  productDelete,
+  getAllProducts,
   getProductById,
   getProductBySlug,
-  getAllProducts,
+  productDelete,
+  productUpsert,
 };
