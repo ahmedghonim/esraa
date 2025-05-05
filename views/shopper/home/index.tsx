@@ -1,15 +1,14 @@
-import React from "react";
-import IntroSection from "./intro-section";
-import Sale from "./sale";
-import Categories from "./categories";
-import NewArrivals from "./new-arrival";
-import OurProducts from "./our-products";
-import CustomerSupport from "./customer-support";
-import Testimonials from "./testimonials";
-import { getAllSaleSliders } from "@/actions/slae";
 import { getAllCategories } from "@/actions/category";
 import { getAllProducts } from "@/actions/product";
+import { getAllSaleSliders } from "@/actions/slae";
 import { getAllWhatTheSays } from "@/actions/whatStay";
+import Categories from "./categories";
+import CustomerSupport from "./customer-support";
+import IntroSection from "./intro-section";
+import NewArrivals from "./new-arrival";
+import OurProducts from "./our-products";
+import Sale from "./sale";
+import Testimonials from "./testimonials";
 
 export default async function Home() {
   const sale = (await getAllSaleSliders({ notHidden: true })) as any;

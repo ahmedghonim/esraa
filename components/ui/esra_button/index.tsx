@@ -1,7 +1,6 @@
-import React, { HTMLAttributes, MouseEvent } from "react";
-import clsx from "clsx";
-import { Loader } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
+import React, { HTMLAttributes, MouseEvent } from "react";
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   name: string | React.ReactNode;
@@ -16,22 +15,30 @@ export function EsraButton({
   name,
   className,
   onClick,
-  isLoading,
-  type,
-  disabled,
+  isLoading = false,
+  type = "button",
+  disabled = false,
+  ...props
 }: Props) {
   return (
     <button
-      disabled={disabled}
-      className={clsx("bg-primary-100", className, {
-        "cursor-not-allowed": disabled,
-        "opacity-50": disabled,
-      })}
       type={type}
-      onClick={(e) => onClick?.(e)}
+      className={cn(
+        "flex justify-center items-center py-3 px-4 text-base font-bold leading-6 text-white bg-primary-100 rounded-full w-full hover:bg-primary-200 transition-colors duration-200 ease-in-out",
+        {
+          "opacity-70 cursor-not-allowed": disabled || isLoading,
+        },
+        className
+      )}
+      onClick={onClick}
+      disabled={disabled || isLoading}
+      {...props}
     >
       {isLoading ? (
-        <Loader className={cn("size-6 fill-current mx-auto")} />
+        <>
+          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+          <span>Loading...</span>
+        </>
       ) : (
         name
       )}

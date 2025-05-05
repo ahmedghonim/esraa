@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import { getOurInfo } from "@/actions/our-info";
+import { SocialMedia } from "@/components/ui";
 import TopRight from "@/svg/arrow-top-right.svg";
 import Whatsapp from "@/svg/footer-whatsapp.svg";
-import { SocialMedia } from "@/components/ui";
 import { Link } from "@/utils/navigation";
-import { getOurInfo } from "@/actions/our-info";
-import { OurInfo } from "@/schema";
 import { useTranslations } from "next-intl";
+import React, { useEffect } from "react";
 
 export default function WhatsAppAndSocialMedia() {
   const t = useTranslations("common");
@@ -29,6 +28,7 @@ export default function WhatsAppAndSocialMedia() {
               href={"https://wa.me/" + info?.whatsApp || "/"}
               target="_blank"
               className="flex gap-2 justify-end mt-7"
+              aria-label="Contact us via WhatsApp"
             >
               <span>{t("whatsApp")}</span>
               <TopRight />

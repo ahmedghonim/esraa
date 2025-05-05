@@ -1,17 +1,17 @@
 "use client";
-import React, { useTransition } from "react";
+import { productDelete } from "@/actions/product";
+import { EsraButton } from "@/components/ui";
+import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 import Delete from "@/svg/delete.svg";
 import Edit from "@/svg/edit.svg";
-import { EsraButton } from "@/components/ui";
+import { Link, useRouter } from "@/utils/navigation";
+import { Color, Product, Size } from "@prisma/client";
+import { ToastAction } from "@radix-ui/react-toast";
 import parser from "html-react-parser";
 import Image from "next/image";
-import { Color, Product, Size, ProductVariant } from "@prisma/client";
-import { Link, useRouter } from "@/utils/navigation";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@radix-ui/react-toast";
+import { useTransition } from "react";
 import { useTranslations } from "use-intl";
-import { productDelete } from "@/actions/product";
-import { cn } from "@/lib/utils";
 
 interface Props extends Product {
   ProductVariant: {
@@ -124,7 +124,7 @@ export default function ProductRow({
       <td className="py-4 text-center ">
         <span
           className={cn("", {
-            "line-through text-red-500 p-2": newPrice,
+            "line-through text-red-700 p-2 font-medium": newPrice,
           })}
         >
           {Number(price).toLocaleString()} {t("LE")} <br />

@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import Filter from "./filter";
-import ProductsList from "./products-list";
 import { Category, Collection, Color, Product, Size } from "@prisma/client";
-import { useFilterActions } from "./filter/helpers/useFilterActions";
 import { FilterIcon } from "lucide-react";
+import { useState } from "react";
+import Filter from "./filter";
+import { useFilterActions } from "./filter/helpers/useFilterActions";
+import ProductsList from "./products-list";
 interface Props {
   color: Color[];
   category: Category[];
@@ -37,7 +37,7 @@ export default function Products({
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="mt-[55px] grid grid-cols-12 gap-5">
+    <section className="mt-[100px] grid grid-cols-12 gap-5">
       <button onClick={() => setOpen(!open)} className="lg:hidden">
         <FilterIcon />
       </button>

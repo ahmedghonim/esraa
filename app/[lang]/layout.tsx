@@ -1,9 +1,8 @@
-import { NextIntlClientProvider, useMessages } from "next-intl";
-import { El_Messiri } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 import Layout from "@/layout";
 import LocalCart from "@/views/shopper/local-cart";
-import { Toaster } from "@/components/ui/toaster";
-import { Metadata } from "next";
+import { NextIntlClientProvider, useMessages } from "next-intl";
+import { El_Messiri } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 
 const cairo_font = El_Messiri({
@@ -12,72 +11,58 @@ const cairo_font = El_Messiri({
   variable: "--font-cairo",
 });
 
-export async function generateMetadata(
-  {
-    params: { lang },
-  }: {
-    params: { lang: string };
-  },
-  cookieLang: string | undefined
-): Promise<Metadata> {
+type Props = {
+  params: {
+    lang: string;
+  };
+  children: React.ReactNode;
+};
+
+export async function generateMetadata({ params }: Props) {
+  const { lang } = params;
+
+  // Create dynamic metadata based on the current page
   return {
     title: {
-      template: `Esra | %s`,
-      default: "Esra",
+      template: "%s | Esraa Fashion",
+      default: "Esraa Fashion - Elegant Modest Fashion",
     },
-    // description: t("description"),
-    // keywords: t("keywords"),
-    authors: [{ name: "esramodestwear" }],
-    applicationName: "esramodestwear",
-    metadataBase: new URL("https://www.esramodestwear.com"),
-    alternates: {
-      canonical: `${cookieLang ? "/" + (lang === "en" ? "" : `${lang}`) : ""}`,
-      languages: {
-        en: "/",
-        "en-US": "/",
-        "en-au": "/",
-        "en-bz": "/",
-        "en-ca": "/",
-        "en-ie": "/",
-        "en-jm": "/",
-        "en-nz": "/",
-        "en-za": "/",
-        "en-tt": "/",
-        "en-gb": "/",
-        "en-us": "/",
-        "ar-AR": "/ar",
-        "ar-dz": "/ar",
-        "ar-bh": "/ar",
-        "ar-eg": "/ar",
-        "ar-iq": "/ar",
-        "ar-jo": "/ar",
-        "ar-kw": "/ar",
-        "ar-lb": "/ar",
-        "ar-ly": "/ar",
-        "ar-ma": "/ar",
-        "ar-om": "/ar",
-        "ar-qa": "/ar",
-        "ar-sa": "/ar",
-        "ar-sy": "/ar",
-        "ar-tn": "/ar",
-        "ar-ae": "/ar",
-        "ar-ye": "/ar",
-      },
-    },
-
+    description:
+      "Shop the latest modest fashion trends at Esraa Fashion. Elegant dresses, abayas, and more for the modern woman.",
+    keywords: [
+      "modest fashion",
+      "abayas",
+      "dresses",
+      "islamic clothing",
+      "women fashion",
+    ],
     openGraph: {
+      title: "Esraa Fashion - Elegant Modest Fashion",
+      description:
+        "Shop the latest modest fashion trends at Esraa Fashion. Elegant dresses, abayas, and more for the modern woman.",
+      url: "https://esramodestwear.com",
+      siteName: "Esraa Fashion",
+      locale: lang,
       type: "website",
-      title: "Esra Modestwear",
-      url: `https://www.esramodestwear.com/${lang}`,
-      siteName: "esramodestwear",
       images: [
         {
-          url: "./logo.jpg",
-          width: 800,
-          height: 600,
-          alt: "esramodestwear",
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Esraa Fashion",
         },
       ],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: "https://esramodestwear.com",
+      languages: {
+        en: "https://esramodestwear.com/en",
+        ar: "https://esramodestwear.com/ar",
+      },
     },
   };
 }

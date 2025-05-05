@@ -1,12 +1,12 @@
 "use client";
-import React, { useContext } from "react";
 import { ChangeProductCount, EsraButton } from "@/components/ui";
-import { useTranslations } from "next-intl";
-import { useShowProductActions } from "../helpers/useShowProductActions";
-import { TColor, TProduct, TSize } from "@/types";
 import { cn } from "@/lib/utils";
+import { TColor, TProduct, TSize } from "@/types";
 import { ProductVariant } from "@prisma/client";
+import { useTranslations } from "next-intl";
+import React, { useContext } from "react";
 import { CartContext, TCart } from "../../local-cart";
+import { useShowProductActions } from "../helpers/useShowProductActions";
 
 interface Props {
   product: TProduct & {
@@ -60,7 +60,7 @@ export default function ProductInfo({ product }: Props) {
         {/* Main Information */}
         <h1
           className={cn("text-lg font-medium max-md:max-w-full", {
-            "text-red-500": stock === 0,
+            "text-red-700 font-bold": stock === 0,
             "text-green-500": stock > 0,
           })}
         >
@@ -78,7 +78,8 @@ export default function ProductInfo({ product }: Props) {
           <div className="flex gap-2 justify-between text-3xl text-right whitespace-nowrap">
             <div
               className={cn("", {
-                "line-through text-primary-100/50 px-2": product.newPrice,
+                "line-through text-primary-100 font-medium px-2":
+                  product.newPrice,
               })}
             >
               {product.price}

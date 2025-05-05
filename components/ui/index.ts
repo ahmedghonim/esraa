@@ -1,25 +1,33 @@
-import { EsraLink } from "./link";
 import { EsraButton } from "@/components/ui/esra_button";
-import { EsraInput } from "./input";
-import { EsraPagination } from "./pagination";
-import { EsraSelect } from "./select";
-import { EsraModal } from "./modal";
 import { EsraAlertDialog } from "./alert";
-import { ProductCard } from "./product-card";
-import { CollapseCard } from "./collapse-card";
-import { SocialMedia } from "./social-media";
+import { Breadcrumb } from "./breadcrumb";
 import { ChangeProductCount } from "./change-count-button";
+import { CheckoutProgress } from "./checkout-progress";
+import { CollapseCard } from "./collapse-card";
+import { EsraInput } from "./input";
+import { EsraLink } from "./link";
+import { EsraModal } from "./modal";
+import { OptimizedImage } from "./optimized-image";
+import { EsraPagination } from "./pagination";
+import { ProductCard } from "./product-card";
+import { Search } from "./search";
+import { EsraSelect } from "./select";
+import { SocialMedia } from "./social-media";
 
 export {
-  EsraLink,
-  EsraSelect,
+  Breadcrumb,
+  ChangeProductCount,
+  CheckoutProgress,
+  CollapseCard,
+  EsraAlertDialog,
   EsraButton,
   EsraInput,
+  EsraLink,
   EsraModal,
   EsraPagination,
+  EsraSelect,
+  OptimizedImage,
   ProductCard,
-  CollapseCard,
+  Search,
   SocialMedia,
-  EsraAlertDialog,
-  ChangeProductCount,
 };

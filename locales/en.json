@@ -158,6 +158,42 @@
     "country": "Country",
     "build_no": "Build No",
     "floor_no": "Floor No",
-    "details": "Details"
+    "details": "Details",
+
+    "product_details": "Product Details",
+    "dashboard": "Dashboard",
+    "search_products": "Search for products",
+    "clear_search": "Clear search",
+    "view_all_results": "View all results",
+    "search_products_or_categories": "Search for products or categories",
+
+    "shop_all": "Shop All",
+    "shop_by_category": "Shop by Category",
+    "summer_collection": "Summer Collection 2025",
+    "best_sellers": "Best Sellers",
+    "sale": "Sale",
+
+    "our_story": "Our Story",
+    "brand_story_p1": "At Esraa Fashion, we believe that modesty never compromises on style. Founded in 2020, our journey began with a simple vision: to create elegant modest fashion that empowers women to express their unique identity while honoring their values.",
+    "brand_story_p2": "Each piece in our collection is thoughtfully designed with attention to quality, comfort, and contemporary style. We're committed to sustainable practices and ethical production, ensuring that our fashion choices reflect not just who we are, but the world we want to create.",
+    "brand_story_image_alt": "Esraa Fashion brand story image",
+    "learn_more": "Learn More",
+
+    "payment": "Payment",
+    "confirmation": "Confirmation",
+
+    "guest_checkout": "Guest Checkout",
+    "personal_details": "Personal Details",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "shipping_address": "Shipping Address",
+    "state": "State",
+    "zip_code": "Zip Code",
+    "payment_details": "Payment Details",
+    "payment_method_description": "Choose your preferred payment method below. Your payment information is always secure.",
+    "order_summary": "Order Summary",
+    "back": "Back",
+    "continue": "Continue",
+    "place_order": "Place Order"
   }
 }

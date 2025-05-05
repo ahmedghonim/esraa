@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { Link, usePathname } from "@/utils/navigation";
 import { useLocale, useTranslations } from "next-intl";
 
-import React from "react";
-
 type Props = {};
 
 const currentYear = new Date().getFullYear();
@@ -41,18 +39,20 @@ export default function FooterBar({}: Props) {
         </div>
         <div className="flex gap-5 justify-between font-medium tracking-wide uppercase whitespace-nowrap">
           <button
-            className={cn("text-neutral-400", {
+            className={cn("text-neutral-200 hover:text-neutral-50", {
               "text-neutral-50": lang === "en",
             })}
             onClick={() => redirectedPathName("en")}
+            aria-label="Switch to English language"
           >
             {t("en")}
           </button>
           <button
-            className={cn("text-neutral-400", {
+            className={cn("text-neutral-200 hover:text-neutral-50", {
               "text-neutral-50": lang === "ar",
             })}
             onClick={() => redirectedPathName("ar")}
+            aria-label="Switch to Arabic language"
           >
             {t("ar")}
           </button>

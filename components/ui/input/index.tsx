@@ -1,6 +1,6 @@
-import React, { InputHTMLAttributes } from "react";
-import clsx from "clsx";
 import { Input } from "@/ui/input";
+import clsx from "clsx";
+import React, { InputHTMLAttributes } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -8,6 +8,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   wrapperClassName?: string;
   startContent?: React.ReactNode;
   isForm?: boolean;
+  error?: string;
 }
 
 export function EsraInput({
@@ -17,6 +18,7 @@ export function EsraInput({
   startContent,
   name,
   isForm = false,
+  error,
   ...props
 }: Props) {
   return isForm ? (
@@ -26,6 +28,7 @@ export function EsraInput({
       className={className}
       wrapperClassName={wrapperClassName}
       startContent={startContent}
+      error={error}
       {...props}
     />
   ) : (
@@ -35,6 +38,7 @@ export function EsraInput({
       className={className}
       wrapperClassName={wrapperClassName}
       startContent={startContent}
+      error={error}
       {...props}
     />
   );
@@ -46,6 +50,7 @@ const CustomInput = ({
   wrapperClassName,
   startContent,
   name,
+  error,
   ...props
 }: Props) => {
   return (
@@ -60,6 +65,7 @@ const CustomInput = ({
             className,
             {
               "ps-10": startContent,
+              "border-red-500": error,
             }
           )}
         />
@@ -67,6 +73,8 @@ const CustomInput = ({
           <div className="absolute left-2 top-2">{startContent}</div>
         )}
       </div>
+
+      {error && <div className="text-sm text-red-500 mt-1">{error}</div>}
     </div>
   );
 };

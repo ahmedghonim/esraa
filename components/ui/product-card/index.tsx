@@ -1,11 +1,10 @@
-import { Link } from "@/utils/navigation";
-import React from "react";
-import Image from "next/image";
-import { Product } from "@prisma/client";
-import { Color } from "@/schema";
-import { EsraLink } from "../link";
-import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { Color } from "@/schema";
+import { Link } from "@/utils/navigation";
+import { Product } from "@prisma/client";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { EsraLink } from "../link";
 interface Props extends Product {
   id: number;
   colors: Color[];
@@ -38,7 +37,7 @@ export function ProductCard({
         {ProductVariant?.every((item: any) => item.stock === 0) && (
           <h2
             className={cn(
-              "absolute text-[16px] top-[15px] -translate-y-1/3 left-[52px] -translate-x-1/2 bg-white text-red-500 p-1 rounded-sm"
+              "absolute text-[16px] top-[15px] -translate-y-1/3 left-[52px] -translate-x-1/2 bg-white text-red-700 p-1 rounded-sm font-bold"
             )}
           >
             {t("sold_out")}
@@ -51,7 +50,7 @@ export function ProductCard({
           {!!newPrice && <div className="font-bold">{newPrice}</div>}
           <div
             className={cn("", {
-              "line-through text-primary-100/50": newPrice,
+              "line-through text-primary-100 font-medium": newPrice,
             })}
           >
             {price}
