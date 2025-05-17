@@ -23,13 +23,13 @@ export default function OurProducts({ data }: Props) {
   return (
     <section className="flex flex-col font-bold leading-[150%] mt-[45px]">
       <EsraSectionTitle title={t("our_products")} href="/products" />
-      <div className="grid md:grid-cols-3 lg:grid-cols-4  gap-5 mt-[14px]">
-        <Carousal
-          slides={data}
-          className="mt-[14px]"
-          component={(item) => <ProductCard {...item} key={item.id} />}
-        />
-      </div>
+
+      <Carousal
+        slides={data}
+        className="mt-[14px]"
+        component={(item) => <ProductCard {...item} key={item.id} />}
+      />
+
       <Button
         variant="outline"
         className="mt-8 bg-transparent border-primary-100 border-[2px] text-primary-100"
