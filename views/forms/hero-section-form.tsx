@@ -34,8 +34,14 @@ function HeroSectionForm({
     },
   });
   const onSubmit = async (values: HeroSection) => {
+    // Ensure products is an array of numbers
+    const formattedValues = {
+      ...values,
+      products: Array.isArray(values.products) ? values.products : [],
+    };
+
     startTransaction(() => {
-      upsertHeroSection(values)
+      upsertHeroSection(formattedValues)
         .then(() => {
           toast({
             title: t("success"),

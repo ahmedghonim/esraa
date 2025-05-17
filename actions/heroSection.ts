@@ -15,6 +15,7 @@ const upsertHeroSection = async (data: HeroSection) => {
           description: validatedData.description,
           mainProduct: validatedData.mainProduct,
           products: {
+            set: [],
             connect: data.products?.map((id) => ({ id })),
           },
         },
