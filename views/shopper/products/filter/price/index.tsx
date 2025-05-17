@@ -2,11 +2,12 @@
 import { CollapseCard } from "@/components/ui";
 import React, { useContext } from "react";
 //@ts-ignore
+import { useTranslations } from "next-intl";
+//@ts-ignore
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
-import { TFilterState } from "../helpers/useFilterActions";
 import { FilterContext } from "..";
-import { useTranslations } from "next-intl";
+import { TFilterState } from "../helpers/useFilterActions";
 
 interface Props {}
 
@@ -23,7 +24,7 @@ export default function Price({}: Props) {
         className="!h-[3px]"
         step={100}
         min={0}
-        max={2000}
+        max={10000}
         value={[filterControler.min_price, filterControler.max_price]}
         onInput={(value: number[]) =>
           setFilterControler({

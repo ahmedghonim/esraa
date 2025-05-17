@@ -6,7 +6,6 @@ import { getAllSizes } from "@/actions/size";
 import Products from "@/views/shopper/products";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import React from "react";
 
 export async function generateMetadata({
   params: { lang },
@@ -71,8 +70,43 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductsPage() {
-  const data = (await getAllProducts()) as any;
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: {
+    categories?: string;
+    sale?: string;
+    newarrival?: string;
+    min_price?: string;
+    max_price?: string;
+    page?: string;
+    pageSize?: string;
+    search?: string;
+  };
+}) {
+  // Parse query parameters
+  const page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const pageSize = searchParams.pageSize ? parseInt(searchParams.pageSize) : 12;
+
+  const filters = {
+    categories: searchParams.categories
+      ? parseInt(searchParams.categories)
+      : undefined,
+    sale: searchParams.sale === "true",
+    newarrival: searchParams.newarrival === "true",
+    minPrice: searchParams.min_price
+      ? parseInt(searchParams.min_price)
+      : undefined,
+    maxPrice: searchParams.max_price
+      ? parseInt(searchParams.max_price)
+      : undefined,
+    search: searchParams.search,
+    page,
+    pageSize,
+  };
+
+  // Fetch data with filters
+  const data = await getAllProducts(filters);
 
   const color = await getAllColors();
 
@@ -88,7 +122,9 @@ export default async function ProductsPage() {
       category={category}
       sizes={sizes}
       collection={collection}
-      data={data}
+      data={data.products as any}
+      initialFilters={filters}
+      pagination={data.pagination}
     />
   );
 }

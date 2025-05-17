@@ -27,11 +27,11 @@ export const links = [
   },
   {
     name: "best_sellers",
-    href: "/products?sort=bestselling",
+    href: "/products?categories=36",
   },
   {
     name: "sale",
-    href: "/products?sale=true",
+    href: "/products?categories=35",
     highlight: true,
   },
   {

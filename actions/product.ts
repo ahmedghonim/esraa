@@ -147,14 +147,127 @@ const getProductBySlug = (slug: string) => {
   });
 };
 
-const getAllProducts = () => {
-  return prisma.product.findMany({
+const getAllProducts = async (filters?: {
+  categories?: number;
+  sale?: boolean;
+  newarrival?: boolean;
+  minPrice?: number;
+  maxPrice?: number;
+  colors?: number[];
+  sizes?: number[];
+  search?: string;
+  page?: number;
+  pageSize?: number;
+}) => {
+  const page = filters?.page || 1;
+  const pageSize = filters?.pageSize || 12;
+  const skip = (page - 1) * pageSize;
+
+  const whereConditions: any = {};
+
+  // Filter by sale
+  if (filters?.sale) {
+    whereConditions.newPrice = { not: null };
+  }
+
+  // Filter by new arrival
+  if (filters?.newarrival) {
+    whereConditions.newArrival = true;
+  }
+
+  // Filter by price range
+  if (filters?.minPrice || filters?.maxPrice) {
+    whereConditions.OR = [
+      {
+        price: {
+          gte: filters?.minPrice || 0,
+          lte: filters?.maxPrice || Number.MAX_SAFE_INTEGER,
+        },
+      },
+    ];
+
+    // Include products with newPrice if it exists
+    if (filters?.minPrice && filters?.maxPrice) {
+      whereConditions.OR.push({
+        newPrice: {
+          gte: filters?.minPrice,
+          lte: filters?.maxPrice,
+        },
+      });
+    }
+  }
+
+  // Search by name
+  if (filters?.search) {
+    whereConditions.name = {
+      contains: filters.search,
+      mode: "insensitive",
+    };
+  }
+
+  // Query conditions for filtering
+  const queryConditions = {
+    where: {
+      ...whereConditions,
+      // Filter by categories if provided
+      ...(filters?.categories && {
+        categories: {
+          some: {
+            id: filters.categories,
+          },
+        },
+      }),
+      // Filter by colors if provided
+      ...(filters?.colors &&
+        filters.colors.length > 0 && {
+          ProductVariant: {
+            some: {
+              colorId: {
+                in: filters.colors,
+              },
+            },
+          },
+        }),
+      // Filter by sizes if provided
+      ...(filters?.sizes &&
+        filters.sizes.length > 0 && {
+          ProductVariant: {
+            some: {
+              sizeId: {
+                in: filters.sizes,
+              },
+            },
+          },
+        }),
+    },
     include: {
       ProductVariant: { include: { color: true, size: true } },
       categories: true,
       collection: true,
     },
+  };
+
+  // Count total products (for pagination)
+  const totalProducts = await prisma.product.count({
+    where: queryConditions.where,
   });
+
+  // Get paginated products
+  const products = await prisma.product.findMany({
+    ...queryConditions,
+    skip,
+    take: pageSize,
+  });
+
+  return {
+    products,
+    pagination: {
+      total: totalProducts,
+      pageCount: Math.ceil(totalProducts / pageSize),
+      page,
+      pageSize,
+    },
+  };
 };
 
 export {

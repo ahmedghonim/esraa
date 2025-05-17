@@ -3,9 +3,11 @@
 import { Category, Collection, Color, Product, Size } from "@prisma/client";
 import { FilterIcon } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import Filter from "./filter";
 import { useFilterActions } from "./filter/helpers/useFilterActions";
 import ProductsList from "./products-list";
+
 interface Props {
   color: Color[];
   category: Category[];
@@ -17,6 +19,21 @@ interface Props {
       category: { id: number };
     }
   >;
+  initialFilters?: {
+    categories?: number;
+    sale?: boolean;
+    newarrival?: boolean;
+    minPrice?: number;
+    maxPrice?: number;
+    page?: number;
+    pageSize?: number;
+  };
+  pagination?: {
+    total: number;
+    pageCount: number;
+    page: number;
+    pageSize: number;
+  };
 }
 
 export default function Products({
@@ -25,7 +42,12 @@ export default function Products({
   sizes,
   collection,
   data,
+  initialFilters,
+  pagination,
 }: Props) {
+  const t = useTranslations("common");
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   const {
     filterControler,
     products,
@@ -33,15 +55,15 @@ export default function Products({
     setSearchValue,
     setFilterControler,
     onApplyFilter,
-  } = useFilterActions(data);
-  const [open, setOpen] = useState(false);
+    isLoading,
+  } = useFilterActions(data, initialFilters);
 
   return (
     <section className="mt-[100px] grid grid-cols-12 gap-5">
-      <button onClick={() => setOpen(!open)} className="lg:hidden">
+      <button onClick={() => setOpenDrawer(!openDrawer)} className="lg:hidden">
         <FilterIcon />
       </button>
-      {open && (
+      {openDrawer && (
         <Filter
           color={color}
           category={category}
@@ -51,6 +73,7 @@ export default function Products({
           onResetFilter={onResetFilter}
           setFilterControler={setFilterControler as any}
           onApplyFilter={onApplyFilter}
+          isLoading={isLoading}
         />
       )}
       <div className="lg:col-span-3 col-span-12 flex flex-col gap-4 max-lg:hidden">
@@ -63,9 +86,14 @@ export default function Products({
           onResetFilter={onResetFilter}
           setFilterControler={setFilterControler as any}
           onApplyFilter={onApplyFilter}
+          isLoading={isLoading}
         />
       </div>
-      <ProductsList data={products} setSearchValue={setSearchValue} />
+      <ProductsList
+        data={products}
+        setSearchValue={setSearchValue}
+        pagination={pagination}
+      />
     </section>
   );
 }

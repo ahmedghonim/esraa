@@ -1,13 +1,13 @@
 "use client";
-import React, { createContext } from "react";
-import Categories from "./categories";
-import Price from "./price";
-import Colors from "./colors";
-import Sizes from "./sizes";
 import { EsraButton } from "@/components/ui";
-import { TFilterState } from "./helpers/useFilterActions";
 import { Category, Collection, Color, Size } from "@prisma/client";
 import { useTranslations } from "next-intl";
+import React, { createContext } from "react";
+import Categories from "./categories";
+import Colors from "./colors";
+import { TFilterState } from "./helpers/useFilterActions";
+import Price from "./price";
+import Sizes from "./sizes";
 
 type Props = {
   color: Color[];
@@ -18,6 +18,7 @@ type Props = {
   setFilterControler: React.Dispatch<React.SetStateAction<TFilterState>>;
   onApplyFilter: () => void;
   onResetFilter: () => void;
+  isLoading: boolean;
 };
 export const FilterContext = createContext<any>(null);
 
@@ -29,6 +30,7 @@ export default function Filter({
   setFilterControler,
   onResetFilter,
   onApplyFilter,
+  isLoading,
 }: Props) {
   const t = useTranslations("common");
 
@@ -46,15 +48,17 @@ export default function Filter({
         <Sizes sizes={sizes} />
 
         <EsraButton
-          name={t("apply_filter")}
+          name={isLoading ? t("loading") + "..." : t("apply_filter")}
           className="py-2 text-white"
           onClick={onApplyFilter}
+          disabled={isLoading}
         />
 
         <EsraButton
-          name={t("reset")}
-          className="bg-transparent border-[2px] border-primary-100 py-2"
+          name={isLoading ? t("loading") + "..." : t("reset")}
+          className="bg-transparent border-[2px] text-primary-100 border-primary-100 py-2"
           onClick={onResetFilter}
+          disabled={isLoading}
         />
       </FilterContext.Provider>
     </section>
