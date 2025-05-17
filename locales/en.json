@@ -194,6 +194,15 @@
     "order_summary": "Order Summary",
     "back": "Back",
     "continue": "Continue",
-    "place_order": "Place Order"
+    "place_order": "Place Order",
+    "terms_and_policy": "Terms & Policy",
+    "try_before_buy": "Try Before You Buy",
+    "try_before_buy_desc_1": "We understand that sometimes items may not meet your expectations or fit as desired. Therefore, we offer a convenient \"Try Before You Buy\" policy. When your order is delivered by the courier, you have the opportunity to try on the items right away. If you find that any item does not meet your satisfaction, you can only pay the shipping fees, and the courier will take back the unwanted items.",
+    "try_before_buy_desc_2": "Once the courier leaves we will not be able to accept any exchanges or refunds.",
+    "special_offers": "Special Offers",
+    "special_offers_attention": "Attention: During offers, packages can't be opened. No refund or exchange.",
+    "important_notes": "Important Notes",
+    "important_notes_sale": "SALE items can't be refunded or exchanged",
+    "important_notes_condition": "Items must be in their original condition, unworn, unwashed, and with all original tags and packaging intact."
   }
 }

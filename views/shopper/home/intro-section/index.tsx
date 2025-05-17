@@ -95,14 +95,22 @@ export default function IntroSection({ data }: Props) {
                   disableOnInteraction: false,
                 }}
                 modules={[Autoplay]}
-                slidesPerView={3}
+                slidesPerView={5}
+                breakpoints={{
+                  330: {
+                    slidesPerView: 4,
+                  },
+                  700: {
+                    slidesPerView: 5,
+                  },
+                }}
                 spaceBetween={20}
                 onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
               >
                 {/* @ts-ignore */}
                 {data?.products?.map((product: Product, index: number): any => (
                   <SwiperSlide key={index}>
-                    <div className="relative w-[184px] h-[130px] bg-primary-100">
+                    <div className="relative w-full h-[130px] bg-primary-100">
                       <Image
                         src={product.thumbnail}
                         width={184}

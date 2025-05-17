@@ -29,11 +29,8 @@ export default function FooterBar({}: Props) {
             © {currentYear} — {t("copy_right")}
           </div>
           <div className="flex gap-4">
-            <Link href="" className="underline">
-              {t("privacy")}
-            </Link>
-            <Link href="" className="underline">
-              {t("terms_and_condition")}
+            <Link href="/terms-and-policy" className="underline">
+              {t("terms_and_policy")}
             </Link>
           </div>
         </div>
