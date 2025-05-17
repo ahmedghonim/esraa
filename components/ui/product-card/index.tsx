@@ -24,7 +24,7 @@ export function ProductCard({
   const t = useTranslations("common");
 
   return (
-    <div className="flex relative flex-col md:max-w-[243px]">
+    <div className="flex relative flex-col w-full h-full">
       <Link href={`/products/${id}`} className="h-full">
         <Image
           alt="product image"

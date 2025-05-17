@@ -1,4 +1,5 @@
 import { getAllCategories } from "@/actions/category";
+import { getHeroSection } from "@/actions/heroSection";
 import { getAllProducts } from "@/actions/product";
 import { getAllSaleSliders } from "@/actions/slae";
 import { getAllWhatTheSays } from "@/actions/whatStay";
@@ -18,9 +19,10 @@ export default async function Home() {
     (product: any) => product.newArrival
   ) as any;
   const whatTheySay = (await getAllWhatTheSays({ notHidden: true })) as any;
+  const heroSection = (await getHeroSection()) as any;
   return (
-    <>
-      <IntroSection />
+    <div>
+      <IntroSection data={heroSection} />
       <Sale data={sale} />
       {category.length > 0 && <Categories data={category} />}
       {newArrivals.length > 0 && <NewArrivals data={newArrivals} />}
@@ -28,6 +30,6 @@ export default async function Home() {
       <CustomerSupport />
 
       {whatTheySay.length > 0 && <Testimonials data={whatTheySay} />}
-    </>
+    </div>
   );
 }

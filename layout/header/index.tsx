@@ -7,7 +7,7 @@ import { CartContext, TCart } from "@/views/shopper/local-cart";
 import clsx from "clsx";
 import { ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { MobileHeader } from "./mobile-header";
 
 // Updated navigation links based on recommendations
@@ -49,8 +49,6 @@ export default function Header({}: Props) {
   const asPath = usePathname();
   const isActive = (href: string) => asPath === href;
   const [category, setCategory] = React.useState<Category[]>();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     getAllCategories({}).then((data) => {
@@ -58,32 +56,13 @@ export default function Header({}: Props) {
     });
   }, []);
 
-  // Add scroll effect for sticky header
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <header
-      className={`pt-4 flex gap-5 justify-between items-center fixed top-0 left-0 right-0 z-50 w-full px-[10%] transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md py-2" : "py-4"
-      }`}
+      className={`flex gap-5 mx-auto sticky top-2 left-2 right-2 lg:px-6 lg:py-4  rounded-full bg-white justify-between items-center z-50 w-full !translate-y-0`}
     >
-      <Link href="/" aria-label="Home page">
+      <Link href="/" aria-label="Home page" className="max-lg:scale-75">
         <Logo />
       </Link>
-
       {/* Desktop Header */}
       <ul className="max-lg:hidden flex flex-1 lg:gap-8 2xl:gap-12 justify-center px-5 my-auto max-md:flex-wrap max-md:max-w-full">
         {links.map((link) => (
@@ -115,7 +94,6 @@ export default function Header({}: Props) {
           </li>
         ))}
       </ul>
-
       <div className="flex items-center gap-4">
         {/* Cart Button - Updated Design */}
         <Link
@@ -132,7 +110,6 @@ export default function Header({}: Props) {
           )}
         </Link>
       </div>
-
       {/* Mobile Header */}
       <MobileHeader />
     </header>

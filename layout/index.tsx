@@ -27,17 +27,14 @@ export default function Layout({ children }: Props) {
 
       {/* auth layout */}
       {isAuthRoute && <AuthLayout>{children}</AuthLayout>}
-
       {/* public layout */}
       {!isAdminRoute && !isAuthRoute && (
-        <main className="">
-          <div className="lg:px-[118px] relative px-6">
-            <Header />
+        <main className="lg:px-[118px] relative w-screen px-4">
+          <Header />
 
-            {isHomePage && <SideMenu />}
+          {isHomePage && <SideMenu />}
+          <div className="px-2">{children}</div>
 
-            {children}
-          </div>
           <Footer />
         </main>
       )}

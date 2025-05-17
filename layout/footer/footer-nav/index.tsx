@@ -19,7 +19,7 @@ export default function FooterNav() {
     <div className="px-5 mt-6 max-md:max-w-full">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
         <div className="flex flex-col w-[43%] max-md:ms-0 max-md:w-full">
-          <span className="lg:hidden text-2xl leading-8 text-zinc-800 mt-10">
+          <span className="lg:hidden text-2xl leading-8 text-zinc-800 xl:mt-10">
             {t("our_info")}
           </span>
           <ul className="flex flex-col gap-6 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
@@ -35,13 +35,14 @@ export default function FooterNav() {
           </ul>
         </div>
         <div className="flex flex-col ms-5 w-[45%] max-md:ms-0 max-md:w-full">
-          <span className="lg:hidden text-2xl leading-8 text-zinc-800 mt-10">
+          <span className="lg:hidden text-2xl leading-8 text-zinc-800 xl:mt-10">
             {t("categories")}
           </span>
-          <div className="flex flex-col gap-6 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
+          <div className="flex xl:flex-col flex-wrap gap-6 grow text-lg leading-6 text-zinc-800 max-md:mt-4">
             {category?.map((category) => (
               <Link
                 key={category.id}
+                className="shadow-md rounded-md px-2 py-1"
                 href={`/products?categories=${category.id}`}
               >
                 {category.name}

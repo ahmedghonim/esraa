@@ -21,7 +21,6 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const { lang } = params;
 
-  // Create dynamic metadata based on the current page
   return {
     title: {
       template: "%s | Esraa Fashion",

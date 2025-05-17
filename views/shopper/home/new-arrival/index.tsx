@@ -1,9 +1,9 @@
 "use client";
 import { ProductCard } from "@/components/ui";
+import Carousal from "@/components/ui/carousal";
 import EsraSectionTitle from "@/components/ui/section-title";
 import { Color, Product, Size } from "@prisma/client";
 import { useTranslations } from "next-intl";
-import React from "react";
 
 type Props = {
   data: Array<
@@ -19,11 +19,12 @@ export default function NewArrivals({ data }: Props) {
         title={t("new_arrival")}
         href="/products?newarrival=true"
       />
-      <div className="grid md:grid-cols-3 lg:grid-cols-4  gap-5 mt-[14px]">
-        {data.map((item) => (
-          <ProductCard {...item} key={item.id} />
-        ))}
-      </div>
+
+      <Carousal
+        slides={data}
+        className="mt-[14px]"
+        component={(item) => <ProductCard {...item} key={item.id} />}
+      />
     </section>
   );
 }
