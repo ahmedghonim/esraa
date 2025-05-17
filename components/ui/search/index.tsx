@@ -49,7 +49,9 @@ export function Search({ className = "", placeholder }: SearchProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsData = await getAllProducts();
+        const productsData = await getAllProducts({
+          pageSize: 1000,
+        });
         const categoriesData = await getAllCategories({});
         setProducts(productsData as any);
         setCategories(categoriesData as any);

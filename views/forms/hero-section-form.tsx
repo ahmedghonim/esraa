@@ -69,16 +69,17 @@ function HeroSectionForm({
         />
 
         <FormSelect
-          // @ts-ignore
-          options={form?.getValues("products")?.map(
-            (val: any) =>
-              products
-                .map((item) => ({
-                  value: item.id,
-                  label: item?.name,
-                }))
-                ?.find((option) => option.value == val) || []
-          )}
+          options={products
+            .filter((item) => {
+              const selectedProducts = form.getValues("products");
+              return selectedProducts && item.id !== undefined
+                ? selectedProducts.includes(item.id as number)
+                : false;
+            })
+            .map((item) => ({
+              value: item.id,
+              label: item?.name,
+            }))}
           form={form}
           label={t("main_product")}
           name="mainProduct"

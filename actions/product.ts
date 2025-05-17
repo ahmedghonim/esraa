@@ -120,18 +120,33 @@ const productDelete = async (id: number) => {
   });
 };
 
-const getProductById = (id: number) => {
-  return prisma.product.findFirst({
-    where: {
-      id,
-    },
-    include: {
-      ProductVariant: { include: { color: true, size: true } },
-      categories: true,
-      collection: true,
-      relatedProducts: true,
-    },
-  });
+const getProductById = async (id: number) => {
+  if (!id || isNaN(id)) {
+    throw new Error("Invalid product ID provided");
+  }
+
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        ProductVariant: { include: { color: true, size: true } },
+        categories: true,
+        collection: true,
+        relatedProducts: true,
+      },
+    });
+
+    if (!product) {
+      throw new Error(`Product with ID ${id} not found`);
+    }
+
+    return product;
+  } catch (error) {
+    console.error(`Error fetching product with ID ${id}:`, error);
+    throw error;
+  }
 };
 
 const getProductBySlug = (slug: string) => {
