@@ -15,9 +15,9 @@ export default async function Home() {
   const sale = (await getAllSaleSliders({ notHidden: true })) as any;
   const category = (await getAllCategories({ top: true })) as any;
   const ourProducts = (await getAllProducts()) as any;
-  const newArrivals = ourProducts.filter(
-    (product: any) => product.newArrival
-  ) as any;
+  const newArrivals = Array.isArray(ourProducts)
+    ? ourProducts.filter((product: any) => product.newArrival)
+    : [];
   const whatTheySay = (await getAllWhatTheSays({ notHidden: true })) as any;
   const heroSection = (await getHeroSection()) as any;
   return (
@@ -26,7 +26,9 @@ export default async function Home() {
       <Sale data={sale} />
       {category.length > 0 && <Categories data={category} />}
       {newArrivals.length > 0 && <NewArrivals data={newArrivals} />}
-      {ourProducts.length > 0 && <OurProducts data={ourProducts} />}
+      {ourProducts && Array.isArray(ourProducts) && ourProducts.length > 0 && (
+        <OurProducts data={ourProducts} />
+      )}
       <CustomerSupport />
 
       {whatTheySay.length > 0 && <Testimonials data={whatTheySay} />}

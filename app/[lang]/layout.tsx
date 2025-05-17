@@ -22,6 +22,9 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = params;
 
   return {
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_APP_URL || "https://esramodestwear.com"
+    ),
     title: {
       template: "%s | Esraa Fashion",
       default: "Esraa Fashion - Elegant Modest Fashion",
