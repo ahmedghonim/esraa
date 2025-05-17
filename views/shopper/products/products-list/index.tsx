@@ -37,6 +37,7 @@ export default function ProductsList({ data, pagination }: Props) {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   // Debounce function
   const debounce = (func: Function, delay: number) => {
@@ -132,9 +133,6 @@ export default function ProductsList({ data, pagination }: Props) {
     setIsTyping(false);
   }, [searchParams]);
 
-  // Typing indicator state
-  const [isTyping, setIsTyping] = useState(false);
-
   // Handle search input change
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -189,7 +187,11 @@ export default function ProductsList({ data, pagination }: Props) {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage > 1) handlePageChange(currentPage - 1);
+            }}
             className={
               currentPage === 1 ? "pointer-events-none opacity-50" : ""
             }
@@ -204,8 +206,12 @@ export default function ProductsList({ data, pagination }: Props) {
           ) : (
             <PaginationItem key={pageNumber}>
               <PaginationLink
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageChange(pageNumber);
+                }}
                 isActive={currentPage === pageNumber}
-                onClick={() => handlePageChange(pageNumber as number)}
               >
                 {pageNumber}
               </PaginationLink>
@@ -215,9 +221,11 @@ export default function ProductsList({ data, pagination }: Props) {
 
         <PaginationItem>
           <PaginationNext
-            onClick={() =>
-              currentPage < totalPages && handlePageChange(currentPage + 1)
-            }
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (currentPage < totalPages) handlePageChange(currentPage + 1);
+            }}
             className={
               currentPage === totalPages ? "pointer-events-none opacity-50" : ""
             }
@@ -228,16 +236,16 @@ export default function ProductsList({ data, pagination }: Props) {
   };
 
   return (
-    <section className="lg:col-span-9 col-span-12 relative">
-      {/* search */}
-      <div className="flex justify-between items-center gap-2">
-        <div className="relative flex-1">
+    <div className="w-full">
+      {/* Search Section */}
+      <div className="mb-8">
+        <div className="relative">
           <EsraInput
             placeholder={t("search_placeholder")}
             startContent={<Search />}
-            wrapperClassName="!flex-1"
             onChange={handleSearchChange}
             value={searchTerm}
+            className="w-full"
           />
           {searchTerm && (
             <button
@@ -248,17 +256,15 @@ export default function ProductsList({ data, pagination }: Props) {
             </button>
           )}
         </div>
+        {isTyping && searchTerm && (
+          <div className="mt-2 text-sm text-primary-100">
+            <span className="animate-pulse">{t("typing")}...</span>
+          </div>
+        )}
       </div>
 
-      {/* Typing indicator */}
-      {isTyping && searchTerm && (
-        <div className="mt-2 text-sm text-primary-100">
-          <span className="animate-pulse">{t("typing")}...</span>
-        </div>
-      )}
-
-      {/* sort */}
-      <div className="flex justify-between items-center my-6">
+      {/* Results Count */}
+      <div className="flex justify-between items-center mb-6">
         <div className="text-lg">
           <span className="text-primary-300">{t("search_results:")}</span>{" "}
           <span className="font-bold text-primary-700">
@@ -267,7 +273,7 @@ export default function ProductsList({ data, pagination }: Props) {
         </div>
       </div>
 
-      {/* Loading indicator */}
+      {/* Loading State */}
       {isLoading && (
         <div className="flex flex-col items-center justify-center my-8">
           <Loader2 className="h-12 w-12 animate-spin text-primary-100" />
@@ -277,36 +283,42 @@ export default function ProductsList({ data, pagination }: Props) {
         </div>
       )}
 
-      {/* products list */}
+      {/* Products Grid */}
       <div
-        className={`grid md:grid-cols-3 gap-5 mt-[14px] mb-8 ${
+        className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-opacity duration-300 ${
           isLoading ? "opacity-50" : ""
         }`}
       >
         {data.length === 0 ? (
-          <div className="col-span-3 text-center py-10">
+          <div className="col-span-full text-center py-10">
             <p className="text-lg text-gray-500">{t("no_products_found")}</p>
           </div>
         ) : (
-          data.map((item: any) => <ProductCard key={item.id} {...item} />)
+          data.map((item: any) => (
+            <div key={item.id} className="h-full">
+              <ProductCard {...item} />
+            </div>
+          ))
         )}
       </div>
 
       {/* Pagination */}
       {pagination && pagination.pageCount > 1 && (
-        <Pagination className="my-8">{generatePaginationItems()}</Pagination>
+        <div className="mt-12 flex justify-center">
+          <Pagination>{generatePaginationItems()}</Pagination>
+        </div>
       )}
 
-      {/* Scroll to top button */}
+      {/* Scroll to Top Button */}
       {showScrollToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 bg-primary-100 p-3 rounded-full shadow-md hover:bg-primary-200 transition-all duration-300 z-50"
+          className="fixed bottom-8 right-8 bg-primary-100 p-3 rounded-full shadow-lg hover:bg-primary-200 transition-all duration-300 z-50"
           aria-label="Scroll to top"
         >
           <ChevronUp className="h-6 w-6 text-white" />
         </button>
       )}
-    </section>
+    </div>
   );
 }

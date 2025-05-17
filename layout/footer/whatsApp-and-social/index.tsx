@@ -18,9 +18,6 @@ export default function WhatsAppAndSocialMedia() {
   return (
     <>
       <div className="flex gap-4 md:gap-5 justify-between px-0 md:px-5 max-md:flex-wrap max-md:max-w-full max-lg:mt-6">
-        <span className="max-lg:hidden self-end mt-40 text-2xl leading-8 text-zinc-800">
-          {t("our_info")}
-        </span>
         <div className="flex flex-col w-full md:w-auto">
           <div className="px-4 md:px-5 py-4 max-w-full text-sm leading-5 whitespace-nowrap bg-primary-100 text-neutral-50 w-full md:w-[243px]">
             <Whatsapp />
@@ -35,17 +32,12 @@ export default function WhatsAppAndSocialMedia() {
             </Link>
           </div>
           <div className="flex gap-4 md:gap-5 mt-8 md:mt-12 w-full">
-            <span className="max-lg:hidden flex-auto text-2xl leading-8 text-zinc-800">
-              {t("categories")}
-            </span>
             <div className="flex flex-1 gap-4 justify-center md:justify-start">
               <SocialMedia fill="primary" info={info} />
             </div>
           </div>
         </div>
       </div>
-
-      <div className="max-md:hidden mt-1.5 border border-solid bg-zinc-400 border-zinc-400" />
     </>
   );
 }

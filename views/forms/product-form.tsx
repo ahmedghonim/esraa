@@ -1,27 +1,27 @@
 "use client";
-import { Trash2 } from "lucide-react";
-import {
-  Product,
-  Color,
-  Category,
-  Size,
-  ProductSchema,
-  Collection,
-} from "@/schema";
-import { useTranslations } from "next-intl";
-import { useTransition } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { productUpsert } from "@/actions/product";
-import { useRouter } from "@/utils/navigation";
-import { Form } from "@/components/ui/form";
-import { Text } from "@/components/ui/Text";
 import { EsraButton } from "@/components/ui";
+import { Form } from "@/components/ui/form";
+import FormEditor from "@/components/ui/form-editor";
 import FormInput from "@/components/ui/form-input";
 import FormSelect from "@/components/ui/form-select";
-import { useToast } from "@/components/ui/use-toast";
-import FormEditor from "@/components/ui/form-editor";
+import { Text } from "@/components/ui/Text";
 import UploadImage from "@/components/ui/upload-image";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  Category,
+  Collection,
+  Color,
+  Product,
+  ProductSchema,
+  Size,
+} from "@/schema";
+import { useRouter } from "@/utils/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useTransition } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
 
 const ProductForm = ({
   values,
@@ -270,7 +270,7 @@ const ProductForm = ({
 
         <FormSelect
           isMulti
-          options={products.map((item) => ({
+          options={products?.map((item) => ({
             value: item.id,
             label: item?.name,
           }))}

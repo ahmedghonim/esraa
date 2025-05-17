@@ -59,7 +59,7 @@ function HeroSectionForm({
 
         <FormSelect
           isMulti
-          options={products.map((item) => ({
+          options={products?.map((item) => ({
             value: item.id,
             label: item?.name,
           }))}
