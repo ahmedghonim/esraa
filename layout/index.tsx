@@ -33,7 +33,7 @@ export default function Layout({ children }: Props) {
           <Header />
 
           {isHomePage && <SideMenu />}
-          <div className="px-2">{children}</div>
+          <div className="px-2 pt-6">{children}</div>
 
           <Footer />
         </main>
