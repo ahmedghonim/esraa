@@ -199,10 +199,21 @@ const getAllProducts = async (filters?: {
 
   // Search by name
   if (filters?.search) {
-    whereConditions.name = {
-      contains: filters.search,
-      mode: "insensitive",
-    };
+    whereConditions.OR = [
+      ...(whereConditions.OR || []),
+      {
+        name: {
+          contains: filters.search,
+          mode: "insensitive",
+        },
+      },
+      {
+        description: {
+          contains: filters.search,
+          mode: "insensitive",
+        },
+      },
+    ];
   }
 
   // Query conditions for filtering

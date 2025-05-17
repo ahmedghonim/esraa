@@ -50,9 +50,7 @@ export default function Products({
 
   const {
     filterControler,
-    products,
     onResetFilter,
-    setSearchValue,
     setFilterControler,
     onApplyFilter,
     isLoading,
@@ -89,11 +87,7 @@ export default function Products({
           isLoading={isLoading}
         />
       </div>
-      <ProductsList
-        data={products}
-        setSearchValue={setSearchValue}
-        pagination={pagination}
-      />
+      <ProductsList data={data} pagination={pagination} />
     </section>
   );
 }

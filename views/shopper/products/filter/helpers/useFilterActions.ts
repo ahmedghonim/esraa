@@ -1,4 +1,3 @@
-import { Color, Product, Size } from "@prisma/client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -26,7 +25,6 @@ const useFilterActions = (data: any, initialFilters?: any) => {
   const pathname = usePathname();
 
   const categories = searchParams.get("categories");
-  const newarrival = searchParams.get("newarrival");
   const sale = searchParams.get("sale");
   const min_price = searchParams.get("min_price");
   const max_price = searchParams.get("max_price");
@@ -40,16 +38,6 @@ const useFilterActions = (data: any, initialFilters?: any) => {
     sale: sale === "true",
   });
 
-  const [products, setProducts] = useState<
-    Array<
-      Product & { sizes: Size[] } & { colors: Color[] } & {
-        price: number;
-        category: { id: number };
-      }
-    >
-  >(data);
-
-  const [searchValue, setSearchValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
   // Initialize filters from URL if present
@@ -64,18 +52,6 @@ const useFilterActions = (data: any, initialFilters?: any) => {
       }));
     }
   }, [initialFilters]);
-
-  // Apply search filter client-side (could be moved to server later)
-  useEffect(() => {
-    if (searchValue !== "") {
-      const filteredProducts = data.filter((product: any) =>
-        product.name.toLowerCase().includes(searchValue.toLowerCase())
-      );
-      setProducts(filteredProducts);
-    } else {
-      setProducts(data);
-    }
-  }, [searchValue, data]);
 
   /* ------------------------ */
   /*      On Apply Filter     */
@@ -140,9 +116,8 @@ const useFilterActions = (data: any, initialFilters?: any) => {
 
   return {
     filterControler,
-    products,
+    products: data, // Just pass through the data from props
     onResetFilter,
-    setSearchValue,
     setFilterControler,
     onApplyFilter,
     isLoading,

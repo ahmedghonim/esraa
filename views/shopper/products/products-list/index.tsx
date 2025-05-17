@@ -1,6 +1,6 @@
 "use client";
 
-import { EsraButton, EsraInput, ProductCard } from "@/components/ui";
+import { EsraInput, ProductCard } from "@/components/ui";
 import {
   Pagination,
   PaginationContent,
@@ -11,14 +11,14 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import Search from "@/svg/search.svg";
-import { ChevronUp, Loader2 } from "lucide-react";
+import { ChevronUp, Loader2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 type Props = {
   data: any;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+
   pagination?: {
     total: number;
     pageCount: number;
@@ -27,18 +27,52 @@ type Props = {
   };
 };
 
-export default function ProductsList({
-  data,
-  setSearchValue,
-  pagination,
-}: Props) {
+export default function ProductsList({ data, pagination }: Props) {
   const t = useTranslations("common");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || ""
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+
+  // Debounce function
+  const debounce = (func: Function, delay: number) => {
+    let timeout: NodeJS.Timeout;
+    return (...args: any) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  // Handle search with debounce
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setIsLoading(true);
+
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (value) {
+        params.set("search", value);
+      } else {
+        params.delete("search");
+      }
+
+      // Reset to page 1 when searching
+      params.set("page", "1");
+
+      router.push(`${pathname}?${params.toString()}`);
+    }, 2000),
+    [searchParams, router, pathname]
+  );
+
+  // Update search term when URL changes
+  useEffect(() => {
+    const searchValue = searchParams.get("search") || "";
+    setSearchTerm(searchValue);
+  }, [searchParams]);
 
   // Check scroll position to show/hide scroll to top button
   useEffect(() => {
@@ -70,35 +104,43 @@ export default function ProductsList({
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  // Function to handle search
-  const handleSearch = () => {
-    setIsLoading(true);
-
-    // Scroll to top of the page
-    scrollToTop();
-
+  // Clear search
+  const clearSearch = () => {
+    setSearchTerm("");
     const params = new URLSearchParams(searchParams.toString());
-
-    if (searchTerm) {
-      params.set("search", searchTerm);
-      // Reset to page 1 when searching
-      params.set("page", "1");
-    } else {
-      params.delete("search");
-    }
-
+    params.delete("search");
+    params.set("page", "1");
     router.push(`${pathname}?${params.toString()}`);
   };
-
-  // Reset loading state when URL changes (navigation completes)
-  React.useEffect(() => {
-    setIsLoading(false);
-  }, [searchParams]);
 
   // Scroll to top on component mount or when pagination changes
   React.useEffect(() => {
     scrollToTop();
   }, [pagination?.page]);
+
+  // Call debounced search when search term changes
+  useEffect(() => {
+    if (searchTerm !== (searchParams.get("search") || "")) {
+      setIsTyping(true);
+      debouncedSearch(searchTerm);
+    }
+  }, [searchTerm, debouncedSearch, searchParams]);
+
+  // Reset loading state when URL changes (navigation completes)
+  useEffect(() => {
+    setIsLoading(false);
+    setIsTyping(false);
+  }, [searchParams]);
+
+  // Typing indicator state
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setIsTyping(true);
+  };
 
   // Generate pagination items
   const generatePaginationItems = () => {
@@ -189,24 +231,31 @@ export default function ProductsList({
     <section className="lg:col-span-9 col-span-12 relative">
       {/* search */}
       <div className="flex justify-between items-center gap-2">
-        <EsraInput
-          placeholder={t("search_placeholder")}
-          startContent={<Search />}
-          wrapperClassName="!flex-1"
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setSearchValue(e.target.value);
-          }}
-          value={searchTerm}
-        />
-
-        <EsraButton
-          name={isLoading ? "Loading..." : "Search"}
-          className="text-white w-[150px] p-2"
-          onClick={handleSearch}
-          disabled={isLoading}
-        />
+        <div className="relative flex-1">
+          <EsraInput
+            placeholder={t("search_placeholder")}
+            startContent={<Search />}
+            wrapperClassName="!flex-1"
+            onChange={handleSearchChange}
+            value={searchTerm}
+          />
+          {searchTerm && (
+            <button
+              onClick={clearSearch}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-100"
+            >
+              <X className="h-4 w-4 text-gray-500" />
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Typing indicator */}
+      {isTyping && searchTerm && (
+        <div className="mt-2 text-sm text-primary-100">
+          <span className="animate-pulse">{t("typing")}...</span>
+        </div>
+      )}
 
       {/* sort */}
       <div className="flex justify-between items-center my-6">
@@ -234,9 +283,13 @@ export default function ProductsList({
           isLoading ? "opacity-50" : ""
         }`}
       >
-        {data.map((item: any) => (
-          <ProductCard key={item.id} {...item} />
-        ))}
+        {data.length === 0 ? (
+          <div className="col-span-3 text-center py-10">
+            <p className="text-lg text-gray-500">{t("no_products_found")}</p>
+          </div>
+        ) : (
+          data.map((item: any) => <ProductCard key={item.id} {...item} />)
+        )}
       </div>
 
       {/* Pagination */}

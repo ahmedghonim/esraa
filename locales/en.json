@@ -181,7 +181,7 @@
     "loading": "Loading",
     "payment": "Payment",
     "confirmation": "Confirmation",
-
+    "no_products_found": "No products found",
     "guest_checkout": "Guest Checkout",
     "personal_details": "Personal Details",
     "first_name": "First Name",
