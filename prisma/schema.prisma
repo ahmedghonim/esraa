@@ -45,6 +45,7 @@ model HeroSection {
   description String
   products    Product[]
   mainProduct Int
+  thumbnail   String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }

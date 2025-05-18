@@ -5,6 +5,7 @@ import { Form } from "@/components/ui/form";
 import FormEditor from "@/components/ui/form-editor";
 import FormInput from "@/components/ui/form-input";
 import FormSelect from "@/components/ui/form-select";
+import UploadImage from "@/components/ui/upload-image";
 import { useToast } from "@/components/ui/use-toast";
 import { HeroSection, HeroSectionSchema, Product } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,6 +61,12 @@ function HeroSectionForm({
   return (
     <Form {...form}>
       <div className="flex flex-col gap-6">
+        {/* thumb nail */}
+        <UploadImage
+          className="w-full min-h-[350px]"
+          label={t("thumbnail")}
+          name="thumbnail"
+        />
         <FormInput form={form} name="title" label={t("title")} />
         <FormEditor form={form} name="description" label={t(" description")} />
 

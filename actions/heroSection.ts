@@ -12,6 +12,7 @@ const upsertHeroSection = async (data: HeroSection) => {
         where: { id: 1 },
         data: {
           title: validatedData.title,
+          thumbnail: validatedData.thumbnail,
           description: validatedData.description,
           mainProduct: validatedData.mainProduct,
           products: {
@@ -25,6 +26,7 @@ const upsertHeroSection = async (data: HeroSection) => {
       const heroSection = await prisma.heroSection.create({
         data: {
           title: validatedData.title,
+          thumbnail: validatedData.thumbnail,
           description: validatedData.description,
           mainProduct: validatedData.mainProduct,
           products: {
