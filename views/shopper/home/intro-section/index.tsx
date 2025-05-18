@@ -5,7 +5,6 @@ import Next from "@/svg/next.svg";
 import Previous from "@/svg/previous.svg";
 import { Link } from "@/utils/navigation";
 import parser from "html-react-parser";
-import { Eye } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -34,25 +33,21 @@ export default function IntroSection({ data }: Props) {
     <section className="relative z-0">
       <div className="flex max-md:flex-col">
         <div className="relative w-[41%] max-md:ms-0 max-md:w-full">
-          <Image
-            src={mainProduct?.thumbnail || "/intro-1.png"}
-            width={1200}
-            height={555}
-            alt="image"
-            className="!max-h-[650px] object-cover object-center"
-          />
-          {mainProduct?.thumbnail && (
-            <Link
-              href={`/products/${mainProduct?.id}`}
-              className="absolute top-[17%] translate-y-1/2 right-3 duration-300 hover:scale-90 border border-white p-2 rounded-full bg-white/40"
-            >
-              <Eye className="text-white" />
-            </Link>
-          )}
+          <Link
+            href={mainProduct?.thumbnail ? `/products/${mainProduct?.id}` : "#"}
+          >
+            <Image
+              src={mainProduct?.thumbnail || "/intro-1.png"}
+              width={1200}
+              height={555}
+              alt="image"
+              className="!max-h-[650px] object-cover object-center"
+            />
+          </Link>
         </div>
 
         <div className="flex flex-col ms-5 w-[59%] max-md:ms-0 max-md:w-full">
-          <div className="flex flex-col max-md:mt-6 max-md:max-w-full">
+          <div className="flex flex-col max-md:mt-6 w-full">
             <div className="flex gap-5 justify-between w-full font-medium max-md:flex-wrap max-md:max-w-full">
               <div className="text-lg tracking-tight leading-7 text-zinc-800">
                 <span className="text-2xl text-zinc-800">
@@ -95,13 +90,13 @@ export default function IntroSection({ data }: Props) {
                   disableOnInteraction: false,
                 }}
                 modules={[Autoplay]}
-                slidesPerView={5}
+                slidesPerView={3}
                 breakpoints={{
                   330: {
-                    slidesPerView: 4,
+                    slidesPerView: 3,
                   },
                   700: {
-                    slidesPerView: 5,
+                    slidesPerView: 3,
                   },
                 }}
                 spaceBetween={20}
@@ -110,20 +105,15 @@ export default function IntroSection({ data }: Props) {
                 {/* @ts-ignore */}
                 {data?.products?.map((product: Product, index: number): any => (
                   <SwiperSlide key={index}>
-                    <div className="relative w-full h-[130px] bg-primary-100">
-                      <Image
-                        src={product.thumbnail}
-                        width={184}
-                        height={130}
-                        alt="image"
-                        className="!w-full !h-full object-contain object-top"
-                      />
-
-                      <Link
-                        href={`/products/${product?.id}`}
-                        className="absolute bottom-4 right-3 duration-300 hover:scale-90 border border-white p-1 rounded-full bg-white/40"
-                      >
-                        <Eye className="text-white" />
+                    <div className="relative w-full h-full bg-primary-100">
+                      <Link href={`/products/${product?.id}`}>
+                        <Image
+                          src={product.thumbnail}
+                          width={184}
+                          height={130}
+                          alt="image"
+                          className="!w-full !h-full object-contain object-top"
+                        />
                       </Link>
                     </div>
                   </SwiperSlide>
@@ -131,7 +121,7 @@ export default function IntroSection({ data }: Props) {
               </Swiper>
             </div>
 
-            <h1 className="mt-4 text-3xl md:text-[52px] font-bold tracking-tight leading-[78px] text-primary-500 max-md:leading-[40px] w-[230px] text-wrap">
+            <h1 className="mt-4 text-3xl md:text-[52px] font-bold tracking-tight leading-[78px] text-primary-500 max-md:leading-[40px] w-full text-wrap">
               {data?.title}
             </h1>
 
