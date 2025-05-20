@@ -8,7 +8,7 @@ export async function GET() {
       ProductVariant: true,
     },
   });
-  console.log("🚀 ~ :11 ~ GET ~ products:", products);
+
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
@@ -33,7 +33,7 @@ export async function GET() {
         <g:description>${description}</g:description>
         <g:link>https://esramodestwear.com/products/${product.slug}</g:link>
         <g:image_link>${product.images[0]}</g:image_link>
-        <g:price>${product.price} USD</g:price>
+        <g:price>${product.price} EGP</g:price>
         <g:availability>${
           product.ProductVariant.length > 0 ? "in stock" : "out of stock"
         }</g:availability>
