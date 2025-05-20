@@ -4,9 +4,15 @@ import { cn } from "@/lib/utils";
 import { TColor, TProduct, TSize } from "@/types";
 import { ProductVariant } from "@prisma/client";
 import { useTranslations } from "next-intl";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CartContext, TCart } from "../../local-cart";
 import { useShowProductActions } from "../helpers/useShowProductActions";
+
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void;
+  }
+}
 
 interface Props {
   product: TProduct & {
@@ -14,6 +20,17 @@ interface Props {
   };
 }
 export default function ProductInfo({ product }: Props) {
+  useEffect(() => {
+    if (typeof window.fbq !== "undefined") {
+      window.fbq("track", "ViewContent", {
+        content_ids: [product.id],
+        content_type: "product",
+        value: product.price,
+        currency: "USD",
+      });
+    }
+  }, [product]);
+
   let info: any = {};
 
   product.ProductVariant.forEach(({ colorId, ...variant }) => {
