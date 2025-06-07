@@ -1,12 +1,12 @@
 "use client";
-import React, { useRef } from "react";
-import LeftArrow from "@/svg/short-left-arrow.svg";
-import RightArrow from "@/svg/right-arrow.svg";
-import Image from "next/image";
-import { SwiperSlide, Swiper } from "swiper/react";
-import "swiper/css";
 import { SaleSlider } from "@/schema";
+import RightArrow from "@/svg/right-arrow.svg";
+import LeftArrow from "@/svg/short-left-arrow.svg";
 import parser from "html-react-parser";
+import Image from "next/image";
+import { useRef } from "react";
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 type Props = {
   data: SaleSlider[];
 };

@@ -13,10 +13,11 @@ import Testimonials from "./testimonials";
 
 export default async function Home() {
   const sale = (await getAllSaleSliders({ notHidden: true })) as any;
+  console.log("🚀 ~ :16 ~ Home ~ sale:", sale);
   const category = (await getAllCategories({ top: true })) as any;
 
   // Get products data and handle the new structure
-  const productsData = await getAllProducts({ pageSize: 20 });
+  const productsData = await getAllProducts({ pageSize: 200 });
 
   // Map the products to match the expected structure for the UI components
   const products = (productsData.products || []).map((product: any) => ({
