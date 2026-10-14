@@ -1,14 +1,3 @@
 {
-  "i18n-ally.localesPaths": [
-    "locales"
-  ],
-  "task.allowAutomaticTasks": true,
-  "debug.openDebug": "neverOpen",
-  "terminal.integrated.inheritEnv": false,
-  "tasks": {
-    "label": "lint on open",
-    "type": "shell",
-    "command": "npm run lint",
-    "runOn": "folderOpen"
-  }
+  "i18n-ally.localesPaths": ["locales"]
 }
