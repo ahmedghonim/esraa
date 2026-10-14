@@ -35,4 +35,4 @@ yarn-error.log*
 next-env.d.ts
 
 # restored env ignore rules
-config.bat
+.env
